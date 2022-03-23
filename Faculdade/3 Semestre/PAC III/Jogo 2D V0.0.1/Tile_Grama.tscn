@@ -9,6 +9,7 @@ extents = Vector2( 16, 16 )
 
 [node name="0" type="Sprite" parent="."]
 position = Vector2( 0, 64 )
+scale = Vector2( 1, 0.09375 )
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
@@ -25,6 +26,7 @@ shape = SubResource( 1 )
 
 [node name="1" type="Sprite" parent="."]
 position = Vector2( 32, 64 )
+scale = Vector2( 1, 0.03125 )
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
@@ -41,10 +43,11 @@ shape = SubResource( 1 )
 
 [node name="2" type="Sprite" parent="."]
 position = Vector2( 64, 64 )
+scale = Vector2( 0.0625, 3.1875 )
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 64, 0, 32, 32 )
+region_rect = Rect2( 96, 32, 0, 0 )
 __meta__ = {
 "_edit_group_": true
 }

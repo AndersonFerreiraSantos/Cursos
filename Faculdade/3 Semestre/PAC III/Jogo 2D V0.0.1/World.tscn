@@ -6,6 +6,7 @@
 [ext_resource path="res://back.jpg" type="Texture" id=11]
 
 [node name="World" type="Node2D"]
+position = Vector2( 2, 0 )
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -39,4 +40,4 @@ tile_data = PoolIntArray( 327689, 0, 0, 327690, 1, 0, 327691, 2, 0, 458755, 0, 0
 
 [node name="Passagem mapa1" parent="." instance=ExtResource( 2 )]
 position = Vector2( 875, 194 )
-cenas = "Mapa2.tscn"
+cenas = "M1.tscn"
