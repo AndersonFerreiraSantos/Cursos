@@ -33,6 +33,7 @@ texture = ExtResource( 11 )
 position = Vector2( 812, 192 )
 
 [node name="TileMap" type="TileMap" parent="."]
+position = Vector2( 1, 0 )
 tile_set = ExtResource( 3 )
 cell_size = Vector2( 32, 32 )
 format = 1
