@@ -21,7 +21,7 @@ func _physics_process(delta):
 		motion.x = 0
 		$Sprite.play("Idle")
 	if is_on_floor():
-		print("esta no chao")
+		#print("esta no chao")
 		if Input.is_action_pressed("ui_up"):
 			motion.y = JUMP_HEIGHT
 	else:
@@ -32,4 +32,8 @@ func _physics_process(delta):
 
 
 func _on_Passagem_mapa1_body_entered(body):
+	pass # Replace with function body.
+
+
+func _on_Area2D_body_entered(body):
 	pass # Replace with function body.

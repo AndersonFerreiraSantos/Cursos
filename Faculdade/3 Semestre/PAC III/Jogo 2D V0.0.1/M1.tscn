@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Mapas/M1/4.png" type="Texture" id=1]
 [ext_resource path="res://Mapas/M1/1.png" type="Texture" id=2]
@@ -8,25 +8,28 @@
 [ext_resource path="res://provisorio.tres" type="TileSet" id=6]
 [ext_resource path="res://Mapas/M1/2.png" type="Texture" id=7]
 [ext_resource path="res://Mapas/M1/Suporte.png" type="Texture" id=8]
+[ext_resource path="res://Mapas/M1/Flores.png" type="Texture" id=9]
+[ext_resource path="res://PortaM1.gd" type="Script" id=10]
 
 [sub_resource type="SpriteFrames" id=10]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "default",
-"speed": 5.0
+"speed": 2.0
 } ]
 
 [sub_resource type="SegmentShape2D" id=2]
-b = Vector2( 133, 3 )
+a = Vector2( -1, 0 )
+b = Vector2( 152, 1 )
 
 [sub_resource type="SegmentShape2D" id=3]
-a = Vector2( 171, 388 )
-b = Vector2( 133, 353 )
+a = Vector2( 180, 387 )
+b = Vector2( 151, 351 )
 
 [sub_resource type="SegmentShape2D" id=4]
 a = Vector2( 295, 389 )
-b = Vector2( 171, 388 )
+b = Vector2( 179, 387 )
 
 [sub_resource type="SegmentShape2D" id=5]
 
@@ -40,23 +43,25 @@ b = Vector2( 319, 373 )
 
 [sub_resource type="SegmentShape2D" id=8]
 a = Vector2( 539, 372 )
-b = Vector2( 731, 433 )
+b = Vector2( 737, 435 )
 
 [sub_resource type="SegmentShape2D" id=9]
 a = Vector2( 730, 434 )
 b = Vector2( 1280, 437 )
 
+[sub_resource type="CapsuleShape2D" id=11]
+radius = 22.0
+height = 24.0
+
 [node name="M1" type="Node2D"]
 position = Vector2( 135, -20 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
-position = Vector2( 38, 318 )
+position = Vector2( 821, 399 )
 z_as_relative = false
 
 [node name="Camera2D2" type="Camera2D" parent="Player"]
-scale = Vector2( 10, 10 )
-offset = Vector2( 2, 2 )
-zoom = Vector2( 200, 200 )
+visible = false
 limit_right = 1000
 limit_bottom = 1000
 
@@ -67,7 +72,6 @@ limit_bottom = 1000
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2( 775, 236 )
 frames = SubResource( 10 )
-frame = 2
 playing = true
 
 [node name="Passagem mapa1" parent="." instance=ExtResource( 4 )]
@@ -108,8 +112,27 @@ shape = SubResource( 8 )
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="Sprite/StaticBody2D"]
 shape = SubResource( 9 )
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Sobreposição" type="Area2D" parent="."]
 
-[node name="Sprite" type="Sprite" parent="Area2D"]
+[node name="Corrimão" type="Sprite" parent="Sobreposição"]
 position = Vector2( 288, 281 )
 texture = ExtResource( 8 )
+
+[node name="Flores" type="Sprite" parent="Sobreposição"]
+position = Vector2( 640, 256 )
+texture = ExtResource( 9 )
+
+[node name="PortaM1" type="Area2D" parent="."]
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+cenas = "World.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PortaM1"]
+position = Vector2( 994, 400 )
+shape = SubResource( 11 )
+
+[connection signal="body_entered" from="PortaM1" to="PortaM1" method="_on_PortaM1_body_entered"]
+[connection signal="input_event" from="PortaM1" to="PortaM1" method="_on_PortaM1_input_event"]
+[connection signal="mouse_entered" from="PortaM1" to="PortaM1" method="_on_PortaM1_mouse_entered"]
