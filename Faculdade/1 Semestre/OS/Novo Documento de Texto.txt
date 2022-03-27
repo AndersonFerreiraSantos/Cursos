@@ -1,0 +1,17 @@
+nkdir
+
+permissão:chmod + "nome do arquivo"
+
+hora=5
+minutos=50
+
+
+
+if [ $hora -gt 12 ]
+then
+horaam=$(($hora-12))
+echo "$horaam:$minutos pm"
+else
+echo "$hora:$minutos am"
+fi
+

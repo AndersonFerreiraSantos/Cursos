@@ -1,0 +1,30 @@
+
+#intro {
+    -webkit-background-size: cover;
+    -moz-webkit-background-size: cover;
+    -o-webkit-background-size: cover;
+    -webkit-background-size: cover;
+}
+
+.a {
+    text-align: center ;
+}
+
+.view {
+    
+    text-align: justify-all;
+    -moz-text-decoration-color: cornsilk;
+    color: rgb(247, 247, 247);
+  
+    
+}
+.texto{
+
+    text-align: center;
+    margin: 8%;
+}
+.Titulo{
+    font-size: 50px;
+    text-align: center;
+    
+}

@@ -54,24 +54,32 @@ radius = 22.0
 height = 24.0
 
 [node name="M1" type="Node2D"]
-position = Vector2( 135, -20 )
+position = Vector2( 138, 1 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 position = Vector2( 821, 399 )
 z_as_relative = false
 
 [node name="Camera2D2" type="Camera2D" parent="Player"]
-visible = false
+position = Vector2( 1, 0 )
+rotating = true
+zoom = Vector2( 1000, 1000 )
+limit_left = -9999968
+limit_top = -10000
 limit_right = 1000
 limit_bottom = 1000
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2( 775, 236 )
+position = Vector2( 778, 257 )
 frames = SubResource( 10 )
+frame = 2
 playing = true
 
 [node name="Passagem mapa1" parent="." instance=ExtResource( 4 )]

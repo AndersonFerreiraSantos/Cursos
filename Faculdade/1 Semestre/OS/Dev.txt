@@ -1,0 +1,75 @@
+nkdir
+
+permissão:chmod + "nome do arquivo"
+
+hora=5
+minutos=50
+
+
+
+if [ $hora -gt 12 ]
+then
+horaam=$(($hora-12))
+echo "$horaam:$minutos pm"
+else
+echo "$hora:$minutos am"
+fi
+________________________
+#!/bin/bash
+
+
+
+x=0
+
+
+
+while [ "$x" -le 10 ]
+do
+echo "Execução número: $x"
+x=$((x+1))
+done
+
+________________________
+
+#!/bin/bash
+
+
+
+for x in Compra Venda Aluguel
+do
+echo $x
+done
+________________________
+#!/bin/bash
+
+
+
+for x in $(seq 5)
+do
+echo $((x*2))
+done
+________________________
+
+#!/bin/bash
+
+
+
+rm -rf tmp tmp2
+
+
+
+for teste in $(cut -f1 -d: /etc/passwd)
+do
+echo "Usuário: ${teste} Pasta: " >> tmp
+done
+
+
+
+cut -f6 -d: /etc/passwd >> tmp2
+
+
+
+paste -d " " tmp tmp2
+________________________
+
+________________________

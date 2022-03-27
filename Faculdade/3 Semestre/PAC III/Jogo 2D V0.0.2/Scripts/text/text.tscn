@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/text/text_cabo_de_rede.gd" type="Script" id=1]
+
+[node name="text_cabo_de_rede" type="Label"]
+margin_left = 655.0
+margin_top = -80.0
+margin_right = 833.0
+margin_bottom = -66.0
+text = "Você pegou um cab de rede"
+script = ExtResource( 1 )
