@@ -15,6 +15,16 @@ var jump_force = -1000
 #Verifica se está no chao
 var is_grounded
 
+
+#Itens:
+
+var cabo_de_rede = 0
+var RJ45 = 0
+var crimpador = 0
+
+
+
+
 #Não sei
 onready var raycasts = $raycasts
 
@@ -24,6 +34,10 @@ func _physics_process(delta: float) -> void:
 	
 	#Gravidade do jogo sendo aplicada no Player
 	velocity.y += gravity * delta
+	
+	
+	
+	_itens_necessario()
 	
 	_get_input()
 		
@@ -71,15 +85,29 @@ func _set_animation():
 #camera parar de seguir jogardor CASA-----------------------
 func _on_Trigger_PlayerEntered() -> void:
 	$Camera.current = false
+	
+func _itens_necessario():
+	if crimpador >= 2:
+		print("pegou todos")
 
 
 func _on_cabo_de_rede_PlayerEntered():
-	print("Pegou cabo de rede")
+	cabo_de_rede += 1
+	print("Pegou Cabo de rede, TOTAL:", cabo_de_rede)
 
 
 func _on_crimpador_PlayerEntered():
-	print("Pegou crimpador")
+	crimpador += 1
+	print("Pegou crimpador, TOTAL:", crimpador)
 
 
-func _on_RJ45_macho_PlayerEntered():
-	print("Pegou RJ45")
+
+func _on_RJ45_PlayerEntered():
+	RJ45 += 1
+	print("Pegou RJ45, TOTAL:", RJ45)
+
+
+
+func _on_crimpador2_PlayerEntered():
+	crimpador += 1
+	print("Pegou crimpador, TOTAL:", crimpador)

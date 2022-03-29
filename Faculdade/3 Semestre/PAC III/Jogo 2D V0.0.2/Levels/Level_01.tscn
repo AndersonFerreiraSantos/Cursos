@@ -17,7 +17,7 @@
 [ext_resource path="res://Scripts/HomeDoor.gd" type="Script" id=15]
 [ext_resource path="res://Scripts/cabo_de_rede.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Scripts/crimpador.tscn" type="PackedScene" id=17]
-[ext_resource path="res://Scripts/RJ45_macho.tscn" type="PackedScene" id=18]
+[ext_resource path="res://Scripts/RJ45.tscn" type="PackedScene" id=18]
 
 [sub_resource type="ConvexPolygonShape2D" id=63]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -2425,11 +2425,15 @@ position = Vector2( 2608, 544 )
 [node name="crimpador" parent="." instance=ExtResource( 17 )]
 position = Vector2( 2688, 560 )
 
-[node name="RJ45_macho" parent="." instance=ExtResource( 18 )]
-position = Vector2( 2768, 544 )
+[node name="RJ45" parent="." instance=ExtResource( 18 )]
+position = Vector2( 2512, 560 )
+
+[node name="crimpador2" parent="." instance=ExtResource( 17 )]
+position = Vector2( 2864, 560 )
 
 [connection signal="PlayerEntered" from="Trigger" to="Player" method="_on_Trigger_PlayerEntered"]
 [connection signal="PlayerEntered" from="Trigger" to="HomeDoor" method="_on_Trigger_PlayerEntered"]
 [connection signal="PlayerEntered" from="cabo_de_rede" to="Player" method="_on_cabo_de_rede_PlayerEntered"]
 [connection signal="PlayerEntered" from="crimpador" to="Player" method="_on_crimpador_PlayerEntered"]
-[connection signal="PlayerEntered" from="RJ45_macho" to="Player" method="_on_RJ45_macho_PlayerEntered"]
+[connection signal="PlayerEntered" from="RJ45" to="Player" method="_on_RJ45_PlayerEntered"]
+[connection signal="PlayerEntered" from="crimpador2" to="Player" method="_on_crimpador2_PlayerEntered"]
