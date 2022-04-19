@@ -1,0 +1,144 @@
+Utilizando a tabela de customers resolver os seguintes exercícios: 
+
+ 
+
+1) Selecionar todos os clientes que começam com a letra E. 
+	R: select * from co.customers where full_name like 'E%'
+2)Selecionar todos os clientes que começam com a letra E e possuem ID < 100. 
+	R:select * from co.customers where full_name like 'E%' and customer_id < 100
+3)Selecionar o nome completo, o endereço de E-mail, a data e hora do pedido, o status do pedido,
+ o nome da loja, o endereço Web da loja e o endereço físico da loja. 
+	R:
+select
+cust.full_name,
+cust.email_address,
+ord.order_datetime,
+ord.order_status,
+stor.store_name,
+stor.web_address
+from co.orders ord
+inner join co.customers cust on ord.customer_id = cust.customer_id
+inner join co.stores stor on ord.store_id = stor.store_id
+
+4)Idem à anterior, porém ordenado por data do pedido e nome do cliente, de forma ascendente. 
+	R:
+select
+cust.full_name,
+cust.email_address,
+ord.order_datetime,
+ord.order_status,
+stor.store_name,
+stor.web_address
+from co.orders ord
+inner join co.customers cust on ord.customer_id = cust.customer_id
+inner join co.stores stor on ord.store_id = stor.store_id
+order by  ord.order_datetime asc,cust.full_name asc
+
+5)Selecionar o nome completo, o endereço de e-mail, a date e hora do pedido, o status do pedido,
+ a linha do item no pedido, o nome do produto, os detalhes do produto (este item está em formado JSON,
+ utilizar a dica após o exercício), a quantidade e o preço unitário de venda, ordenado por data e hora do pedido,
+ nome do cliente e linha do item no pedido em formato ascendente 
+	a-Para extrair o JSON do campo usar: utl_raw.cast_to_varchar2(dbms_lob.substr(NOMEDOCAMPO)) 
+R:
+SELECT
+    cust.full_name,
+    cust.email_address,
+    ord.order_datetime,
+    ord.order_status,
+    ord_item.order_id,
+    ord_item.line_item_id,
+    product.product_name,
+    utl_raw.cast_to_varchar2(dbms_lob.substr(product.product_details)) product_details,
+    ord_item.quantity,
+    ord_item.unit_price,
+    stor.store_name,
+    stor.web_address
+FROM co.orders ord
+INNER JOIN co.customers cust ON ord.customer_id = cust.customer_id
+INNER JOIN co.stores stor ON ord.store_id = stor.store_id
+INNER JOIN co.order_items ord_item ON ord.order_id = ord_item.order_id
+INNER JOIN co.products product ON ord_item.product_id = product.product_id
+ORDER BY  ord.order_datetime ASC,cust.full_name ASC,ord_item.order_id ASC
+
+6)Selecionar o total de pedidos por dia (não somente o total, mas deve retornar a data (dd Mon yyyy) e ao lado a quantidade de pedidos 
+R:
+SELECT
+    TO_CHAR(TRUNC(ORD.ORDER_DATETIME),'DD.MM.YYYY') DATE_TIME,
+    SUM(ord_item.QUANTITY) QUANTITY
+FROM co.orders ord
+INNER JOIN co.customers cust ON ord.customer_id = cust.customer_id
+INNER JOIN co.order_items ord_item ON ord.order_id = ord_item.order_id
+INNER JOIN co.products product ON ord_item.product_id = product.product_id
+GROUP BY 
+ORD.ORDER_DATETIME
+
+7)Selecionar a quantidade de itens que cada cliente comprou, ordenado por quantidade em ordem decrescente 
+
+SELECT 
+*
+FROM(
+SELECT
+    CUST.FULL_NAME,
+    SUM(ord_item.QUANTITY) QUANTITY
+FROM co.orders ord
+INNER JOIN co.customers cust ON ord.customer_id = cust.customer_id
+INNER JOIN co.order_items ord_item ON ord.order_id = ord_item.order_id
+INNER JOIN co.products product ON ord_item.product_id = product.product_id
+GROUP BY 
+CUST.FULL_NAME
+)
+ORDER BY QUANTITY DESC
+
+8)Selecionar o nome da loja, o endereço da loja e os produtos dos pedidos que possuem status “CANCELLED”. 
+R:
+SELECT
+    STOR.STORE_NAME,
+    STOR.PHYSICAL_ADDRESS,
+    PRODUCT.PRODUCT_NAME,
+    ORD.ORDER_STATUS
+FROM co.orders ord
+INNER JOIN co.customers cust ON ord.customer_id = cust.customer_id
+INNER JOIN CO.STORES STOR ON ORD.STORE_ID = STOR.STORE_ID
+INNER JOIN co.order_items ord_item ON ord.order_id = ord_item.order_id
+INNER JOIN co.products product ON ord_item.product_id = product.product_id
+WHERE ORD.ORDER_STATUS LIKE 'CANCELLED'
+
+9)Selecionar o número dos pedidos que possuem itens com preço maior que 50.00
+R: 
+SELECT
+* 
+FROM
+(
+SELECT
+  ORD.ORDER_ID,
+  SUM(ord_item.UNIT_PRICE) PRICE
+FROM co.orders ord
+INNER JOIN co.customers cust ON ord.customer_id = cust.customer_id
+INNER JOIN CO.STORES STOR ON ORD.STORE_ID = STOR.STORE_ID
+INNER JOIN co.order_items ord_item ON ord.order_id = ord_item.order_id
+INNER JOIN co.products product ON ord_item.product_id = product.product_id
+GROUP  BY
+ORD.ORDER_ID
+)
+WHERE PRICE > 50
+
+10)Selecionar o nome dos clientes que possuem mais de 2 pedidos com status “CANCELLED”. 
+R:
+SELECT 
+*
+FROM 
+(
+SELECT
+    CUST.FULL_NAME,
+    COUNT(QUANTITY) QUANTITY
+FROM co.orders ord
+INNER JOIN co.customers cust ON ord.customer_id = cust.customer_id
+INNER JOIN CO.STORES STOR ON ORD.STORE_ID = STOR.STORE_ID
+INNER JOIN co.order_items ord_item ON ord.order_id = ord_item.order_id
+INNER JOIN co.products product ON ord_item.product_id = product.product_id
+WHERE ORD.ORDER_STATUS LIKE 'CANCELLED'
+GROUP BY 
+    CUST.FULL_NAME
+)
+WHERE 
+QUANTITY>2

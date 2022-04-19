@@ -22,6 +22,10 @@ var cabo_de_rede = 0
 var RJ45 = 0
 var crimpador = 0
 
+var bancada = "false"
+
+
+
 
 
 
@@ -37,7 +41,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 	
-	_itens_necessario()
+	#_itens_necessario()
 	
 	_get_input()
 		
@@ -86,9 +90,10 @@ func _set_animation():
 func _on_Trigger_PlayerEntered() -> void:
 	$Camera.current = false
 	
-func _itens_necessario():
-	if crimpador >= 2:
-		print("pegou todos")
+#func _itens_necessario():
+#	if crimpador >= 2:
+#		print("pegou todos")
+
 
 
 func _on_cabo_de_rede_PlayerEntered():
@@ -111,3 +116,19 @@ func _on_RJ45_PlayerEntered():
 func _on_crimpador2_PlayerEntered():
 	crimpador += 1
 	print("Pegou crimpador, TOTAL:", crimpador)
+	
+func _bancada_enable():
+	if bancada == 2:
+		bancada = "true"
+
+func _set_animation_bancada():
+	var anim_bancada = "disable"
+	
+	if bancada == "true":
+		anim_bancada = "enable"
+	else:
+		anim_bancada = "disable"
+		
+	if $anim_bancada.assigned_animation != anim_bancada:
+		$anim_bancada.play(anim_bancada)
+	
