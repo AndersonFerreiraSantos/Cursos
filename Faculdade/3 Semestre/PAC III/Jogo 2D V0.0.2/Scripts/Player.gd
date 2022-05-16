@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+var UP = Vector2.UP
 #Gravidade do player:
 var velocity = Vector2.ZERO
 
@@ -16,44 +17,36 @@ var jump_force = -1000
 var is_grounded
 
 
-#Itens:
 
+
+#itens:
+var bancada = "false"
 var cabo_de_rede = 0
 var RJ45 = 0
 var crimpador = 0
-
-var bancada = "false"
-
-
-
-
+var missao_1_itens = 0
 
 
 #Não sei
 onready var raycasts = $raycasts
 
-
 #função para movimentação do player
 func _physics_process(delta: float) -> void:
 	
-	#Gravidade do jogo sendo aplicada no Player
+	#GAtributos Players - NÃO ALTERAR
+	
 	velocity.y += gravity * delta
-	
-	
-	
-	#_itens_necessario()
-	
 	_get_input()
-		
-	#PULO: caso aperte jump (configurado o space) deve pular OBS: dividido por 2 pq -720 foi muito... necessáio ajudar.
-	#if Input.is_action_pressed("jump"):
-	#	velocity.y = jump_force/2
-
-	velocity = move_and_slide(velocity)
-	
+	velocity = move_and_slide(velocity, UP)
 	is_grounded = _check_is_grounded()
-	
 	_set_animation()
+	
+#--------------------------------------------------------------------------------------------------------
+	#Missão 1 - Finalizar
+		#Fazer patch_cord
+	patch_cord()
+#--------------------------------------------------------------------------------------------------------
+	_porta_1()
 	
 func _get_input():
 	velocity.x = 0
@@ -86,49 +79,53 @@ func _set_animation():
 	if $anim.assigned_animation != anim:
 		$anim.play(anim)
 
+
+
+
 #camera parar de seguir jogardor CASA-----------------------
-func _on_Trigger_PlayerEntered() -> void:
-	$Camera.current = false
-	
-#func _itens_necessario():
-#	if crimpador >= 2:
-#		print("pegou todos")
-
-
+#func _on_Trigger_PlayerEntered() -> void:
+#	$Camera.current = false
+func patch_cord():
+	if Global.Crimpador == 1 && Global.RJ45_Macho == 1 && Global.Cabo_de_Rede == 1:
+		Global.Patch_Cord = 1
+		Global.Crimpador -= 1
+		Global.RJ45_Macho -= 1
+		Global.Cabo_de_Rede -= 1
+		
+		print("Parabéns, você fez um patch cord. +", Global.Patch_Cord," patch cord")
+		print("Crimpador:", Global.Crimpador, ", RJ45 macho:", Global.RJ45_Macho,", Cabo de Rede:", Global.Cabo_de_Rede)
+#Funções para abrir portas-----------------------------------------------------------------PORTAS
+func _porta_1():
+	if Global.Patch_Cord == 1:
+		Global.porta_1 = "aberta"
 
 func _on_cabo_de_rede_PlayerEntered():
+	missao_1_itens += 1
 	cabo_de_rede += 1
 	print("Pegou Cabo de rede, TOTAL:", cabo_de_rede)
-
+	print("itens: ",missao_1_itens)
 
 func _on_crimpador_PlayerEntered():
+	missao_1_itens += 1
 	crimpador += 1
 	print("Pegou crimpador, TOTAL:", crimpador)
-
-
+	print("itens: ",missao_1_itens)
 
 func _on_RJ45_PlayerEntered():
+	missao_1_itens += 1
 	RJ45 += 1
 	print("Pegou RJ45, TOTAL:", RJ45)
+	print("itens: ",missao_1_itens)
 
 
 
 func _on_crimpador2_PlayerEntered():
+	missao_1_itens += 1
 	crimpador += 1
 	print("Pegou crimpador, TOTAL:", crimpador)
-	
-func _bancada_enable():
-	if bancada == 2:
-		bancada = "true"
+	print("itens: ",missao_1_itens)
 
-func _set_animation_bancada():
-	var anim_bancada = "disable"
-	
-	if bancada == "true":
-		anim_bancada = "enable"
-	else:
-		anim_bancada = "disable"
-		
-	if $anim_bancada.assigned_animation != anim_bancada:
-		$anim_bancada.play(anim_bancada)
+func _on_Portal_Para_M2_PlayerEntered():
+	print("entrou")
+
 	

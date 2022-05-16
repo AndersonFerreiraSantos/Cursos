@@ -14,6 +14,11 @@ config/name="Jogo 2d V 0 . 0 . 2"
 run/main_scene="res://Levels/Level_01.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Hud="*res://Assets/Menu/HUD.tscn"
+Global="*res://Scripts/Global.gd"
+
 [display]
 
 window/size/width=1280

@@ -210,10 +210,6 @@ collision_mask = 8
 [node name="Camera" type="Camera2D" parent="."]
 rotating = true
 current = true
-limit_left = -100
-limit_top = -1000
-limit_right = 3950
-limit_bottom = 590
 limit_smoothed = true
 smoothing_enabled = true
 drag_margin_left = 0.4
@@ -224,6 +220,7 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [node name="text_cabo_de_rede" parent="." instance=ExtResource( 6 )]
+visible = false
 margin_left = -91.0
 margin_top = -101.0
 margin_right = 87.0

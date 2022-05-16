@@ -9,7 +9,6 @@ func _physics_process(delta: float) -> void:
 	
 	for body in bodies:
 		if body.name == "Player":
-			emit_signal("PlayerEntered")
-			emit_signal("Cabo_de_rede")
-			emit_signal("Cabo_de_rede")
+			Global.Cabo_de_Rede += 1
+			print("cabo de rede: ", Global.Cabo_de_Rede)
 			queue_free()
