@@ -3,14 +3,11 @@
 [ext_resource path="res://Assets/Items/Cafe/Cafe_icon.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/score.gd" type="Script" id=2]
 [ext_resource path="res://Macondo-Regular.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://Scripts/qcrimpador.gd" type="Script" id=4]
+[ext_resource path="res://Assets/Menu/heart.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/life2.gd" type="Script" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 45
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 22
 font_data = ExtResource( 3 )
 
 [node name="HUD" type="CanvasLayer"]
@@ -20,52 +17,35 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="icon" type="TextureRect" parent="Holder"]
-margin_left = 2.0
-margin_right = 61.0
-margin_bottom = 61.0
+margin_left = 33.0
+margin_top = 14.0
+margin_right = 92.0
+margin_bottom = 75.0
 texture = ExtResource( 1 )
 expand = true
 
 [node name="score" type="Label" parent="Holder"]
-margin_left = 67.0
-margin_top = 7.0
-margin_right = 166.0
-margin_bottom = 67.0
+margin_left = 96.0
+margin_top = 24.0
+margin_right = 195.0
+margin_bottom = 84.0
 custom_fonts/font = SubResource( 1 )
 text = "00"
 max_lines_visible = 0
 script = ExtResource( 2 )
 
-[node name="Crimpador" type="Label" parent="Holder"]
-margin_left = 185.0
-margin_top = 5.0
-margin_right = 255.0
-margin_bottom = 19.0
-text = "Crimpador:"
+[node name="Holder2" type="Control" parent="."]
+margin_left = 176.0
+margin_top = 30.0
+margin_right = 524.0
+margin_bottom = 70.0
+script = ExtResource( 5 )
 
-[node name="qcrimpador" type="Label" parent="Holder"]
-margin_left = 261.0
-margin_top = -2.0
-margin_right = 301.0
-margin_bottom = 25.0
-custom_fonts/font = SubResource( 2 )
-text = "00"
-script = ExtResource( 4 )
-
-[node name="RJ45" type="Label" parent="Holder"]
-margin_left = 224.0
-margin_top = 26.0
-margin_right = 294.0
-margin_bottom = 40.0
-text = "RJ45:"
-
-[node name="qRJ45" type="Label" parent="Holder"]
-margin_right = 40.0
-margin_bottom = 14.0
-
-[node name="Cabo_de_Rede" type="Label" parent="Holder"]
-margin_left = 310.0
-margin_top = 8.0
-margin_right = 380.0
-margin_bottom = 22.0
-text = "Cabo de Rede:"
+[node name="life" type="TextureRect" parent="Holder2"]
+margin_left = 3.0
+margin_top = 4.0
+margin_right = 34.0
+margin_bottom = 34.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 2

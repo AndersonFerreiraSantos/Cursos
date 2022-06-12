@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/background/M1/Sem_luz_M1_itens.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Iuminação_itens.gd" type="Script" id=2]
+
+[node name="Iuminação_itens" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )

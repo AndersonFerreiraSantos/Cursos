@@ -5,6 +5,6 @@ func _physics_process(delta: float) -> void:
 	teste()
 	
 func teste():
-	if Global.Patch_Cord == 1:
+	if Global.Cabo_de_Rede == 1 && Global.RJ45_Macho == 1:
 		queue_free()
 

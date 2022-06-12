@@ -10,4 +10,3 @@ var missao_1_itens = 0
 
 func _ready():
 	pass # Replace with function body.
-

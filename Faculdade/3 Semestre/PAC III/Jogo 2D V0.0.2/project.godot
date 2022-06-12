@@ -31,6 +31,7 @@ window/stretch/aspect="keep"
 [global]
 
 mask=false
+layer=false
 
 [importer_defaults]
 
@@ -73,9 +74,20 @@ jump={
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
-layer={
+agarrar={
 "deadzone": 0.5,
-"events": [  ]
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":81,"unicode":0,"echo":false,"script":null)
+ ]
+}
+baixo={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777234,"unicode":0,"echo":false,"script":null)
+ ]
+}
+cima={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":0,"physical_scancode":16777232,"unicode":0,"echo":false,"script":null)
+ ]
 }
 
 [layer_names]
@@ -84,6 +96,15 @@ layer={
 2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Items"
 2d_physics/layer_4="World"
+2d_physics/layer_5="Traps"
+2d_physics/layer_6="Hurtboxes"
+2d_physics/layer_7="Hitbox"
+2d_physics/layer_8="barreira"
+2d_physics/layer_9="plataformas"
+2d_physics/layer_10="Deslizante"
+2d_physics/layer_11="Empurraveis"
+2d_physics/layer_12="Energização"
+2d_physics/layer_13="Cabo_Energizado"
 
 [physics]
 

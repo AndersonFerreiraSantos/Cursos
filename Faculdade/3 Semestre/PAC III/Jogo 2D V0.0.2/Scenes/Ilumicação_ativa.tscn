@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/background/M2/M2_V2.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Ilumicação_ativa.gd" type="Script" id=2]
+
+[node name="Ilumicação_ativa" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Casa" type="Sprite" parent="."]
+position = Vector2( 2298, -176 )
+texture = ExtResource( 1 )
