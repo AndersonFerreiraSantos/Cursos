@@ -9,7 +9,7 @@ var notebook = 0
 var RJ45_Macho = 0
 var HD = 0
 
-var Posicao_camera = 0
+var Posicao_camera = 1
 	#Computador
 
 

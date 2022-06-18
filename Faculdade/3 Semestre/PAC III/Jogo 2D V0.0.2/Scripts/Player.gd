@@ -4,7 +4,7 @@ var hurted = false
 var knockback_dir = 1
 var knockback_int = 3700
 
-var posicao_camera = 6
+var posicao_camera = 0
 
 var UP = Vector2.UP
 #Gravidade do player:
