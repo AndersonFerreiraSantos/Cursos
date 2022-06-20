@@ -1,0 +1,20 @@
+O que é NPM:
+    Gerenciado de pacotes do node, mesmo que o apt do linux.
+    É possivel executar scripts pelo NPM, rotinas etc.
+    !!!! Os módulos externos ficam na pasta node_modules, essa pasta deve ser descartavel, um rotina para reinstalar os pacotes será ciada, tudo isso para faciliar a atualização desses apcotes.
+
+Terminal CDMER é utilizado no windows para simular um terminal do linux, nem todos os comandos são executados corretamente no PowerShell    
+Módulos são scripts reaproveitáveis. inter: nós desenvolvemos, core modules: módulos que vem com o Node.js, externos: módulos que instamos via NPM.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Insalações:
+    NodeJS: https://nodejs.org/en/ 
+    cmder: https://cmder.net/
+
+
+Comandos:
+    node -v: Verificar versão do NodeJS.
+    npm -v: Verificar versão do NPM.
+
+    node: acessa o node via terminal.
+    
