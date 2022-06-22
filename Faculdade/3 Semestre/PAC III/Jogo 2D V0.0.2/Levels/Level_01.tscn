@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=2]
+[gd_scene load_steps=91 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/Mushroom/Idle (32x32).png" type="Texture" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Scripts/RJ45.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Alavanca_De_Parede.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Scenes/Iluinação_M1.tscn" type="PackedScene" id=20]
+[ext_resource path="res://Porta.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Assets/Items/Cafe/Cafe.tscn" type="PackedScene" id=22]
 [ext_resource path="res://Assets/Items/Cafe/Cafe_Expresso.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Assets/background/M1/Elevador.tscn" type="PackedScene" id=24]
@@ -595,6 +596,10 @@ position = Vector2( 599, 403 )
 
 [node name="M1" type="Node2D" parent="."]
 script = ExtResource( 37 )
+
+[node name="Porta" parent="M1" instance=ExtResource( 21 )]
+position = Vector2( 1865, 215 )
+z_index = 8
 
 [node name="Mapa" type="Sprite" parent="M1"]
 position = Vector2( 4296, 3830 )
