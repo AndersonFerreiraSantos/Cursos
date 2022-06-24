@@ -21,6 +21,8 @@ Comandos:
     npm init: inicializar o NPM no prjeto (permite instalar modulos externos).
      Pacotes NPM:
         npm install minimist: minimist é um pacote que permite extrair argumentos do console.
+        npm install chalk: chalk é um pacote para uma visualização do console mais agradável.
+            Correção: Para funcionar corretamente: npm i chalk@4.1.2
 
 
     
