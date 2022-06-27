@@ -6,6 +6,11 @@ O que é NPM:
 Terminal CDMER é utilizado no windows para simular um terminal do linux, nem todos os comandos são executados corretamente no PowerShell    
 Módulos são scripts reaproveitáveis. inter "nós desenvolvemos, core modules" "módulos que vem com o Node.js", externos "módulos que instamos via NPM".
 
+Síncrono e Assíncrono:
+    Síncrono: O codigo ira executar sincronizado, ou seja, vai executar o proximo assim que terminar o que esta executando.
+    Assíncrono: Ele não precisa terminar um para executar o proximo.
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Insalações:
     NodeJS: https://nodejs.org/en/ 
@@ -22,7 +27,14 @@ Comandos:
      Pacotes NPM:
         npm install minimist: minimist é um pacote que permite extrair argumentos do console.
         npm install chalk: chalk é um pacote para uma visualização do console mais agradável.
-            Correção: Para funcionar corretamente: npm i chalk@4.1.2
+            Correção - Para funcionar corretamente: npm i chalk@4.1.2
+        npm install inquirer: Módulo para lidar melhor com input do usuário.
+
+Core Modules fundamentais para crianção de software em node(não é necessário instalar):
+    http: módulo para criar servidores HTTP;
+    path: extrair informações de paths (caminhos) de arquivos;
+    fs: file system, leitura e escrita de arquivos;
+    url: módulo para trabalhar com URLs;
 
 
     

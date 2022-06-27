@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends Area2D
 var teste = Global.Patch_Cord
 
 func _physics_process(delta: float) -> void:

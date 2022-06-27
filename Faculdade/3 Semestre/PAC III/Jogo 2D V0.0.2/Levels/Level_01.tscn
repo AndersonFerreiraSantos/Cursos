@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/Mushroom/Idle (32x32).png" type="Texture" id=2]
@@ -44,6 +44,7 @@
 [ext_resource path="res://Assets/background/M1/M1_Rampa.png" type="Texture" id=42]
 [ext_resource path="res://M1_ar_condicionado.tscn" type="PackedScene" id=43]
 [ext_resource path="res://Scenes/M1_Cabos_eletricos.tscn" type="PackedScene" id=44]
+[ext_resource path="res://Scripts/Porta_1.gd" type="Script" id=45]
 
 [sub_resource type="RectangleShape2D" id=111]
 extents = Vector2( 53.5, 18.5 )
@@ -597,9 +598,10 @@ position = Vector2( 599, 403 )
 [node name="M1" type="Node2D" parent="."]
 script = ExtResource( 37 )
 
-[node name="Porta" parent="M1" instance=ExtResource( 21 )]
-position = Vector2( 1865, 215 )
+[node name="Porta_1" parent="M1" instance=ExtResource( 21 )]
+position = Vector2( 1865, 216 )
 z_index = 8
+script = ExtResource( 45 )
 
 [node name="Mapa" type="Sprite" parent="M1"]
 position = Vector2( 4296, 3830 )
@@ -617,7 +619,6 @@ position = Vector2( 3278, 472 )
 z_index = 8
 
 [node name="Ilumicação_ativa" parent="M1/Noite" instance=ExtResource( 11 )]
-visible = false
 
 [node name="M1_caixa_materna" parent="M1/Noite" instance=ExtResource( 12 )]
 position = Vector2( 2942, 409 )
@@ -779,7 +780,7 @@ texture = ExtResource( 3 )
 [node name="Itens" type="Node2D" parent="M1"]
 
 [node name="RJ45" parent="M1/Itens" instance=ExtResource( 18 )]
-position = Vector2( 3084, 499 )
+position = Vector2( 2946, 429 )
 
 [node name="crimpador" parent="M1/Itens" instance=ExtResource( 17 )]
 position = Vector2( 2947, 161 )
