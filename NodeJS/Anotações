@@ -1,14 +1,18 @@
 O que é NPM:
-    Gerenciado de pacotes do node, mesmo que o apt do linux.
+    Gerenciado de pacotes do node(como um GIT mas de pacote para o node), mesmo que o apt do linux.
     É possivel executar scripts pelo NPM, rotinas etc.
     !!!! Os módulos externos ficam na pasta node_modules, essa pasta deve ser descartavel, um rotina para reinstalar os pacotes será ciada, tudo isso para faciliar a atualização desses apcotes.
     Os módulos externos podem ser instalados via npm, para isso é necessário inicializar o npm com o comando "npm init"
+    A criação de um projeto gera sempre um arquivo, o package.json, é uma maneira de verificar o que foi instalado, quais scripts que tem, entre outras coisas.
 Terminal CDMER é utilizado no windows para simular um terminal do linux, nem todos os comandos são executados corretamente no PowerShell    
 Módulos são scripts reaproveitáveis. inter "nós desenvolvemos, core modules" "módulos que vem com o Node.js", externos "módulos que instamos via NPM".
 
 Síncrono e Assíncrono:
     Síncrono: O codigo ira executar sincronizado, ou seja, vai executar o proximo assim que terminar o que esta executando.
     Assíncrono: Ele não precisa terminar um para executar o proximo.
+
+
+CORE MODULES: Conhecimento sobre módulos do node, caso o objetivo seja verificar arquivos, sistema, configurar servidor é necessário verificar essa pasta.
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
