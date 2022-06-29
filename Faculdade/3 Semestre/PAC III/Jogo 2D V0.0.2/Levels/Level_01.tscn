@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=2]
+[gd_scene load_steps=100 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/Mushroom/Idle (32x32).png" type="Texture" id=2]
@@ -49,6 +49,8 @@
 [ext_resource path="res://Enemies/Mushroom/Derrotado (32x32).png" type="Texture" id=47]
 [ext_resource path="res://Enemies/inimigo 2.gd" type="Script" id=48]
 [ext_resource path="res://Enemies/inimigo 1.gd" type="Script" id=49]
+[ext_resource path="res://Scenes/Suporte_temporario.tscn" type="PackedScene" id=50]
+[ext_resource path="res://Scenes/Bloco - Final - Massivo.tscn" type="PackedScene" id=51]
 
 [sub_resource type="RectangleShape2D" id=111]
 extents = Vector2( 53.5, 18.5 )
@@ -175,7 +177,7 @@ extents = Vector2( 273.5, 4.25 )
 extents = Vector2( 273.5, 4.25 )
 
 [sub_resource type="RectangleShape2D" id=87]
-extents = Vector2( 1403, 10 )
+extents = Vector2( 1932.5, 20.5 )
 
 [sub_resource type="RectangleShape2D" id=113]
 extents = Vector2( 3.375, 56.5 )
@@ -511,11 +513,162 @@ tracks/2/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
 }
 
+[sub_resource type="GDScript" id=121]
+script/source = "extends KinematicBody2D
+#aaaaa
+var speed = 64
+var velocity = Vector2.ZERO
+var gravity = 1200
+export var  Energizado = true
+
+onready var Direita := $Direita as RayCast2D
+
+
+func _physics_process(delta: float) -> void:
+#	velocity = move_and_slide(velocity)
+#	velocity.y += gravity * delta
+	
+
+	_set_animation()
+	Massivo_Ativado()
+
+	
+		
+func _set_animation():
+	var anim = \"Desconectado\"
+	if Energizado == false:
+		anim = \"Desconectado - Desativado\"
+		
+	if $Direita.is_colliding() and Energizado == true:
+		anim = \"Direita\"
+	elif $Esquerda.is_colliding() and Energizado == true:
+		anim = \"Esquerda\"
+	elif $Cima.is_colliding() and Energizado == true:
+		anim = \"Cima\"
+	elif $Baixo.is_colliding() and Energizado == true:
+		anim = \"Baixo\"
+	if $Esquerda.is_colliding() and $Direita.is_colliding() and Energizado == true:
+		anim = \"Esquerda-Direita\"
+	if $anim.assigned_animation != anim:
+		$anim.play(anim)
+		
+func Massivo_Ativado():
+	if Energizado == true:
+		$Massivo_Ativado/Massivo_Ativado.disabled = false
+	else: 
+		$Massivo_Ativado/Massivo_Ativado.disabled = true
+	
+	
+	
+	
+"
+
+[sub_resource type="GDScript" id=122]
+script/source = "extends KinematicBody2D
+#aaaaa
+var speed = 64
+var velocity = Vector2.ZERO
+var gravity = 1200
+export var  Energizado = true
+
+onready var Direita := $Direita as RayCast2D
+
+var Conectado = false
+
+func _physics_process(delta: float) -> void:
+#	velocity = move_and_slide(velocity)
+#	velocity.y += gravity * delta
+	
+	Detectar_Cabo_Energizado()
+	_set_animation()
+#	Massivo_Ativado()
+
+	
+		
+func _set_animation():
+	var anim = \"Desconectado\"
+	if Conectado == false:
+		anim = \"Desconectado - Desativado\"
+		
+	if $Direita.is_colliding() and Conectado == true:
+		anim = \"Direita\"
+	elif $Esquerda.is_colliding() and Conectado == true:
+		anim = \"Esquerda\"
+	elif $Cima.is_colliding() and Conectado == true:
+		anim = \"Cima\"
+	elif $Baixo.is_colliding() and Conectado == true:
+		anim = \"Baixo\"
+	if $Esquerda.is_colliding() and $Direita.is_colliding() and Conectado == true:
+		anim = \"Esquerda-Direita\"
+	if $anim.assigned_animation != anim:
+		$anim.play(anim)
+		
+#func Massivo_Ativado():
+#	if Conectado == true:
+#		$Massivo_Ativado/Massivo_Ativado.disabled = false
+#	else: 
+#		$Massivo_Ativado/Massivo_Ativado.disabled = true
+#
+#func Detectar_Massivo_ativo():
+#	if $Detectar_Massivo_ativo_direita.is_colliding() or $Detectar_Massivo_ativo_esquerda.is_colliding():
+#		$Cabo_Energizado/Cabo_Energizado.disabled = false
+#		Massivo = true
+#	else:
+#		Massivo = false
+#
+#
+#Cabooo--------------------------------------------------------------------------------------------------------
+func Detectar_Cabo_Energizado():
+	if $Detectar_Cabo_Energizado_Direita.is_colliding() or $Detectar_Cabo_Energizado_Esquerda.is_colliding():
+		Conectado = true
+		Global.bloco_ativo_1 = true
+	else:
+		Conectado = false
+		Global.bloco_ativo_1 = false
+		
+#func Desativar():
+#	if Massivo == false and Cabo == false:
+#		$Cabo_Energizado/Cabo_Energizado.disabled = true
+
+
+"
+
+[sub_resource type="GDScript" id=123]
+script/source = "extends KinematicBody2D
+
+onready var timer := $Timer as Timer
+var tempo = 0
+
+func _physics_process(delta: float) -> void:
+	_set_animation()
+	
+func _on_Timer_timeout():
+	if tempo == 1:
+		$Collision.disabled = false
+		tempo = 0
+	else:
+		$Collision.disabled = true
+		tempo = 1
+	print(tempo)
+	
+func _set_animation():
+	if Global.bloco_ativo_1 == true:
+		var anim = \"abrindo\"
+		if tempo == 0:
+			anim = \"abrindo\"
+		
+		if tempo == 1:
+			anim = \"Fechando\"
+			
+		if $anim.assigned_animation != anim:
+			$anim.play(anim)
+"
+
 [node name="Main" type="Node2D"]
 position = Vector2( 0, -3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 3905, 1376 )
+position = Vector2( 8237, 3086 )
 
 [node name="M1" type="Node2D" parent="."]
 script = ExtResource( 37 )
@@ -874,7 +1027,7 @@ position = Vector2( 2258, -3441 )
 shape = SubResource( 81 )
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
-position = Vector2( 3159, -2130 )
+position = Vector2( 3066, -2119 )
 shape = SubResource( 87 )
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
@@ -927,7 +1080,7 @@ position = Vector2( 1661, -4344 )
 shape = SubResource( 84 )
 
 [node name="Elevador_1" parent="M2" instance=ExtResource( 28 )]
-position = Vector2( 7447, 1370 )
+position = Vector2( 7447, 3081 )
 
 [node name="Alavanca" type="Area2D" parent="M2/Elevador_1"]
 
@@ -969,53 +1122,52 @@ anims/run = SubResource( 120 )
 [node name="skin" type="Node2D" parent="M2"]
 
 [node name="Grade_Elevador_01_M2" type="Sprite" parent="M2/skin"]
-position = Vector2( 7970, 1879 )
+position = Vector2( 7444, 1986 )
 texture = ExtResource( 29 )
 
 [node name="Trampolim" parent="M2" instance=ExtResource( 31 )]
-position = Vector2( 6776, 2997 )
+position = Vector2( 6389, 2773 )
 
 [node name="Blocos" type="Node2D" parent="M2"]
 
 [node name="Blocos energia" type="Node2D" parent="M2/Blocos"]
 
 [node name="Bloco - Energia - Cabo3" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 7921, 2929 )
+position = Vector2( 8490, 3149 )
 
 [node name="Bloco - Energia - Cabo5" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 8339, 2811 )
+position = Vector2( 8341, 2773 )
 
 [node name="Bloco - Energia - Cabo6" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 8612, 2971 )
+position = Vector2( 9145, 3170 )
 
 [node name="Bloco - Energia - Cabo8" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 8468, 2941 )
+position = Vector2( 9047, 3170 )
 
 [node name="Bloco - Energia - Cabo7" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 7755, 2926 )
+position = Vector2( 8851, 3169 )
 
 [node name="Bloco - Energia - Cabo4" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 8137, 2924 )
-
-[node name="Bloco - Energia - Massiva" parent="M2/Blocos/Blocos energia" instance=ExtResource( 35 )]
-position = Vector2( 7068, 2704 )
+position = Vector2( 8949, 3170 )
 
 [node name="Bloco - Energia - Massiva2" parent="M2/Blocos/Blocos energia" instance=ExtResource( 35 )]
-position = Vector2( 8809, 3164 )
+position = Vector2( 9250, 3172 )
+script = SubResource( 121 )
+
+[node name="Bloco - Final - Massivo" parent="M2/Blocos/Blocos energia" instance=ExtResource( 51 )]
+position = Vector2( 8673, 3172 )
+script = SubResource( 122 )
 
 [node name="Blocos moveis" type="Node2D" parent="M2/Blocos"]
 
 [node name="Bloco_1" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
-position = Vector2( 7049, 3130 )
+position = Vector2( 5986, 3142 )
 
 [node name="Bloco_2" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
-position = Vector2( 6996, 2958 )
-
-[node name="Bloco_3" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
-position = Vector2( 6941, 2823 )
+position = Vector2( 7530, 2897 )
 
 [node name="Bloco_7" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
-position = Vector2( 6207, 2910 )
+position = Vector2( 6152, 3120 )
 
 [node name="Bloco_8" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
 position = Vector2( 6615, 2837 )
@@ -1065,10 +1217,19 @@ collision_mask = 0
 
 [node name="Portas M2" type="Node2D" parent="M2"]
 
+[node name="Suportes" type="Node2D" parent="M2"]
+
+[node name="Suporte1" parent="M2/Suportes" instance=ExtResource( 50 )]
+position = Vector2( 7054, 3018 )
+script = SubResource( 123 )
+
 [node name="Geral" type="Node2D" parent="."]
 position = Vector2( 5796, 1381 )
 
 [node name="HUD" parent="Geral" instance=ExtResource( 26 )]
+
+[node name="Suporte" parent="." instance=ExtResource( 50 )]
+position = Vector2( 6352, 2901 )
 
 [connection signal="PlayerEntered" from="M1/Trigger" to="Player" method="_on_Trigger_PlayerEntered"]
 [connection signal="PlayerEntered" from="M1/Trigger" to="M1/HomeDoor" method="_on_Trigger_PlayerEntered"]

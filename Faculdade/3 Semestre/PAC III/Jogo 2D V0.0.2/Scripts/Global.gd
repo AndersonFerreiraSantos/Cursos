@@ -16,7 +16,10 @@ var RAM_2 = 0
 var RAM_4 = 0
 var RAM_8 = 0
 
-
+#Energia
+	#Blocos Ativos
+		#Bloco Ativo M2
+var bloco_ativo_1 = false
 
 
 
@@ -39,9 +42,10 @@ var no_elevador = 5
 
 #Armadilhas____________________
 var no_cabo_eletrico = false
-#unc _process(delta: float) -> void:
+func _process(delta: float) -> void:
 	#____________M1____________
 
 	
 	#____________M2____________
+	print(bloco_ativo_1)
 	

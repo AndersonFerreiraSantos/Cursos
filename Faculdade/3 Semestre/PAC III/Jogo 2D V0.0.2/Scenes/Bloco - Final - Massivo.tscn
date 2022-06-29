@@ -1,14 +1,14 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo.png" type="Texture" id=2]
-[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Direita.png" type="Texture" id=3]
+[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo.png" type="Texture" id=1]
+[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Direita.png" type="Texture" id=2]
+[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Baixo.png" type="Texture" id=3]
 [ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Cima.png" type="Texture" id=4]
-[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Baixo.png" type="Texture" id=5]
-[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Esquerda.png" type="Texture" id=6]
-[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Esquerda - Direita.png" type="Texture" id=7]
-[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Desativado.png" type="Texture" id=8]
+[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Esquerda.png" type="Texture" id=5]
+[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Esquerda - Direita.png" type="Texture" id=6]
+[ext_resource path="res://Assets/background/Blocos/Bloco -  Energia Massivo/Bloco - Energia Massivo - Desativado.png" type="Texture" id=7]
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=10]
 script/source = "extends KinematicBody2D
 #aaaaa
 var speed = 64
@@ -18,50 +18,69 @@ export var  Energizado = true
 
 onready var Direita := $Direita as RayCast2D
 
+var Conectado = false
 
 func _physics_process(delta: float) -> void:
 #	velocity = move_and_slide(velocity)
 #	velocity.y += gravity * delta
 	
-
+	Detectar_Cabo_Energizado()
 	_set_animation()
-	Massivo_Ativado()
+#	Massivo_Ativado()
 
 	
 		
 func _set_animation():
 	var anim = \"Desconectado\"
-	if Energizado == false:
+	if Conectado == false:
 		anim = \"Desconectado - Desativado\"
 		
-	if $Direita.is_colliding() and Energizado == true:
+	if $Direita.is_colliding() and Conectado == true:
 		anim = \"Direita\"
-	elif $Esquerda.is_colliding() and Energizado == true:
+	elif $Esquerda.is_colliding() and Conectado == true:
 		anim = \"Esquerda\"
-	elif $Cima.is_colliding() and Energizado == true:
+	elif $Cima.is_colliding() and Conectado == true:
 		anim = \"Cima\"
-	elif $Baixo.is_colliding() and Energizado == true:
+	elif $Baixo.is_colliding() and Conectado == true:
 		anim = \"Baixo\"
-	if $Esquerda.is_colliding() and $Direita.is_colliding() and Energizado == true:
+	if $Esquerda.is_colliding() and $Direita.is_colliding() and Conectado == true:
 		anim = \"Esquerda-Direita\"
 	if $anim.assigned_animation != anim:
 		$anim.play(anim)
 		
-func Massivo_Ativado():
-	if Energizado == true:
-		$Massivo_Ativado/Massivo_Ativado.disabled = false
-	else: 
-		$Massivo_Ativado/Massivo_Ativado.disabled = true
+#func Massivo_Ativado():
+#	if Conectado == true:
+#		$Massivo_Ativado/Massivo_Ativado.disabled = false
+#	else: 
+#		$Massivo_Ativado/Massivo_Ativado.disabled = true
+#
+#func Detectar_Massivo_ativo():
+#	if $Detectar_Massivo_ativo_direita.is_colliding() or $Detectar_Massivo_ativo_esquerda.is_colliding():
+#		$Cabo_Energizado/Cabo_Energizado.disabled = false
+#		Massivo = true
+#	else:
+#		Massivo = false
+#
+#
+#Cabooo--------------------------------------------------------------------------------------------------------
+func Detectar_Cabo_Energizado():
+	if $Detectar_Cabo_Energizado_Direita.is_colliding() or $Detectar_Cabo_Energizado_Esquerda.is_colliding():
+		Conectado = true
+	else:
+		Conectado = false
+		
 	
-	
-	
-	
+#func Desativar():
+#	if Massivo == false and Cabo == false:
+#		$Cabo_Energizado/Cabo_Energizado.disabled = true
+
+
 "
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 48, 48 )
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=2]
 resource_name = "Baixo"
 length = 0.1
 tracks/0/type = "value"
@@ -74,7 +93,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 5 ) ]
+"values": [ ExtResource( 3 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Bloco-EnergiaMassivo:hframes")
@@ -101,7 +120,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "Cima"
 length = 0.1
 tracks/0/type = "value"
@@ -141,7 +160,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 resource_name = "Desconectado"
 length = 0.1
 tracks/0/type = "value"
@@ -154,7 +173,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ ExtResource( 2 ) ]
+"values": [ ExtResource( 1 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Bloco-EnergiaMassivo:hframes")
@@ -181,129 +200,9 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=5]
 resource_name = "Desconectado - Desativado"
 length = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Bloco-EnergiaMassivo:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 8 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Bloco-EnergiaMassivo:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 1 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Bloco-EnergiaMassivo:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-
-[sub_resource type="Animation" id=2]
-resource_name = "Direita"
-length = 0.1
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Bloco-EnergiaMassivo:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 3 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Bloco-EnergiaMassivo:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 1 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Bloco-EnergiaMassivo:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-
-[sub_resource type="Animation" id=6]
-resource_name = "Esquerda"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("Bloco-EnergiaMassivo:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 6 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Bloco-EnergiaMassivo:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 1 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Bloco-EnergiaMassivo:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 0 ]
-}
-
-[sub_resource type="Animation" id=7]
-resource_name = "Esquerda-Direita"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Bloco-EnergiaMassivo:texture")
 tracks/0/interp = 1
@@ -341,32 +240,151 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="Animation" id=6]
+resource_name = "Direita"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bloco-EnergiaMassivo:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bloco-EnergiaMassivo:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Bloco-EnergiaMassivo:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Esquerda"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bloco-EnergiaMassivo:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bloco-EnergiaMassivo:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Bloco-EnergiaMassivo:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Esquerda-Direita"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Bloco-EnergiaMassivo:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Bloco-EnergiaMassivo:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Bloco-EnergiaMassivo:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=9]
 extents = Vector2( 52, 52.5 )
 
-[node name="Bloco - Energia - Massiva" type="KinematicBody2D"]
-position = Vector2( 6, 3 )
-collision_layer = 1024
-collision_mask = 1024
-script = SubResource( 11 )
+[node name="Bloco - Final - Massivo" type="KinematicBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = SubResource( 10 )
 
 [node name="Bloco-EnergiaMassivo" type="Sprite" parent="."]
 position = Vector2( -5, -2 )
-texture = ExtResource( 8 )
+texture = ExtResource( 7 )
 
 [node name="Colission" type="CollisionShape2D" parent="."]
 position = Vector2( -5, -2 )
 shape = SubResource( 1 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
-autoplay = "Desconectado"
-anims/Baixo = SubResource( 4 )
-anims/Cima = SubResource( 5 )
-anims/Desconectado = SubResource( 3 )
-"anims/Desconectado - Desativado" = SubResource( 9 )
-anims/Direita = SubResource( 2 )
-anims/Esquerda = SubResource( 6 )
-anims/Esquerda-Direita = SubResource( 7 )
+autoplay = "Desconectado - Desativado"
+anims/Baixo = SubResource( 2 )
+anims/Cima = SubResource( 3 )
+anims/Desconectado = SubResource( 4 )
+"anims/Desconectado - Desativado" = SubResource( 5 )
+anims/Direita = SubResource( 6 )
+anims/Esquerda = SubResource( 7 )
+anims/Esquerda-Direita = SubResource( 8 )
 
 [node name="Direita" type="RayCast2D" parent="."]
 position = Vector2( 43, -3 )
@@ -398,5 +416,17 @@ collision_mask = 0
 
 [node name="Massivo_Ativado" type="CollisionShape2D" parent="Massivo_Ativado"]
 position = Vector2( -5, -2.5 )
-shape = SubResource( 10 )
+shape = SubResource( 9 )
 disabled = true
+
+[node name="Detectar_Cabo_Energizado_Esquerda" type="RayCast2D" parent="."]
+position = Vector2( -58, -13 )
+enabled = true
+cast_to = Vector2( -1, 0 )
+collision_mask = 4096
+
+[node name="Detectar_Cabo_Energizado_Direita" type="RayCast2D" parent="."]
+position = Vector2( 39, -15 )
+enabled = true
+cast_to = Vector2( 10, 0 )
+collision_mask = 4096
