@@ -19,20 +19,31 @@ CORE MODULES: Conhecimento sobre módulos do node, caso o objetivo seja verifica
 Insalações:
     NodeJS: https://nodejs.org/en/ 
     cmder: https://cmder.net/
+    Pacotes: pesquisar pactes do Node https://www.npmjs.com/search?q=express
 
 
 Comandos:
     node -v: Verificar versão do NodeJS.
     npm -v: Verificar versão do NPM.
-
+    npm install: Reinstala todos os pacotes baseado no package.json, caso a pasta node_modules seja exclida ou o projeto seja executado em outro equipamento.
+    npm install --save-dev "pacote": Para instalar um pacote como dependencia dev.
+    npm update: Atualiza todos os pacotes.
+    npm update "pacote": Atualiza um pacote especifico.
+    npx npm-check-updates -u: Verifica se tem algum dependencia que precisa de atualização
+    npm run "scritp": Serve para executar scripts configurado no arquivo package.json.
+    npm install -g "pacote": serve para instalar os pacotes de forma global.
+        npm link "pacote": Em alguns casos é necessário executar o npm link "pacote" pois alguns pacotes necessita dos arquivos localmente.
+    npm uninstall "pacote": Para remover os pacotes, ele remove as dependencias dos arquivos json também.
     node: acessa o node via terminal.
 
     npm init: inicializar o NPM no prjeto (permite instalar modulos externos).
      Pacotes NPM:
         npm install minimist: minimist é um pacote que permite extrair argumentos do console.
         npm install chalk: chalk é um pacote para uma visualização do console mais agradável.
-            Correção - Para funcionar corretamente: npm i chalk@4.1.2
+            Correção - Para funcionar corretamente: npm install chalk@4.1.2
         npm install inquirer: Módulo para lidar melhor com input do usuário.
+            Correção - Para funcionar corretamente: npm install inquirer@8.1.0
+        npm install lodash: Verificar...(compara array)
 
 Core Modules fundamentais para crianção de software em node(não é necessário instalar):
     http: módulo para criar servidores HTTP;

@@ -1,16 +1,26 @@
 extends Node
 
 #itens 
-var Cafe = 0
+var Cafe = 0 
 var Crimpador = 0
 var Cabo_de_Rede = 0
 var Patch_Cord = 0
 var notebook = 0
-var RJ45_Macho = 0
+var RJ45_Macho = 0 #Se for pego abrira a porta_1
+
+#Peças
 var HD = 0
 
-var Posicao_camera = 1
-	#Computador
+	#Memórias RAM
+var RAM_2 = 0
+var RAM_4 = 0
+var RAM_8 = 0
+
+
+
+
+
+#Computador
 
 
 var Elevador = 1

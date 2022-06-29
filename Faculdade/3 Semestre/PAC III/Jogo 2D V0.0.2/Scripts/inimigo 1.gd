@@ -40,6 +40,8 @@ func _set_animation():
 		anim = "run"
 	if hitted == true:
 		anim = "hit"
+	if life < 1:
+		anim = "Derrotado"
 		
 	if $anim.assigned_animation != anim:
 		$anim.play(anim)
@@ -52,7 +54,9 @@ func _on_hitbox_body_entered(body):
 	hitted = false
 	if life < 1:
 		Global.HD += 1
-		
+		print("Recebeu um HD")
 		queue_free()
 		get_node("hitbox/Collision").set_deferred("disable", true)
 	
+
+				

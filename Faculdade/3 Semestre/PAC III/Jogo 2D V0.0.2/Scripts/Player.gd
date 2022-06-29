@@ -4,7 +4,8 @@ var hurted = false
 var knockback_dir = 1
 var knockback_int = 3700
 
-var posicao_camera = 0
+#Posição da camera padrão = 0
+var posicao_camera = 6
 
 var UP = Vector2.UP
 #Gravidade do player:
@@ -213,7 +214,6 @@ func _set_animation():
 func patch_cord():
 	if Global.Crimpador == 1 && Global.RJ45_Macho == 1 && Global.Cabo_de_Rede == 1:
 		Global.Patch_Cord = 1
-		Global.Crimpador -= 1
 		Global.RJ45_Macho -= 1
 		Global.Cabo_de_Rede -= 1
 		

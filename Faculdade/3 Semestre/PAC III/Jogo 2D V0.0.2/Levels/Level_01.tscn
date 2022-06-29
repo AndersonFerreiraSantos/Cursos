@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=95 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/Mushroom/Idle (32x32).png" type="Texture" id=2]
@@ -45,6 +45,10 @@
 [ext_resource path="res://M1_ar_condicionado.tscn" type="PackedScene" id=43]
 [ext_resource path="res://Scenes/M1_Cabos_eletricos.tscn" type="PackedScene" id=44]
 [ext_resource path="res://Scripts/Porta_1.gd" type="Script" id=45]
+[ext_resource path="res://Scripts/porta_2.gd" type="Script" id=46]
+[ext_resource path="res://Enemies/Mushroom/Derrotado (32x32).png" type="Texture" id=47]
+[ext_resource path="res://Enemies/inimigo 2.gd" type="Script" id=48]
+[ext_resource path="res://Enemies/inimigo 1.gd" type="Script" id=49]
 
 [sub_resource type="RectangleShape2D" id=111]
 extents = Vector2( 53.5, 18.5 )
@@ -184,269 +188,6 @@ extents = Vector2( 5.25, 221 )
 
 [sub_resource type="RectangleShape2D" id=85]
 extents = Vector2( 45, 87.5 )
-
-[sub_resource type="GDScript" id=86]
-script/source = "extends KinematicBody2D
-
-export var speed = 64
-export var life = 6
-var velocity = Vector2.ZERO
-var move_direction = -1
-var gravity = 1200
-var hitted = false
-
-
-
-func _physics_process(delta: float) -> void:
-	velocity.x = speed * move_direction
-	velocity = move_and_slide(velocity)
-	velocity.y += gravity * delta
-	
-	if move_direction == 1:
-		$texture.flip_h = true
-	else:
-		$texture.flip_h = false
-	
-	velocity = move_and_slide(velocity)
-	_set_animation()
-
-
-func _on_anim_animation_finished(anim_name):
-	if  anim_name == \"idle\":
-		$texture.flip_h != $texture.flip_h
-		$ray_wall.scale.x *= -1
-		move_direction *= -1
-		$anim.play(\"run\")
-		
-
-func _set_animation():
-	var anim = \"run\"
-	
-	if $ray_wall.is_colliding():
-		anim = \"idle\"
-	elif velocity.x != 0:
-		anim = \"run\"
-	if hitted == true:
-		anim = \"hit\"
-		
-	if $anim.assigned_animation != anim:
-		$anim.play(anim)
-func _on_hitbox_body_entered(body):
-	print(\"colidiuuuuu\")
-	hitted = true
-	life -= 1
-	body.velocity.y -= 450
-	yield(get_tree().create_timer(0.4), \"timeout\")
-	hitted = false
-	if life < 1:
-		Global.HD += 1
-		print(\"Recebeu um HD\")
-		queue_free()
-		get_node(\"hitbox/Collision\").set_deferred(\"disable\", true)
-	
-"
-
-[sub_resource type="Animation" id=91]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("texture:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 1 ]
-}
-
-[sub_resource type="Animation" id=92]
-resource_name = "fall"
-
-[sub_resource type="Animation" id=93]
-resource_name = "hit"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("texture:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 33 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("texture:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 12 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("texture:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4 ]
-}
-
-[sub_resource type="Animation" id=94]
-resource_name = "idle"
-tracks/0/type = "value"
-tracks/0/path = NodePath("texture:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 2 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("texture:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 1 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("texture:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
-}
-
-[sub_resource type="Animation" id=95]
-resource_name = "item"
-
-[sub_resource type="Animation" id=96]
-resource_name = "run"
-length = 1.2
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("texture:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ ExtResource( 32 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("texture:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 12 ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("texture:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
-}
-
-[sub_resource type="GDScript" id=103]
-script/source = "extends KinematicBody2D
-
-export var speed = 64
-export var life = 6
-var velocity = Vector2.ZERO
-var move_direction = -1
-var gravity = 1200
-var hitted = false
-
-
-
-func _physics_process(delta: float) -> void:
-	velocity.x = speed * move_direction
-	velocity = move_and_slide(velocity)
-	velocity.y += gravity * delta
-	
-	if move_direction == 1:
-		$texture.flip_h = true
-	else:
-		$texture.flip_h = false
-	
-	velocity = move_and_slide(velocity)
-	_set_animation()
-
-
-func _on_anim_animation_finished(anim_name):
-	if  anim_name == \"idle\":
-		$texture.flip_h != $texture.flip_h
-		$ray_wall.scale.x *= -1
-		move_direction *= -1
-		$anim.play(\"run\")
-		
-
-func _set_animation():
-	var anim = \"run\"
-	
-	if $ray_wall.is_colliding():
-		anim = \"idle\"
-	elif velocity.x != 0:
-		anim = \"run\"
-	if hitted == true:
-		anim = \"hit\"
-		
-	if $anim.assigned_animation != anim:
-		$anim.play(anim)
-func _on_hitbox_body_entered(body):
-	print(\"colidiuuuuu\")
-	hitted = true
-	life -= 1
-	body.velocity.y -= 450
-	yield(get_tree().create_timer(0.4), \"timeout\")
-	hitted = false
-	if life < 1:
-		Global.HD += 1
-		print(\"Recebeu um HD\")
-		queue_free()
-		get_node(\"hitbox/Collision\").set_deferred(\"disable\", true)
-	
-"
 
 [sub_resource type="Animation" id=97]
 length = 0.001
@@ -589,19 +330,205 @@ tracks/2/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
 }
 
+[sub_resource type="Animation" id=114]
+resource_name = "Derrotado"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 47 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=115]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=116]
+resource_name = "fall"
+
+[sub_resource type="Animation" id=117]
+resource_name = "hit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 33 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 12 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+
+[sub_resource type="Animation" id=118]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+}
+
+[sub_resource type="Animation" id=119]
+resource_name = "item"
+
+[sub_resource type="Animation" id=120]
+resource_name = "run"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 32 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 12 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
+}
+
 [node name="Main" type="Node2D"]
 position = Vector2( 0, -3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 599, 403 )
+position = Vector2( 3905, 1376 )
 
 [node name="M1" type="Node2D" parent="."]
 script = ExtResource( 37 )
 
 [node name="Porta_1" parent="M1" instance=ExtResource( 21 )]
-position = Vector2( 1865, 216 )
+position = Vector2( 1866, 211 )
 z_index = 8
 script = ExtResource( 45 )
+
+[node name="Porta_2" parent="M1" instance=ExtResource( 21 )]
+position = Vector2( 3296, 217 )
+z_index = 8
+script = ExtResource( 46 )
 
 [node name="Mapa" type="Sprite" parent="M1"]
 position = Vector2( 4296, 3830 )
@@ -619,12 +546,15 @@ position = Vector2( 3278, 472 )
 z_index = 8
 
 [node name="Ilumicação_ativa" parent="M1/Noite" instance=ExtResource( 11 )]
+visible = false
+position = Vector2( 2000, 4002 )
+z_index = -1
 
 [node name="M1_caixa_materna" parent="M1/Noite" instance=ExtResource( 12 )]
 position = Vector2( 2942, 409 )
 
 [node name="Iluinação" parent="M1/Noite" instance=ExtResource( 20 )]
-position = Vector2( -1, 0 )
+position = Vector2( 0, 1 )
 z_index = 5
 
 [node name="M1Itens" type="Sprite" parent="M1/Noite"]
@@ -638,7 +568,6 @@ texture = ExtResource( 42 )
 
 [node name="ar condicionado" parent="M1/Noite" instance=ExtResource( 43 )]
 position = Vector2( 2619, 84 )
-z_index = 6
 
 [node name="Trigger" parent="M1" instance=ExtResource( 13 )]
 position = Vector2( 1619, -29 )
@@ -780,13 +709,14 @@ texture = ExtResource( 3 )
 [node name="Itens" type="Node2D" parent="M1"]
 
 [node name="RJ45" parent="M1/Itens" instance=ExtResource( 18 )]
-position = Vector2( 2946, 429 )
+position = Vector2( 2603, 494 )
 
 [node name="crimpador" parent="M1/Itens" instance=ExtResource( 17 )]
-position = Vector2( 2947, 161 )
+position = Vector2( 2702, 89 )
+z_index = 1
 
 [node name="cabo_de_rede" parent="M1/Itens" instance=ExtResource( 16 )]
-position = Vector2( 2379, 436 )
+position = Vector2( 1106, 395 )
 
 [node name="Cafe" type="Node2D" parent="M1/Itens"]
 
@@ -1008,38 +938,33 @@ shape = SubResource( 85 )
 [node name="Inimigos" type="Node2D" parent="M2"]
 
 [node name="inimigo 1" parent="M2/Inimigos" instance=ExtResource( 27 )]
-position = Vector2( 5181, 1385 )
-z_index = 1
-collision_mask = 137
-script = SubResource( 86 )
-
-[node name="inimigo 2" parent="M2/Inimigos" instance=ExtResource( 27 )]
-position = Vector2( 4861, 1389 )
-z_index = 1
-collision_mask = 137
-script = SubResource( 86 )
-
-[node name="anim" parent="M2/Inimigos/inimigo 2" index="1"]
-anims/RESET = SubResource( 91 )
-anims/fall = SubResource( 92 )
-anims/hit = SubResource( 93 )
-anims/idle = SubResource( 94 )
-anims/item = SubResource( 95 )
-anims/run = SubResource( 96 )
-
-[node name="inimigo 3" parent="M2/Inimigos" instance=ExtResource( 27 )]
-position = Vector2( 6652, 3116 )
+position = Vector2( 4152, 1350 )
 collision_layer = 8
 collision_mask = 137
-script = SubResource( 103 )
+script = ExtResource( 49 )
 
-[node name="anim" parent="M2/Inimigos/inimigo 3" index="1"]
+[node name="anim" parent="M2/Inimigos/inimigo 1" index="1"]
 anims/RESET = SubResource( 97 )
 anims/fall = SubResource( 98 )
 anims/hit = SubResource( 99 )
 anims/idle = SubResource( 100 )
 anims/item = SubResource( 101 )
 anims/run = SubResource( 102 )
+
+[node name="inimigo 2" parent="M2/Inimigos" instance=ExtResource( 27 )]
+position = Vector2( 5495, 1354 )
+collision_layer = 8
+collision_mask = 137
+script = ExtResource( 48 )
+
+[node name="anim" parent="M2/Inimigos/inimigo 2" index="1"]
+anims/Derrotado = SubResource( 114 )
+anims/RESET = SubResource( 115 )
+anims/fall = SubResource( 116 )
+anims/hit = SubResource( 117 )
+anims/idle = SubResource( 118 )
+anims/item = SubResource( 119 )
+anims/run = SubResource( 120 )
 
 [node name="skin" type="Node2D" parent="M2"]
 
@@ -1135,7 +1060,7 @@ position = Vector2( 6730, 1581 )
 collision_layer = 1024
 
 [node name="Cabos_eletricos" parent="M2/Foço" instance=ExtResource( 44 )]
-position = Vector2( 5789, 1448 )
+position = Vector2( 5859, 1449 )
 collision_mask = 0
 
 [node name="Portas M2" type="Node2D" parent="M2"]
@@ -1161,5 +1086,4 @@ position = Vector2( 5796, 1381 )
 
 [editable path="M2/Inimigos/inimigo 1"]
 [editable path="M2/Inimigos/inimigo 2"]
-[editable path="M2/Inimigos/inimigo 3"]
 [editable path="Geral/HUD"]
