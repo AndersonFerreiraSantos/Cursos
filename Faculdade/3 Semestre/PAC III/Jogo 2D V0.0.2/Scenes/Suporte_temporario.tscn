@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/background/Suporte/Suporte abrindo.png" type="Texture" id=2]
 
@@ -6,30 +6,73 @@
 script/source = "extends KinematicBody2D
 
 onready var timer := $Timer as Timer
-var tempo = 0
+var tempo = 3
 
+var timer_one = true
+func _ready():
+	pass
 func _physics_process(delta: float) -> void:
+	
+	if Global.bloco_ativo_1 == true and timer_one == true :
+		timer.start()
+		timer_one = false
+		tempo = 1
+		$Collision.disabled = false
 	_set_animation()
+		
 	
 func _on_Timer_timeout():
-	if tempo == 1:
+	print(\"executou timer\")
+	if tempo == 0:
 		$Collision.disabled = false
-		tempo = 0
+		tempo = 1
 	else:
 		$Collision.disabled = true
-		tempo = 1
+		tempo = 0
 	print(tempo)
 	
 func _set_animation():
-	var anim = \"abrindo\"
-	if tempo == 0:
+	var anim = \"Idle\"
+	if tempo == 1:
 		anim = \"abrindo\"
 	
-	if tempo == 1:
+	if tempo == 0:
 		anim = \"Fechando\"
 		
 	if $anim.assigned_animation != anim:
 		$anim.play(anim)
+
+#extends KinematicBody2D
+#
+#onready var timer := $Timer as Timer
+#var tempo = 0
+#
+#func _physics_process(delta: float) -> void:
+#	_set_animation()
+#
+#func _ready():
+#	if Global.bloco_ativo_1 == true:
+#		timer.start()
+#func _on_Timer_timeout():
+#	if tempo == 1:
+#		$Collision.disabled = false
+#		tempo = 0
+#	else:
+#		$Collision.disabled = true
+#		tempo = 1
+#	print(tempo)
+#
+#func _set_animation():
+#	pass
+#	var anim = \"Fechando\"
+#	if tempo == 0:
+#		anim = \"abrindo\"
+#
+#	if tempo == 1:
+#		anim = \"Fechando\"
+#
+#	if $anim.assigned_animation != anim:
+#		$anim.play(anim)
 "
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -73,6 +116,46 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -139,6 +222,7 @@ script = SubResource( 5 )
 position = Vector2( 0, 17 )
 z_index = 1
 shape = SubResource( 1 )
+disabled = true
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
@@ -146,8 +230,9 @@ hframes = 3
 frame = 1
 
 [node name="anim" type="AnimationPlayer" parent="."]
-autoplay = "Fechando"
+autoplay = "Idle"
 anims/Fechando = SubResource( 2 )
+anims/Idle = SubResource( 6 )
 anims/RESET = SubResource( 3 )
 anims/abrindo = SubResource( 4 )
 

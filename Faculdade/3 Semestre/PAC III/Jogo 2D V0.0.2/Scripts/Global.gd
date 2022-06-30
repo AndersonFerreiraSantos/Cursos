@@ -43,9 +43,8 @@ var no_elevador = 5
 #Armadilhas____________________
 var no_cabo_eletrico = false
 func _process(delta: float) -> void:
+	pass
 	#____________M1____________
 
 	
 	#____________M2____________
-	print(bloco_ativo_1)
-	

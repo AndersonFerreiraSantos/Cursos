@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/background/M2/Plataforma.png" type="Texture" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 220.5, 10 )
+
+[node name="Plataforma" type="KinematicBody2D"]
+collision_layer = 8
+collision_mask = 10
+
+[node name="Collsion" type="CollisionShape2D" parent="."]
+position = Vector2( 0.5, -17 )
+z_index = 1
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
