@@ -319,3 +319,13 @@ func _on_Cabos_eletricos_body_entered(body):
 		
 func _on_Cabos_eletricos_body_exited(body):
 	em_choque = false
+
+
+func _on_Agua_eletrificada_body_entered(body):
+		em_choque = true
+		life -= 1
+		morte()
+
+
+func _on_Agua_eletrificada_body_exited(body):
+	em_choque = false

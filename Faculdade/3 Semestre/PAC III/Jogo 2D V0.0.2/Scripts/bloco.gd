@@ -12,6 +12,9 @@ func _physics_process(delta: float) -> void:
 	
 	if $Terreno1.is_colliding() or $Terreno1.is_colliding():
 		velocity.x = 0
+		print('no chao')
+	if !$Terreno1.is_colliding() or !$Terreno1.is_colliding():
+		print('voando')
 		
 		#move_speed = 0
 	velocity = move_and_slide(velocity)
@@ -23,12 +26,12 @@ func _physics_process(delta: float) -> void:
 		move_speed = 1600
 		print('jogou')#--------------------------------------------------------------------------Print
 		velocity.y = jump_force
-		velocity.y = -move_speed/3
+		velocity.y = -move_speed/4
 		if Input.is_action_pressed("move_left"):
-			velocity.x = -move_speed/5
+			velocity.x = -move_speed/6
 		if Input.is_action_pressed("move_right"):
-			velocity.x = move_speed/5
-				
+			velocity.x = move_speed/6
+	
 	
 
 func _on_jump_body_entered(body):
