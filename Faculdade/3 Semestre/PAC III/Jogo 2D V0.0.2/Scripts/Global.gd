@@ -50,9 +50,6 @@ var missao_1 = 0
 var no_cabo_eletrico = false
 func _process(delta: float) -> void:
 	pass
-	yield(get_tree().create_timer(2), "timeout")
-	bloco_ativo_1 = true
-	print(missao_1,": mensagem")
 
 	#____________M1____________
 

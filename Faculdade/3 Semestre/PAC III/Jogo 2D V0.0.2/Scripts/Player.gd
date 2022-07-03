@@ -5,7 +5,7 @@ var knockback_dir = 1
 var knockback_int = 3700
 
 #Posição da camera padrão = 0
-var posicao_camera = 0
+var posicao_camera = 9
 
 var UP = Vector2.UP
 #Gravidade do player:
