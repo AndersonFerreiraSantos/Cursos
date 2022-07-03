@@ -5,7 +5,7 @@ var knockback_dir = 1
 var knockback_int = 3700
 
 #Posição da camera padrão = 0
-var posicao_camera = 6
+var posicao_camera = 0
 
 var UP = Vector2.UP
 #Gravidade do player:
@@ -39,9 +39,6 @@ func _ready() -> void:
 	connect("mudar_life", get_parent().get_node("HUD/HBoxContainer/Holder2"), "on_change_life")
 	emit_signal("change_life", max_life)
 
-
-
-
 #itens:
 var bancada = "false"
 var cabo_de_rede = 0
@@ -62,6 +59,8 @@ onready var raycasts = $raycasts
 #		gravity = 1200
 #função para movimentação do player
 func _physics_process(delta: float) -> void:
+	if Input.is_action_pressed("msg"):
+		Global.mensagem = 0
 
 	#Danos_______________
 	#Player_________________
@@ -99,7 +98,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _get_input(delta: float) -> void:
-	if Global.no_elevador == 4:
+	
+	if Global.no_elevador == 4 or Global.em_missao == true:
 			var speed = -40000
 			var move_direction_baixo = 1
 			velocity.y = 0 * delta
@@ -145,9 +145,16 @@ func _get_input(delta: float) -> void:
 		velocity.y = 0 * delta
 		velocity.y = speed 
 		velocity.y = -speed * delta
-
-	if Global.no_elevador == 0:
+		
+		
+	
+	if Global.no_elevador == 0 or Global.em_missao:
 		velocity.x = 0
+		var teste = false
+		
+		
+
+
 		#Movimentação do personagem OBS: "move_right" e "move_left" configurei no painel de conf (configuração Projeto: pesquisar por mapa de entrada)
 #		var move_direction = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 #		velocity.x = lerp(velocity.x, move_speed * move_direction, 0.2)
@@ -212,9 +219,9 @@ func _set_animation():
 #func _on_Trigger_PlayerEntered() -> void:
 #	$Camera.current = false
 func patch_cord():
-	if Global.Crimpador == 1 && Global.RJ45_Macho == 1 && Global.Cabo_de_Rede == 1:
+	if Global.Crimpador == 1 && Global.RJ45_Macho == 2 && Global.Cabo_de_Rede == 1:
 		Global.Patch_Cord = 1
-		Global.RJ45_Macho -= 1
+		Global.RJ45_Macho -= 2
 		Global.Cabo_de_Rede -= 1
 		
 		print("Parabéns, você fez um patch cord. +", Global.Patch_Cord," patch cord")
@@ -226,7 +233,7 @@ func _porta_1():
 		Global.porta_1 = "aberta"
 		
 func _porta_2():
-	if Global.Patch_Cord == 1:
+	if Global.missao_1 == 1:
 		Global.porta_2 = "aberta"		
 
 func _on_cabo_de_rede_PlayerEntered():
@@ -268,7 +275,7 @@ func _on_Area2D_body_entered(body):
 
 func _on_Area2D_body_exited(body):
 	Global.Elevador = 1
-	print("saiu")
+	#print("saiu")
 	pass # Replace with function body.
 
 func knockback():
@@ -292,7 +299,7 @@ func _on_hurtbox_body_entered(body):
 
 func _on_Alavanca_body_entered(body):
 	Global.Elevador_1 = 1
-	print("Entrou no elevador 01")
+	#print("Entrou no elevador 01")
 	
 func posicao_camera():
 	if posicao_camera == 0:
@@ -329,3 +336,5 @@ func _on_Agua_eletrificada_body_entered(body):
 
 func _on_Agua_eletrificada_body_exited(body):
 	em_choque = false
+
+

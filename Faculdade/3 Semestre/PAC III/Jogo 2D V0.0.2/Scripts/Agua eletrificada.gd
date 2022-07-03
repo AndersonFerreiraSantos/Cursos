@@ -10,23 +10,25 @@ func _physics_process(delta):
 		timer_one = false
 		tempo = 1
 		print(tempo,"tempo")
+	if Global.bloco_ativo_1 == false and timer_one == false:
+		timer.stop()
+		timer_one = true
+		tempo = 3
+		$Collision.disabled = true
 
-	print($Collision.disabled,":  Colision ")
-	print(tempo, ":tempo")
 	_set_animation()
 
 var tempo = 3
 
 func _on_Timer_timeout():
-	print('Entrouuu')
 	if tempo == 1:
 		$Collision.disabled = false
 		tempo = 0
-		print('Ativo')#--------------------------------------------------------------
+
 	else:
 		$Collision.disabled = true
 		tempo = 1
-		print('Ativo')#--------------------------------------------------------------
+
 	#print(tempo)
 
 func _set_animation():

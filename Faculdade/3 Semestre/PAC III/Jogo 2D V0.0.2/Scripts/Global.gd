@@ -27,7 +27,7 @@ var bloco_ativo_1 = false
 
 
 var Elevador = 1
-var Elevador_1 = 1
+var Elevador_2 = 1
 
 var life_player = 5
 
@@ -39,11 +39,21 @@ var Luzes_M1 = false
 
 var no_elevador = 5
 
+var mensagem = 0
+
+#Missão
+var em_missao = false
+#RJ45
+var missao_1 = 0
 
 #Armadilhas____________________
 var no_cabo_eletrico = false
 func _process(delta: float) -> void:
 	pass
+	yield(get_tree().create_timer(2), "timeout")
+	bloco_ativo_1 = true
+	print(missao_1,": mensagem")
+
 	#____________M1____________
 
 	

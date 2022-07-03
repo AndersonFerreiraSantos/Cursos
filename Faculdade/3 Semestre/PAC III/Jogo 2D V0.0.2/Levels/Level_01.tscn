@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=2]
+[gd_scene load_steps=133 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/Mushroom/Idle (32x32).png" type="Texture" id=2]
@@ -27,10 +27,10 @@
 [ext_resource path="res://Assets/background/M2/M2_V1.png" type="Texture" id=25]
 [ext_resource path="res://Assets/Menu/HUD.tscn" type="PackedScene" id=26]
 [ext_resource path="res://Enemies/inimigo 1.tscn" type="PackedScene" id=27]
-[ext_resource path="res://Scripts/Elevador_1.tscn" type="PackedScene" id=28]
+[ext_resource path="res://Assets/background/M2/Elevador_1_M2_Baixo.png" type="Texture" id=28]
 [ext_resource path="res://Assets/background/M2/Grade_Elevador_01_M2.png" type="Texture" id=29]
 [ext_resource path="res://Scenes/Blocos.tscn" type="PackedScene" id=30]
-[ext_resource path="res://Scenes/Trampolim.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Scenes/Trapolim.tscn" type="PackedScene" id=31]
 [ext_resource path="res://Enemies/Mushroom/Run (32x32).png" type="Texture" id=32]
 [ext_resource path="res://Enemies/Mushroom/Hit.png" type="Texture" id=33]
 [ext_resource path="res://Scripts/Blocos/Bloco - Energia - Cabo.tscn" type="PackedScene" id=34]
@@ -57,15 +57,231 @@
 [ext_resource path="res://Assets/background/M2/Skins/Plantas - Massiva.png" type="Texture" id=55]
 [ext_resource path="res://Assets/background/M2/Skins/Cabos eletricos.png" type="Texture" id=56]
 [ext_resource path="res://Scenes/Agua eletrificada.tscn" type="PackedScene" id=57]
+[ext_resource path="res://Enemies/Elevador_2.gd" type="Script" id=58]
+[ext_resource path="res://Assets/background/M1/Elevador - P - Cima.png" type="Texture" id=59]
+[ext_resource path="res://Assets/background/M2/Elevador_1_M2_Cima.png" type="Texture" id=60]
+[ext_resource path="res://Assets/background/M2/Skins/Arvores.png" type="Texture" id=61]
+[ext_resource path="res://Assets/background/Suporte/Suporte abrindo.png" type="Texture" id=62]
+[ext_resource path="res://Scenes/Suporte_eterno.tscn" type="PackedScene" id=63]
+[ext_resource path="res://Scenes/msgs.tscn" type="PackedScene" id=64]
+[ext_resource path="res://Levels/msg_4.gd" type="Script" id=65]
+[ext_resource path="res://Levels/msg_3.gd" type="Script" id=66]
+[ext_resource path="res://Levels/msg_1.gd" type="Script" id=67]
+[ext_resource path="res://Assets/background/M2/Grade_elevador_M1.png" type="Texture" id=68]
+
+[sub_resource type="RectangleShape2D" id=130]
+extents = Vector2( 35.5, 206.531 )
+
+[sub_resource type="GDScript" id=132]
+script/source = "extends Area2D
+
+
+func _on_msg_2_body_entered(body):
+	Global.mensagem = 2
+	queue_free()
+"
+
+[sub_resource type="RectangleShape2D" id=131]
+extents = Vector2( 32, 31 )
+
+[sub_resource type="RectangleShape2D" id=133]
+extents = Vector2( 48.25, 41.125 )
+
+[sub_resource type="RectangleShape2D" id=134]
+extents = Vector2( 23.625, 105.75 )
 
 [sub_resource type="RectangleShape2D" id=111]
-extents = Vector2( 53.5, 18.5 )
+extents = Vector2( 141.75, 58.75 )
 
 [sub_resource type="RectangleShape2D" id=112]
 extents = Vector2( 63.5, 31 )
 
 [sub_resource type="RectangleShape2D" id=109]
-extents = Vector2( 31.5, 11 )
+extents = Vector2( 23.5, 11 )
+
+[sub_resource type="GDScript" id=126]
+script/source = "extends KinematicBody2D
+#Unicoooo
+
+export var speed = 500
+var velocity = Vector2.ZERO
+var move_direction_cima = 1
+var move_direction_baixo = -1
+
+func _physics_process(delta: float) -> void:
+
+	_anim()
+	if Global.Elevador_2 == 0:
+		velocity.y = speed * move_direction_cima
+		velocity = move_and_slide(velocity)
+		
+		
+	elif Global.Elevador_2 == 1:
+#		Global.gravidade_player = 0
+		velocity.y = speed * move_direction_baixo
+		velocity = move_and_slide(velocity)
+		
+
+
+func _on_Alavanca_body_exited(body):
+	print('Saiu')
+	Global.Elevador_2 = 0
+	
+	
+func _anim():
+	var anim = \"Cima\"
+	if Global.Elevador_2 == 1:
+		anim = \"Cima\"
+	if Global.Elevador_2 == 0:
+		anim = \"Baixo\"
+	if $anim.assigned_animation != anim:
+		$anim.play(anim)
+
+#onready var Elevador = $Elevador
+#onready var Tween = $Tween
+#var teste = Global.Elevador
+#export var speed = 1.0
+#export var horizontal = false
+#export var distance = 400
+#var follow = Vector2.ZERO
+#const WAIT_DURATION = 0
+#
+#func _ready():
+#	_start_tween(teste)
+#
+#func _start_tween(teste):
+#	if (Global.Elevador == 1):
+#
+#		var move_direction = Vector2.DOWN * distance
+#		var duration = move_direction.length() / float(speed * 10)
+##		Tween.interpolate_property(
+##			self, \"follow\", move_direction, duration, 
+##			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, WAIT_DURATION
+##			)
+#		Tween.interpolate_property(
+#			self, \"follow\", move_direction, Vector2.DOWN * distance, duration, 
+#			Tween.TRANS_LINEAR
+#			)
+#		Tween.start()
+#func _physics_process(delta: float) -> void:
+#	Elevador.position = Elevador.position.linear_interpolate(follow, 0.05)
+
+
+func _on_Colisor_de_Cima_body_entered(body):
+	Global.no_elevador = 4
+	yield(get_tree().create_timer(0.3), \"timeout\")
+	Global.no_elevador = 3
+
+	
+
+func _on_Colisor_de_Baixo_body_entered(body):
+	Global.no_elevador = 3
+
+	
+
+
+
+func _on_Ambiente_som_stop():
+	$Ambiente/elevador.stop()
+"
+
+[sub_resource type="RectangleShape2D" id=127]
+extents = Vector2( 117.5, 17.75 )
+
+[sub_resource type="Animation" id=123]
+resource_name = "Baixo"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 28 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=124]
+resource_name = "Cima"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 60 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=125]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 59 ) ]
+}
 
 [sub_resource type="Shader" id=53]
 code = "shader_type canvas_item;
@@ -165,7 +381,10 @@ extents = Vector2( 139, 10 )
 extents = Vector2( 26, 284.5 )
 
 [sub_resource type="RectangleShape2D" id=110]
-extents = Vector2( 19.75, 54 )
+extents = Vector2( 17.3125, 54 )
+
+[sub_resource type="RectangleShape2D" id=135]
+extents = Vector2( 706.875, 30.6875 )
 
 [sub_resource type="RectangleShape2D" id=76]
 extents = Vector2( 47.5, 24.625 )
@@ -177,7 +396,7 @@ extents = Vector2( 694, 3.5 )
 extents = Vector2( 1275.94, 3.5 )
 
 [sub_resource type="RectangleShape2D" id=80]
-extents = Vector2( 273.5, 4.25 )
+extents = Vector2( 273.75, 4.25 )
 
 [sub_resource type="RectangleShape2D" id=81]
 extents = Vector2( 273.5, 4.25 )
@@ -193,9 +412,6 @@ extents = Vector2( 4, 105.75 )
 
 [sub_resource type="RectangleShape2D" id=84]
 extents = Vector2( 5.25, 221 )
-
-[sub_resource type="RectangleShape2D" id=85]
-extents = Vector2( 45, 87.5 )
 
 [sub_resource type="Animation" id=97]
 length = 0.001
@@ -637,12 +853,263 @@ func Detectar_Cabo_Energizado():
 
 "
 
+[sub_resource type="GDScript" id=128]
+script/source = "extends KinematicBody2D
+
+onready var timer := $Timer as Timer
+
+var tempo = 3
+
+var timer_one = true
+func _ready():
+	pass
+func _physics_process(delta: float) -> void:
+	
+	if Global.bloco_ativo_1 == true and timer_one == true :
+		timer.start()
+		timer_one = false
+		tempo = 1
+		$Collision.disabled = false
+	_set_animation()
+	if Global.bloco_ativo_1 == false and timer_one == false:
+		timer.stop()
+		timer_one = true
+		tempo = 3
+		$Collision.disabled = true
+		
+	
+func _on_Timer_timeout():
+	print(\"executou timer\")
+	if tempo == 0:
+		$Collision.disabled = false
+		tempo = 1
+	else:
+		$Collision.disabled = true
+		tempo = 0
+	print(tempo)
+	
+func _set_animation():
+	var anim = \"Idle\"
+	if tempo == 1:
+		anim = \"abrindo\"
+	
+	if tempo == 0:
+		anim = \"Fechando\"
+		
+	if $anim.assigned_animation != anim:
+		$anim.play(anim)
+
+#extends KinematicBody2D
+#
+#onready var timer := $Timer as Timer
+#var tempo = 0
+#
+#func _physics_process(delta: float) -> void:
+#	_set_animation()
+#
+#func _ready():
+#	if Global.bloco_ativo_1 == true:
+#		timer.start()
+#func _on_Timer_timeout():
+#	if tempo == 1:
+#		$Collision.disabled = false
+#		tempo = 0
+#	else:
+#		$Collision.disabled = true
+#		tempo = 1
+#	print(tempo)
+#
+#func _set_animation():
+#	pass
+#	var anim = \"Fechando\"
+#	if tempo == 0:
+#		anim = \"abrindo\"
+#
+#	if tempo == 1:
+#		anim = \"Fechando\"
+#
+#	if $anim.assigned_animation != anim:
+#		$anim.play(anim)
+"
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 74, 17 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Fechando"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 62 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 62 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "abrindo"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 62 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 1, 0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=129]
+extents = Vector2( 611.375, 13.8125 )
+
 [node name="Main" type="Node2D"]
 position = Vector2( 0, -3 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 8437, 3110 )
+position = Vector2( 253, 324 )
 collision_mask = 8782
+
+[node name="Mensagens" type="Node2D" parent="."]
+
+[node name="msg_1" type="Area2D" parent="Mensagens"]
+collision_layer = 0
+script = ExtResource( 67 )
+
+[node name="Collision" type="CollisionShape2D" parent="Mensagens/msg_1"]
+position = Vector2( 369, 366 )
+shape = SubResource( 130 )
+
+[node name="msg_2" type="Area2D" parent="Mensagens"]
+script = SubResource( 132 )
+
+[node name="Collision" type="CollisionShape2D" parent="Mensagens/msg_2"]
+position = Vector2( 953, 399 )
+shape = SubResource( 131 )
+
+[node name="msg_3" type="Area2D" parent="Mensagens"]
+script = ExtResource( 66 )
+
+[node name="Collision" type="CollisionShape2D" parent="Mensagens/msg_3"]
+position = Vector2( 1300, 532 )
+shape = SubResource( 133 )
+
+[node name="msg_4" type="Area2D" parent="Mensagens"]
+script = ExtResource( 65 )
+
+[node name="Collision" type="CollisionShape2D" parent="Mensagens/msg_4"]
+position = Vector2( 2732, 422 )
+shape = SubResource( 134 )
 
 [node name="M1" type="Node2D" parent="."]
 script = ExtResource( 37 )
@@ -658,7 +1125,7 @@ z_index = 8
 script = ExtResource( 46 )
 
 [node name="Mapa" type="Sprite" parent="M1"]
-position = Vector2( 4296, 3830 )
+position = Vector2( 4296, 3828 )
 z_index = -11
 texture = ExtResource( 36 )
 
@@ -696,42 +1163,105 @@ texture = ExtResource( 42 )
 [node name="ar condicionado" parent="M1/Noite" instance=ExtResource( 43 )]
 position = Vector2( 2619, 84 )
 
+[node name="Sprite" type="Sprite" parent="M1/Noite"]
+position = Vector2( 3528, 773 )
+z_index = 10
+texture = ExtResource( 68 )
+
 [node name="Trigger" parent="M1" instance=ExtResource( 13 )]
 position = Vector2( 1619, -29 )
 
-[node name="Elevador" type="Node2D" parent="M1"]
+[node name="Elevador_1" type="Node2D" parent="M1"]
 
-[node name="Colisor de Cima" type="Area2D" parent="M1/Elevador"]
+[node name="Colisor de Cima" type="Area2D" parent="M1/Elevador_1"]
 position = Vector2( 3531, 328 )
 collision_layer = 0
 collision_mask = 8
 
-[node name="Cima" type="CollisionShape2D" parent="M1/Elevador/Colisor de Cima"]
+[node name="Cima" type="CollisionShape2D" parent="M1/Elevador_1/Colisor de Cima"]
 position = Vector2( 5, -34 )
 shape = SubResource( 111 )
 
-[node name="Colisor de Baixo" type="Area2D" parent="M1/Elevador"]
-position = Vector2( 3531, 327 )
+[node name="Colisor de Baixo" type="Area2D" parent="M1/Elevador_1"]
+position = Vector2( 3528, 347 )
 collision_layer = 0
 collision_mask = 8
 
-[node name="Baixo" type="CollisionShape2D" parent="M1/Elevador/Colisor de Baixo"]
-position = Vector2( -13, 1218 )
+[node name="Baixo" type="CollisionShape2D" parent="M1/Elevador_1/Colisor de Baixo"]
+position = Vector2( 4, 1208 )
 shape = SubResource( 112 )
 
-[node name="Elevador" parent="M1/Elevador" instance=ExtResource( 24 )]
-position = Vector2( 3532, 334 )
+[node name="Elevador" parent="M1/Elevador_1" instance=ExtResource( 24 )]
+position = Vector2( 3531, 337 )
 z_index = 8
 collision_layer = 8
 collision_mask = 8
 collision/safe_margin = 0.001
 
-[node name="Ambiente" type="Area2D" parent="M1/Elevador/Elevador"]
+[node name="Ambiente" type="Area2D" parent="M1/Elevador_1/Elevador"]
+position = Vector2( 2, 0 )
 collision_layer = 0
 script = ExtResource( 39 )
 
-[node name="Collision" type="CollisionShape2D" parent="M1/Elevador/Elevador/Ambiente"]
+[node name="Collision" type="CollisionShape2D" parent="M1/Elevador_1/Elevador/Ambiente"]
 position = Vector2( 0, -121 )
+z_index = 10
+shape = SubResource( 109 )
+
+[node name="Elevador_2" type="Node2D" parent="M1"]
+position = Vector2( 4029, -553 )
+
+[node name="Colisor de Cima" type="Area2D" parent="M1/Elevador_2"]
+position = Vector2( 3531, 328 )
+collision_layer = 0
+collision_mask = 8
+
+[node name="Cima" type="CollisionShape2D" parent="M1/Elevador_2/Colisor de Cima"]
+position = Vector2( -100, 1402 )
+shape = SubResource( 111 )
+
+[node name="Colisor de Baixo" type="Area2D" parent="M1/Elevador_2"]
+position = Vector2( 3528, 347 )
+collision_layer = 0
+collision_mask = 8
+
+[node name="Baixo" type="CollisionShape2D" parent="M1/Elevador_2/Colisor de Baixo"]
+position = Vector2( -116, 3451 )
+shape = SubResource( 112 )
+
+[node name="Elevador" type="KinematicBody2D" parent="M1/Elevador_2"]
+position = Vector2( 3420, 1924 )
+z_index = 4
+collision_layer = 8
+collision_mask = 8
+collision/safe_margin = 0.001
+script = SubResource( 126 )
+
+[node name="Sprite" type="Sprite" parent="M1/Elevador_2/Elevador"]
+texture = ExtResource( 59 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="M1/Elevador_2/Elevador"]
+position = Vector2( -2, 118.25 )
+z_index = 1
+shape = SubResource( 127 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="M1/Elevador_2/Elevador"]
+position = Vector2( -2, -118 )
+z_index = 1
+shape = SubResource( 127 )
+
+[node name="anim" type="AnimationPlayer" parent="M1/Elevador_2/Elevador"]
+autoplay = "Baixo"
+anims/Baixo = SubResource( 123 )
+anims/Cima = SubResource( 124 )
+anims/RESET = SubResource( 125 )
+
+[node name="Ambiente" type="Area2D" parent="M1/Elevador_2/Elevador"]
+collision_layer = 0
+script = ExtResource( 58 )
+
+[node name="Collision" type="CollisionShape2D" parent="M1/Elevador_2/Elevador/Ambiente"]
+position = Vector2( -3, 9 )
 z_index = 10
 shape = SubResource( 109 )
 
@@ -843,7 +1373,7 @@ position = Vector2( 2702, 89 )
 z_index = 1
 
 [node name="cabo_de_rede" parent="M1/Itens" instance=ExtResource( 16 )]
-position = Vector2( 1106, 395 )
+position = Vector2( 954, 398 )
 
 [node name="Cafe" type="Node2D" parent="M1/Itens"]
 
@@ -883,12 +1413,17 @@ position = Vector2( 1023, 404 )
 [node name="Grama" type="Node2D" parent="M1"]
 
 [node name="Grama" type="Sprite" parent="M1/Grama"]
-position = Vector2( 401, 205 )
+position = Vector2( 401, 203 )
+z_index = 6
+texture = ExtResource( 10 )
+
+[node name="Grama3" type="Sprite" parent="M1/Grama"]
+position = Vector2( -601, 203 )
 z_index = 6
 texture = ExtResource( 10 )
 
 [node name="Grama2" type="Sprite" parent="M1/Grama"]
-position = Vector2( 1424, 205 )
+position = Vector2( 1424, 203 )
 z_index = 6
 texture = ExtResource( 10 )
 
@@ -950,7 +1485,22 @@ position = Vector2( 3768, 246 )
 z_index = 8
 shape = SubResource( 110 )
 
+[node name="CollisionShape2D14" type="CollisionShape2D" parent="M1/Collision"]
+position = Vector2( 7420, 704 )
+z_index = 8
+shape = SubResource( 110 )
+
+[node name="CollisionShape2D13" type="CollisionShape2D" parent="M1/Collision"]
+position = Vector2( 7443, 1174 )
+z_index = 8
+shape = SubResource( 110 )
+
+[node name="CollisionShape2D15" type="CollisionShape2D" parent="M1/Collision"]
+position = Vector2( 2594.13, 551.688 )
+shape = SubResource( 135 )
+
 [node name="HomeDoor" parent="M1" instance=ExtResource( 14 )]
+visible = false
 position = Vector2( 1388, 600 )
 z_index = -2
 collision_layer = 8
@@ -993,7 +1543,7 @@ position = Vector2( 736.938, -3883.5 )
 shape = SubResource( 79 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
-position = Vector2( 2757, -3884 )
+position = Vector2( 2757.25, -3884 )
 shape = SubResource( 80 )
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
@@ -1053,15 +1603,6 @@ shape = SubResource( 84 )
 position = Vector2( 1661, -4344 )
 shape = SubResource( 84 )
 
-[node name="Elevador_1" parent="M2" instance=ExtResource( 28 )]
-position = Vector2( 7447, 3081 )
-
-[node name="Alavanca" type="Area2D" parent="M2/Elevador_1"]
-
-[node name="Collision" type="CollisionShape2D" parent="M2/Elevador_1/Alavanca"]
-position = Vector2( -9, 12.5 )
-shape = SubResource( 85 )
-
 [node name="Inimigos" type="Node2D" parent="M2"]
 
 [node name="inimigo 1" parent="M2/Inimigos" instance=ExtResource( 27 )]
@@ -1078,6 +1619,9 @@ anims/idle = SubResource( 100 )
 anims/item = SubResource( 101 )
 anims/run = SubResource( 102 )
 
+[node name="texture" parent="M2/Inimigos/inimigo 1" index="2"]
+frame = 0
+
 [node name="inimigo 2" parent="M2/Inimigos" instance=ExtResource( 27 )]
 position = Vector2( 5495, 1354 )
 collision_layer = 8
@@ -1093,22 +1637,25 @@ anims/idle = SubResource( 118 )
 anims/item = SubResource( 119 )
 anims/run = SubResource( 120 )
 
+[node name="texture" parent="M2/Inimigos/inimigo 2" index="2"]
+frame = 0
+
 [node name="skin" type="Node2D" parent="M2"]
 
 [node name="Grade_Elevador_01_M2" type="Sprite" parent="M2/skin"]
-position = Vector2( 7444, 1986 )
+position = Vector2( 7442, 1959 )
 z_index = 4
 texture = ExtResource( 29 )
 
-[node name="Trampolim" parent="M2" instance=ExtResource( 31 )]
-position = Vector2( 6389, 2773 )
+[node name="Trapolim" parent="M2/skin" instance=ExtResource( 31 )]
+position = Vector2( 5887, 2705 )
 
 [node name="Blocos" type="Node2D" parent="M2"]
 
 [node name="Blocos energia" type="Node2D" parent="M2/Blocos"]
 
 [node name="Bloco - Energia - Cabo3" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 8518, 3146 )
+position = Vector2( 8590, 3152 )
 collision_mask = 1032
 
 [node name="Bloco - Energia - Cabo6" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
@@ -1116,15 +1663,15 @@ position = Vector2( 9151, 3172 )
 collision_mask = 1032
 
 [node name="Bloco - Energia - Cabo8" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 9048, 3171 )
+position = Vector2( 8944, 3171 )
 collision_mask = 1032
 
 [node name="Bloco - Energia - Cabo7" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 8945, 3169 )
+position = Vector2( 9047, 3171 )
 collision_mask = 1032
 
 [node name="Bloco - Energia - Cabo4" parent="M2/Blocos/Blocos energia" instance=ExtResource( 34 )]
-position = Vector2( 8841, 3164 )
+position = Vector2( 8839, 3169 )
 collision_mask = 1032
 
 [node name="Bloco - Energia - Massiva2" parent="M2/Blocos/Blocos energia" instance=ExtResource( 35 )]
@@ -1143,20 +1690,20 @@ script = SubResource( 122 )
 position = Vector2( -1, 0 )
 
 [node name="Bloco_1" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
-position = Vector2( 6466, 3051 )
+position = Vector2( 6276, 3154 )
 
 [node name="Bloco_7" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
 position = Vector2( 8288, 3172 )
 
 [node name="Bloco_5" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
-position = Vector2( 1222, 280 )
+position = Vector2( 1223, 386 )
 
 [node name="Bloco_6" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
-position = Vector2( 1407, 228 )
+position = Vector2( 1433, 385 )
 z_index = 1
 
-[node name="Bloco_10" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 30 )]
-position = Vector2( 311, 240 )
+[node name="Bloco - Imovel" parent="M2/Blocos/Blocos moveis" instance=ExtResource( 40 )]
+position = Vector2( 1301, 525 )
 
 [node name="Foço" type="Node2D" parent="M2"]
 
@@ -1177,15 +1724,12 @@ position = Vector2( 6634, 1865 )
 
 [node name="Bloco - Imovel5" parent="M2/Foço" instance=ExtResource( 40 )]
 position = Vector2( 6634, 1770 )
-collision_layer = 1024
 
 [node name="Bloco - Imovel7" parent="M2/Foço" instance=ExtResource( 40 )]
 position = Vector2( 6730, 1676 )
-collision_layer = 1024
 
 [node name="Bloco - Imovel8" parent="M2/Foço" instance=ExtResource( 40 )]
 position = Vector2( 6730, 1581 )
-collision_layer = 1024
 
 [node name="Cabos_eletricos" parent="M2/Foço" instance=ExtResource( 44 )]
 position = Vector2( 5859, 1449 )
@@ -1201,6 +1745,34 @@ position = Vector2( 7083, 3014 )
 [node name="Suporte2" parent="M2/Suportes" instance=ExtResource( 50 )]
 position = Vector2( 6680, 3016 )
 
+[node name="Suporte3 - Local" type="KinematicBody2D" parent="M2/Suportes"]
+position = Vector2( 6442, 2856 )
+collision_layer = 8
+collision_mask = 8
+script = SubResource( 128 )
+
+[node name="Collision" type="CollisionShape2D" parent="M2/Suportes/Suporte3 - Local"]
+position = Vector2( 47, 103 )
+z_index = 1
+shape = SubResource( 1 )
+disabled = true
+
+[node name="Sprite" type="Sprite" parent="M2/Suportes/Suporte3 - Local"]
+position = Vector2( 46, 85 )
+texture = ExtResource( 62 )
+hframes = 3
+frame = 1
+
+[node name="anim" type="AnimationPlayer" parent="M2/Suportes/Suporte3 - Local"]
+autoplay = "Idle"
+anims/Fechando = SubResource( 2 )
+anims/Idle = SubResource( 6 )
+anims/RESET = SubResource( 3 )
+anims/abrindo = SubResource( 4 )
+
+[node name="Timer" type="Timer" parent="M2/Suportes/Suporte3 - Local"]
+wait_time = 1.5
+
 [node name="Plataforma" parent="M2/Suportes" instance=ExtResource( 52 )]
 position = Vector2( 8045, 2958 )
 z_index = 8
@@ -1208,6 +1780,21 @@ z_index = 8
 [node name="Plataforma2" parent="M2/Suportes" instance=ExtResource( 52 )]
 position = Vector2( 8793, 2958 )
 z_index = 8
+
+[node name="Plataforma3" parent="M2/Suportes" instance=ExtResource( 52 )]
+position = Vector2( 5758, 2862 )
+z_index = 8
+
+[node name="Plataforma4" parent="M2/Suportes" instance=ExtResource( 52 )]
+position = Vector2( 6709, 2473 )
+z_index = 8
+
+[node name="Plataforma5" parent="M2/Suportes" instance=ExtResource( 52 )]
+position = Vector2( 7099, 2295 )
+z_index = 8
+
+[node name="RJ45" parent="M2/Suportes/Plataforma5" instance=ExtResource( 18 )]
+position = Vector2( 168, -73 )
 
 [node name="Agua eletrificada" parent="M2/Suportes" instance=ExtResource( 57 )]
 position = Vector2( 6737, 3200 )
@@ -1235,24 +1822,62 @@ position = Vector2( 7489, 3114 )
 z_index = -3
 texture = ExtResource( 56 )
 
+[node name="Arvores" type="Sprite" parent="M2/Suportes/Skins"]
+position = Vector2( 8646, 3609 )
+z_index = -11
+texture = ExtResource( 61 )
+
+[node name="Suporte_eterno" parent="M2/Suportes" instance=ExtResource( 63 )]
+position = Vector2( 6269, 2862 )
+
+[node name="Bloco - Imovel" parent="M2/Suportes" instance=ExtResource( 40 )]
+position = Vector2( 6712, 2399 )
+
 [node name="Geral" type="Node2D" parent="."]
 position = Vector2( 5796, 1381 )
 
 [node name="HUD" parent="Geral" instance=ExtResource( 26 )]
 
+[node name="Holder" parent="Geral/HUD" index="0"]
+margin_left = 1.0
+margin_right = 41.0
+
+[node name="msg" parent="Geral" instance=ExtResource( 64 )]
+
+[node name="TEstes" type="Node2D" parent="."]
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="TEstes"]
+position = Vector2( 5535, 2992 )
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TEstes/KinematicBody2D"]
+position = Vector2( 1175, 196.813 )
+shape = SubResource( 129 )
+
+[connection signal="body_entered" from="Mensagens/msg_1" to="Mensagens/msg_1" method="_on_msg_1_body_entered"]
+[connection signal="body_entered" from="Mensagens/msg_2" to="Mensagens/msg_2" method="_on_msg_2_body_entered"]
+[connection signal="body_entered" from="Mensagens/msg_3" to="Mensagens/msg_3" method="_on_msg_3_body_entered"]
+[connection signal="body_entered" from="Mensagens/msg_4" to="Mensagens/msg_4" method="_on_msg_4_body_entered"]
 [connection signal="PlayerEntered" from="M1/Trigger" to="Player" method="_on_Trigger_PlayerEntered"]
 [connection signal="PlayerEntered" from="M1/Trigger" to="M1/HomeDoor" method="_on_Trigger_PlayerEntered"]
-[connection signal="body_entered" from="M1/Elevador/Colisor de Cima" to="M1/Elevador/Elevador" method="_on_Colisor_de_Cima_body_entered"]
-[connection signal="body_entered" from="M1/Elevador/Colisor de Baixo" to="M1/Elevador/Elevador" method="_on_Colisor_de_Baixo_body_entered"]
-[connection signal="body_entered" from="M1/Elevador/Elevador/Ambiente" to="M1/Elevador/Elevador/Ambiente" method="_on_Ambiente_body_entered"]
-[connection signal="body_exited" from="M1/Elevador/Elevador/Ambiente" to="M1/Elevador/Elevador/Ambiente" method="_on_Ambiente_body_exited"]
+[connection signal="body_entered" from="M1/Elevador_1/Colisor de Cima" to="M1/Elevador_1/Elevador" method="_on_Colisor_de_Cima_body_entered"]
+[connection signal="body_entered" from="M1/Elevador_1/Colisor de Baixo" to="M1/Elevador_1/Elevador" method="_on_Colisor_de_Baixo_body_entered"]
+[connection signal="body_entered" from="M1/Elevador_1/Elevador/Ambiente" to="M1/Elevador_1/Elevador/Ambiente" method="_on_Ambiente_body_entered"]
+[connection signal="body_exited" from="M1/Elevador_1/Elevador/Ambiente" to="M1/Elevador_1/Elevador/Ambiente" method="_on_Ambiente_body_exited"]
+[connection signal="body_entered" from="M1/Elevador_2/Colisor de Cima" to="M1/Elevador_2/Elevador" method="_on_Colisor_de_Cima_body_entered"]
+[connection signal="body_entered" from="M1/Elevador_2/Colisor de Baixo" to="M1/Elevador_2/Elevador" method="_on_Colisor_de_Baixo_body_entered"]
+[connection signal="body_entered" from="M1/Elevador_2/Elevador/Ambiente" to="M1/Elevador_2/Elevador/Ambiente" method="_on_Ambiente_body_entered"]
+[connection signal="body_exited" from="M1/Elevador_2/Elevador/Ambiente" to="M1/Elevador_2/Elevador/Ambiente" method="_on_Ambiente_body_exited"]
+[connection signal="som_elevador" from="M1/Elevador_2/Elevador/Ambiente" to="M1/Elevador_2/Elevador/Ambiente" method="_on_Ambiente_som_elevador"]
+[connection signal="som_stop" from="M1/Elevador_2/Elevador/Ambiente" to="M1/Elevador_2/Elevador" method="_on_Ambiente_som_stop"]
+[connection signal="som_stop" from="M1/Elevador_2/Elevador/Ambiente" to="M1/Elevador_2/Elevador/Ambiente" method="_on_Ambiente_som_stop"]
 [connection signal="PlayerEntered" from="M1/Itens/RJ45" to="Player" method="_on_RJ45_PlayerEntered"]
 [connection signal="PlayerEntered" from="M1/Itens/crimpador" to="Player" method="_on_crimpador2_PlayerEntered"]
 [connection signal="PlayerEntered" from="M1/Itens/cabo_de_rede" to="Player" method="_on_cabo_de_rede_PlayerEntered"]
-[connection signal="body_entered" from="M2/Elevador_1/Alavanca" to="Player" method="_on_Alavanca_body_entered"]
-[connection signal="body_exited" from="M2/Elevador_1/Alavanca" to="M2/Elevador_1" method="_on_Alavanca_body_exited"]
 [connection signal="body_entered" from="M2/Foço/Cabos_eletricos" to="Player" method="_on_Cabos_eletricos_body_entered"]
 [connection signal="body_exited" from="M2/Foço/Cabos_eletricos" to="Player" method="_on_Cabos_eletricos_body_exited"]
+[connection signal="timeout" from="M2/Suportes/Suporte3 - Local/Timer" to="M2/Suportes/Suporte3 - Local" method="_on_Timer_timeout"]
 [connection signal="body_entered" from="M2/Suportes/Agua eletrificada" to="Player" method="_on_Agua_eletrificada_body_entered"]
 [connection signal="body_exited" from="M2/Suportes/Agua eletrificada" to="Player" method="_on_Agua_eletrificada_body_exited"]
 

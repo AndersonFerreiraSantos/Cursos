@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Alavanca.mp3-664af8fa4766d1d3cb1d6d4afae36b18.mp3str"
+
+[deps]
+
+source_file="res://Audio/Alavanca.mp3"
+dest_files=[ "res://.import/Alavanca.mp3-664af8fa4766d1d3cb1d6d4afae36b18.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

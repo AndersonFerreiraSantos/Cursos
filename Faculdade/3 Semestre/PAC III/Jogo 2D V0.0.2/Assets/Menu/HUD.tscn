@@ -49,3 +49,18 @@ margin_bottom = 34.0
 texture = ExtResource( 4 )
 expand = true
 stretch_mode = 2
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Controles" type="Label" parent="Control"]
+margin_left = 8.0
+margin_top = 623.0
+margin_right = 471.0
+margin_bottom = 705.0
+text = "Q = Empurrar/utilizar
+W = Jogar
+Espaço = Pular
+Setas = Andar
+"

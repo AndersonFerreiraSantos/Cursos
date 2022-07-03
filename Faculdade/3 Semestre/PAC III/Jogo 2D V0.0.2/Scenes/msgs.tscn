@@ -1,0 +1,421 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://Scripts/mensagens.gd" type="Script" id=1]
+[ext_resource path="res://Assets/background/M2/Skins/senhor.png" type="Texture" id=2]
+[ext_resource path="res://Anton-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Assets/background/M2/Perguntas/RJ45 - Certo.png" type="Texture" id=4]
+[ext_resource path="res://Assets/background/M2/Perguntas/RJ45 - errado - 1.png" type="Texture" id=5]
+[ext_resource path="res://Assets/background/M2/Perguntas/RJ45 - errado - 2.png" type="Texture" id=6]
+[ext_resource path="res://Assets/background/M2/Perguntas/Fundo.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Items/Rede/cabo_de_rede.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Items/Rede/RJ45 - Macho.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Items/Rede/crimpador.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Items/Rede/patch cord.png" type="Texture" id=11]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=9]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=8]
+font_data = ExtResource( 3 )
+
+[node name="msg" type="CanvasLayer"]
+
+[node name="Holder" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+
+[node name="personagem" type="TextureRect" parent="Holder"]
+visible = false
+margin_left = 156.0
+margin_top = -96.0
+margin_right = 720.0
+margin_bottom = 468.0
+texture = ExtResource( 2 )
+
+[node name="Nome" type="Label" parent="Holder/personagem"]
+visible = false
+margin_left = 190.0
+margin_top = 381.0
+margin_right = 301.0
+margin_bottom = 412.0
+text = "Sr. Puntar J. Luma
+Tec. Senior"
+align = 1
+
+[node name="msg_1" type="Label" parent="Holder"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 466.0
+margin_top = 158.0
+margin_right = 1020.0
+margin_bottom = 198.0
+custom_fonts/font = SubResource( 1 )
+text = "Finalmente chegamos onde a rebelião das maquitas se iniciou,
+precisamos chegar até o centro de comando e destruir essa instalação o quanto antes."
+align = 1
+
+[node name="msg_2" type="Label" parent="Holder"]
+visible = false
+margin_left = 466.0
+margin_top = 159.0
+margin_right = 1020.0
+margin_bottom = 240.0
+custom_fonts/font = SubResource( 2 )
+align = 1
+
+[node name="Label" type="Label" parent="Holder/msg_2"]
+modulate = Color( 1, 0, 0, 1 )
+margin_right = 554.0
+margin_bottom = 81.0
+custom_fonts/font = SubResource( 2 )
+text = "Você encontrou um CABO CAT6 que é um cabo padronizado para ETHERNET,
+ guarde-o, podemos utiliza-lo futuramente.
+"
+align = 1
+
+[node name="Sprite" type="Sprite" parent="Holder/msg_2"]
+position = Vector2( 287, 126 )
+scale = Vector2( 2.77041, 2.77041 )
+texture = ExtResource( 8 )
+
+[node name="msg_3" type="Label" parent="Holder"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 466.0
+margin_top = 159.0
+margin_right = 1020.0
+margin_bottom = 240.0
+custom_fonts/font = SubResource( 3 )
+text = "Algumas caixas parecem leves, pressione \"W\" para tentar joga-las e \"Q\" para arrasta-las,
+ acredio que existem diversos tipos de caixas, vamos tetar e ver o que cada uma delas faz."
+align = 1
+
+[node name="msg_4" type="Label" parent="Holder"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 469.0
+margin_top = 159.0
+margin_right = 1023.0
+margin_bottom = 240.0
+custom_fonts/font = SubResource( 4 )
+text = "Uma alavanca logo a frente, vamos utiiza-la e ver o que acontece."
+align = 1
+
+[node name="msg_5" type="Label" parent="Holder"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 469.0
+margin_top = 159.0
+margin_right = 1023.0
+margin_bottom = 240.0
+custom_fonts/font = SubResource( 5 )
+text = "Legal!! restabelecemos a energia, isso parece bom."
+align = 1
+
+[node name="msg_6" type="Label" parent="Holder"]
+visible = false
+margin_left = 469.0
+margin_top = 159.0
+margin_right = 1023.0
+margin_bottom = 240.0
+custom_fonts/font = SubResource( 6 )
+align = 1
+
+[node name="msg_11" type="Label" parent="Holder/msg_6"]
+modulate = Color( 1, 0, 0, 1 )
+margin_right = 691.0
+margin_bottom = 81.0
+custom_fonts/font = SubResource( 6 )
+text = "Você encontou um um RJ45 macho, uma peça utilizada para conectar o cabo de rede nos equipamentos, 
+com a ferramenta certa poderemos crimpa-lo a uma cabo de rede."
+align = 1
+
+[node name="Sprite" type="Sprite" parent="Holder/msg_6"]
+position = Vector2( 341, 132 )
+scale = Vector2( 3.05612, 3.05612 )
+texture = ExtResource( 9 )
+
+[node name="msg_7" type="Label" parent="Holder"]
+visible = false
+margin_left = 469.0
+margin_top = 159.0
+margin_right = 1023.0
+margin_bottom = 240.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 7 )
+text = "Essa porte está tracanda, acredito que com um PATCH CORD você conseguira abri-la.
+Precisamos de um alicate crimpador.
+"
+align = 1
+
+[node name="msg_8" type="Label" parent="Holder"]
+visible = false
+margin_left = 484.0
+margin_top = 49.0
+margin_right = 1207.0
+margin_bottom = 130.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 9 )
+
+[node name="Crimpador" type="Sprite" parent="Holder/msg_8"]
+position = Vector2( 488, 27 )
+scale = Vector2( 2.65517, 2.13265 )
+texture = ExtResource( 10 )
+
+[node name="Label" type="Label" parent="Holder/msg_8"]
+margin_left = -96.0
+margin_top = 2.0
+margin_right = 540.0
+margin_bottom = 191.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 7 )
+text = "Parabéns! Você achou um CRIMPADOR, 
+com esse alicate podemos fazer um PATCH CORD,
+ agora basta crimpa-lo da forma correta. "
+align = 1
+
+[node name="Sprite" type="Sprite" parent="Holder/msg_8"]
+position = Vector2( 391.5, 321.5 )
+scale = Vector2( 1.05638, 0.842199 )
+texture = ExtResource( 7 )
+
+[node name="explicação" type="Label" parent="Holder/msg_8"]
+margin_left = 4.0
+margin_top = 115.0
+margin_right = 581.0
+margin_bottom = 196.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+text = "A padronização da montagem dos cabos nasceu da necessidade de se evitar ruídos e perda de performance 
+nas transmissões de dados. Existem dois padrões mais utilizados: eles são conhecidos como EIA/TIA 568A(padrão A) 
+e EIA/TIA 568B(padrão B). Ambos funcionam perfeitamente.
+Faça o PATCH CORD com o padrão B :
+"
+align = 1
+
+[node name="A" type="Label" parent="Holder/msg_8"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -67.0
+margin_top = 226.0
+margin_right = 510.0
+margin_bottom = 307.0
+custom_fonts/font = SubResource( 8 )
+text = "A"
+align = 1
+
+[node name="B" type="Label" parent="Holder/msg_8"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 158.0
+margin_top = 227.0
+margin_right = 735.0
+margin_bottom = 308.0
+custom_fonts/font = SubResource( 8 )
+text = "B"
+align = 1
+
+[node name="C" type="Label" parent="Holder/msg_8"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 391.0
+margin_top = 227.0
+margin_right = 968.0
+margin_bottom = 308.0
+custom_fonts/font = SubResource( 8 )
+text = "C"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Holder/msg_8"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 249.0
+margin_right = 50.0
+margin_bottom = 409.0
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Holder/msg_8/HBoxContainer"]
+margin_left = 102.0
+margin_right = 329.0
+margin_bottom = 241.0
+custom_constants/margin_right = 100
+
+[node name="Correto" type="TextureButton" parent="Holder/msg_8/HBoxContainer/MarginContainer"]
+margin_right = 127.0
+margin_bottom = 241.0
+texture_normal = ExtResource( 4 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="Holder/msg_8/HBoxContainer"]
+margin_left = 333.0
+margin_right = 560.0
+margin_bottom = 241.0
+custom_constants/margin_right = 100
+
+[node name="Errado - 1" type="TextureButton" parent="Holder/msg_8/HBoxContainer/MarginContainer2"]
+margin_right = 127.0
+margin_bottom = 241.0
+texture_normal = ExtResource( 5 )
+
+[node name="MarginContainer3" type="MarginContainer" parent="Holder/msg_8/HBoxContainer"]
+margin_left = 564.0
+margin_right = 621.0
+margin_bottom = 241.0
+custom_constants/margin_right = -70
+
+[node name="Errado - 2" type="TextureButton" parent="Holder/msg_8/HBoxContainer/MarginContainer3"]
+margin_right = 127.0
+margin_bottom = 241.0
+texture_normal = ExtResource( 6 )
+
+[node name="msg_9" type="Label" parent="Holder"]
+visible = false
+margin_left = 484.0
+margin_top = 49.0
+margin_right = 1207.0
+margin_bottom = 130.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 9 )
+text = "Hummm parece que você está montando errado, tente novamente ."
+align = 1
+
+[node name="Sprite" type="Sprite" parent="Holder/msg_9"]
+position = Vector2( 391.5, 321.5 )
+scale = Vector2( 1.05638, 0.842199 )
+texture = ExtResource( 7 )
+
+[node name="explicação" type="Label" parent="Holder/msg_9"]
+margin_left = 4.0
+margin_top = 115.0
+margin_right = 581.0
+margin_bottom = 196.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+text = "A padronização da montagem dos cabos nasceu da necessidade de se evitar ruídos e perda de performance 
+nas transmissões de dados. Existem dois padrões mais utilizados: eles são conhecidos como EIA/TIA 568A(padrão A) 
+e EIA/TIA 568B(padrão B). Ambos funcionam perfeitamente.
+Faça o PATCH CORD com o padrão B :
+"
+align = 1
+
+[node name="A" type="Label" parent="Holder/msg_9"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -67.0
+margin_top = 226.0
+margin_right = 510.0
+margin_bottom = 307.0
+custom_fonts/font = SubResource( 8 )
+text = "A"
+align = 1
+
+[node name="B" type="Label" parent="Holder/msg_9"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 158.0
+margin_top = 227.0
+margin_right = 735.0
+margin_bottom = 308.0
+custom_fonts/font = SubResource( 8 )
+text = "B"
+align = 1
+
+[node name="C" type="Label" parent="Holder/msg_9"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 391.0
+margin_top = 227.0
+margin_right = 968.0
+margin_bottom = 308.0
+custom_fonts/font = SubResource( 8 )
+text = "C"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Holder/msg_9"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_top = 249.0
+margin_right = 50.0
+margin_bottom = 409.0
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Holder/msg_9/HBoxContainer"]
+margin_left = 102.0
+margin_right = 329.0
+margin_bottom = 241.0
+custom_constants/margin_right = 100
+
+[node name="Correto" type="TextureButton" parent="Holder/msg_9/HBoxContainer/MarginContainer"]
+margin_right = 127.0
+margin_bottom = 241.0
+texture_normal = ExtResource( 4 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="Holder/msg_9/HBoxContainer"]
+margin_left = 333.0
+margin_right = 560.0
+margin_bottom = 241.0
+custom_constants/margin_right = 100
+
+[node name="Errado - 1" type="TextureButton" parent="Holder/msg_9/HBoxContainer/MarginContainer2"]
+margin_right = 127.0
+margin_bottom = 241.0
+texture_normal = ExtResource( 5 )
+
+[node name="MarginContainer3" type="MarginContainer" parent="Holder/msg_9/HBoxContainer"]
+margin_left = 564.0
+margin_right = 621.0
+margin_bottom = 241.0
+custom_constants/margin_right = -70
+
+[node name="Errado - 2" type="TextureButton" parent="Holder/msg_9/HBoxContainer/MarginContainer3"]
+margin_right = 127.0
+margin_bottom = 241.0
+texture_normal = ExtResource( 6 )
+
+[node name="msg_10" type="Label" parent="Holder"]
+margin_left = 469.0
+margin_top = 159.0
+margin_right = 1025.0
+margin_bottom = 240.0
+custom_fonts/font = SubResource( 7 )
+text = "Muito bem, Você conseguiu fazer seu primeiro PATCH CORD, 
+Acredito que agora conseguiremos abrir a porta."
+align = 1
+
+[node name="Label" type="Label" parent="Holder/msg_10"]
+modulate = Color( 1, 0, 0, 1 )
+margin_right = 556.0
+margin_bottom = 81.0
+custom_fonts/font = SubResource( 7 )
+text = "Muito bem, Você conseguiu fazer seu primeiro PATCH CORD, 
+Acredito que agora conseguiremos abrir a porta."
+align = 1
+
+[node name="Sprite" type="Sprite" parent="Holder/msg_10"]
+position = Vector2( 277, 106 )
+scale = Vector2( 0.635, 0.635 )
+texture = ExtResource( 11 )
+
+[connection signal="pressed" from="Holder/msg_8/HBoxContainer/MarginContainer/Correto" to="Holder" method="_on_Correto_pressed"]
+[connection signal="pressed" from="Holder/msg_8/HBoxContainer/MarginContainer2/Errado - 1" to="Holder" method="_on_Errado__1_pressed"]
+[connection signal="pressed" from="Holder/msg_8/HBoxContainer/MarginContainer3/Errado - 2" to="Holder" method="_on_Errado__2_pressed"]
+[connection signal="pressed" from="Holder/msg_9/HBoxContainer/MarginContainer/Correto" to="Holder" method="_on_Correto_pressed"]
+[connection signal="pressed" from="Holder/msg_9/HBoxContainer/MarginContainer2/Errado - 1" to="Holder" method="_on_Errado__1_pressed"]
+[connection signal="pressed" from="Holder/msg_9/HBoxContainer/MarginContainer3/Errado - 2" to="Holder" method="_on_Errado__2_pressed"]

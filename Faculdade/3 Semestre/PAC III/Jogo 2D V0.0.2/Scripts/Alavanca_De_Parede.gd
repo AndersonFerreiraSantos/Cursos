@@ -15,12 +15,26 @@ func _on_Alavanca_De_Parede_body_exited(body):
 func _Alavanca():
 	var anim = "Ativado"
 	if status == true and Luzes_M1 == false and Input.is_action_pressed("agarrar"):
-		yield(get_tree().create_timer(0.2), "timeout")
+		Global.mensagem = 5
+		yield(get_tree().create_timer(0.3), "timeout")
+		
+		$som.play()
+		#yield(get_tree().create_timer(0.03), "timeout")
+
 		Luzes_M1 = true
 		
+		
 	elif status == true and Input.is_action_pressed("agarrar") and Luzes_M1 == true:
-		yield(get_tree().create_timer(0.2), "timeout")
+	
+		yield(get_tree().create_timer(0.3), "timeout")
+		
 		Luzes_M1 = false
+		$som.play()
+		#yield(get_tree().create_timer(0.03), "timeout")
+
+		
+		
+		
 	
 
 	if Luzes_M1 == true:

@@ -1,0 +1,129 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/background/M1/Elevador.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Ambiente_Elevador.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=111]
+extents = Vector2( 53.5, 18.5 )
+
+[sub_resource type="RectangleShape2D" id=112]
+extents = Vector2( 63.5, 31 )
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends KinematicBody2D
+
+export var speed = 500
+var velocity = Vector2.ZERO
+var move_direction_cima = 1
+var move_direction_baixo = -1
+
+func _physics_process(delta: float) -> void:
+	_anim()
+	if Global.Elevador == 0:
+		velocity.y = speed * move_direction_cima
+		velocity = move_and_slide(velocity)
+		
+	elif Global.Elevador == 1:
+#		Global.gravidade_player = 0
+		velocity.y = speed * move_direction_baixo
+		velocity = move_and_slide(velocity)
+
+
+func _on_Alavanca_body_exited(body):
+	print('Saiu')
+	Global.Elevador = 0
+	
+	
+func _anim():
+	var anim = \"Cima\"
+	if Global.Elevador == 1:
+		anim = \"Cima\"
+	if Global.Elevador == 0:
+		anim = \"Baixo\"
+	if $anim.assigned_animation != anim:
+		$anim.play(anim)
+
+#onready var Elevador = $Elevador
+#onready var Tween = $Tween
+#var teste = Global.Elevador
+#export var speed = 1.0
+#export var horizontal = false
+#export var distance = 400
+#var follow = Vector2.ZERO
+#const WAIT_DURATION = 0
+#
+#func _ready():
+#	_start_tween(teste)
+#
+#func _start_tween(teste):
+#	if (Global.Elevador == 1):
+#
+#		var move_direction = Vector2.DOWN * distance
+#		var duration = move_direction.length() / float(speed * 10)
+##		Tween.interpolate_property(
+##			self, \"follow\", move_direction, duration, 
+##			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, WAIT_DURATION
+##			)
+#		Tween.interpolate_property(
+#			self, \"follow\", move_direction, Vector2.DOWN * distance, duration, 
+#			Tween.TRANS_LINEAR
+#			)
+#		Tween.start()
+#func _physics_process(delta: float) -> void:
+#	Elevador.position = Elevador.position.linear_interpolate(follow, 0.05)
+
+
+func _on_Colisor_de_Cima_body_entered(body):
+	Global.no_elevador = 4
+	yield(get_tree().create_timer(0.3), \"timeout\")
+	Global.no_elevador = 3
+
+func _on_Colisor_de_Baixo_body_entered(body):
+	Global.no_elevador = 3
+
+"
+
+[sub_resource type="RectangleShape2D" id=109]
+extents = Vector2( 31.5, 11 )
+
+[node name="Elevador" type="Node2D"]
+
+[node name="Colisor de Cima" type="Area2D" parent="."]
+position = Vector2( 3531, 328 )
+collision_layer = 0
+collision_mask = 8
+
+[node name="Cima" type="CollisionShape2D" parent="Colisor de Cima"]
+position = Vector2( 5, -34 )
+shape = SubResource( 111 )
+
+[node name="Colisor de Baixo" type="Area2D" parent="."]
+position = Vector2( 3528, 347 )
+collision_layer = 0
+collision_mask = 8
+
+[node name="Baixo" type="CollisionShape2D" parent="Colisor de Baixo"]
+position = Vector2( 4, 1208 )
+shape = SubResource( 112 )
+
+[node name="Elevador" parent="." instance=ExtResource( 1 )]
+position = Vector2( 3531, 337 )
+z_index = 8
+collision_layer = 8
+collision_mask = 8
+collision/safe_margin = 0.001
+script = SubResource( 6 )
+
+[node name="Ambiente" type="Area2D" parent="Elevador"]
+collision_layer = 0
+script = ExtResource( 2 )
+
+[node name="Collision" type="CollisionShape2D" parent="Elevador/Ambiente"]
+position = Vector2( 0, -121 )
+z_index = 10
+shape = SubResource( 109 )
+
+[connection signal="body_entered" from="Colisor de Cima" to="Elevador" method="_on_Colisor_de_Cima_body_entered"]
+[connection signal="body_entered" from="Colisor de Baixo" to="Elevador" method="_on_Colisor_de_Baixo_body_entered"]
+[connection signal="body_entered" from="Elevador/Ambiente" to="Elevador/Ambiente" method="_on_Ambiente_body_entered"]
+[connection signal="body_exited" from="Elevador/Ambiente" to="Elevador/Ambiente" method="_on_Ambiente_body_exited"]

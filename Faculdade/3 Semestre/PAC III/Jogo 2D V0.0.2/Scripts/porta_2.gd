@@ -2,9 +2,9 @@ extends KinematicBody2D
 var teste = Global.Patch_Cord
 
 func _physics_process(delta: float) -> void:
-	teste()
+	Abrir()
 	
-func teste():
-	if Global.Patch_Cord == 1:
+func Abrir():
+	if Global.missao_1 == 1:
 		queue_free()
 

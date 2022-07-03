@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Main Characters/Tecnico/run.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Assets/Main Characters/Tecnico/Fall.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Main Characters/Tecnico/wallslide.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Main Characters/Tecnico/Efeitos/Choque.png" type="Texture" id=9]
+[ext_resource path="res://Audio/Fundo.ogg" type="AudioStream" id=10]
 
 [sub_resource type="Animation" id=12]
 resource_name = "fall"
@@ -342,5 +343,11 @@ collision_mask = 1024
 [node name="Choque" type="Sprite" parent="."]
 visible = false
 texture = ExtResource( 9 )
+
+[node name="Sons" type="Node2D" parent="."]
+
+[node name="fundo" type="AudioStreamPlayer" parent="Sons"]
+stream = ExtResource( 10 )
+volume_db = -5.714
 
 [connection signal="body_entered" from="hurtbox" to="." method="_on_hurtbox_body_entered"]

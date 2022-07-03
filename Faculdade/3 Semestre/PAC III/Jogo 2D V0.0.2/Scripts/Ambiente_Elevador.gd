@@ -14,14 +14,10 @@ func _physics_process(delta):
 		print(status," =Elevador para cima")
 		Global.Elevador = 1
 		Global.no_elevador = 1
-
 	#####print(Global.Elevador)
-
-		
 func _on_Ambiente_body_entered(body):
 	status = true
-
-
+	
 func _on_Ambiente_body_exited(body):
 	status = false
 	Global.no_elevador = 3

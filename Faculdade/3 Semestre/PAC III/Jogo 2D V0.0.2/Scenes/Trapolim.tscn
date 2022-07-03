@@ -1,0 +1,173 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scripts/Trampolim.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Traps/Trampoline/Jump (28x28).png" type="Texture" id=2]
+[ext_resource path="res://Assets/Traps/Trampoline/Idle.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Trampolim_start.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/Trapolim_geral.gd" type="Script" id=5]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 46.5, 47 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 35.3125, 45.75 )
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "jump"
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 8 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 47, 47.5 )
+
+[node name="Trapolim" type="Node2D"]
+
+[node name="Colisões_Laterais" type="KinematicBody2D" parent="."]
+collision_layer = 1024
+collision_mask = 1032
+script = ExtResource( 5 )
+
+[node name="start" type="Area2D" parent="Colisões_Laterais"]
+collision_layer = 0
+script = ExtResource( 4 )
+
+[node name="Collision" type="CollisionShape2D" parent="Colisões_Laterais/start"]
+position = Vector2( 50.5, 50 )
+shape = SubResource( 6 )
+
+[node name="Trampolim" type="Area2D" parent="Colisões_Laterais/start"]
+position = Vector2( 50, 65 )
+collision_layer = 16
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collision" type="CollisionShape2D" parent="Colisões_Laterais/start/Trampolim"]
+position = Vector2( 2, -31 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="texture" type="Sprite" parent="Colisões_Laterais/start/Trampolim"]
+position = Vector2( 0, -14 )
+texture = ExtResource( 2 )
+hframes = 8
+frame = 1
+
+[node name="anim" type="AnimationPlayer" parent="Colisões_Laterais/start/Trampolim"]
+autoplay = "idle"
+anims/RESET = SubResource( 2 )
+anims/idle = SubResource( 3 )
+anims/jump = SubResource( 4 )
+
+[node name="Collision" type="CollisionShape2D" parent="Colisões_Laterais"]
+position = Vector2( 50, 50.5 )
+shape = SubResource( 5 )
+
+[node name="Terreno1" type="RayCast2D" parent="Colisões_Laterais"]
+position = Vector2( 11, 90 )
+enabled = true
+cast_to = Vector2( 0, 10 )
+collision_mask = 8
+
+[node name="Terreno2" type="RayCast2D" parent="Colisões_Laterais"]
+position = Vector2( 88, 90 )
+enabled = true
+cast_to = Vector2( 0, 10 )
+collision_mask = 8
+
+[connection signal="body_entered" from="Colisões_Laterais/start" to="Colisões_Laterais" method="_on_start_body_entered"]
+[connection signal="body_entered" from="Colisões_Laterais/start" to="Colisões_Laterais/start" method="_on_start_body_entered"]
+[connection signal="body_exited" from="Colisões_Laterais/start" to="Colisões_Laterais" method="_on_start_body_exited"]
+[connection signal="body_exited" from="Colisões_Laterais/start" to="Colisões_Laterais/start" method="_on_start_body_exited"]
+[connection signal="body_entered" from="Colisões_Laterais/start/Trampolim" to="Colisões_Laterais/start/Trampolim" method="_on_Trampolim_body_entered"]
+[connection signal="body_exited" from="Colisões_Laterais/start/Trampolim" to="Colisões_Laterais/start/Trampolim" method="_on_Trampolim_body_exited"]
