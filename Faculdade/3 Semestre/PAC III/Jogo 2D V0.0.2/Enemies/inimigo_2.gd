@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 export var speed = 64
-export var life = 6
+export var life = 90
 var velocity = Vector2.ZERO
 var move_direction = -1
 var gravity = 1200
@@ -23,8 +23,9 @@ func _physics_process(delta: float) -> void:
 	_set_animation()
 
 
-func _on_anim_animation_finished(anim):
-	if  anim == "idle":
+func _on_anim_animation_finished(anim_name):
+	if  anim_name == "idle":
+		print("Entrouuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
 		$texture.flip_h != $texture.flip_h
 		$ray_wall.scale.x *= -1
 		move_direction *= -1
@@ -46,7 +47,6 @@ func _set_animation():
 	if $anim.assigned_animation != anim:
 		$anim.play(anim)
 func _on_hitbox_body_entered(body):
-	print("colidiuuuuu")
 	hitted = true
 	life -= 1
 	body.velocity.y -= 450
@@ -58,5 +58,3 @@ func _on_hitbox_body_entered(body):
 		queue_free()
 		get_node("hitbox/Collision").set_deferred("disable", true)
 	
-
-				
