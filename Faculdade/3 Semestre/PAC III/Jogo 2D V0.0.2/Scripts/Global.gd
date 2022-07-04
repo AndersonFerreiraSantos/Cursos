@@ -10,7 +10,13 @@ var RJ45_Macho = 0 #Se for pego abrira a porta_1
 
 #Peças
 var HD = 0
-
+var SSD = 0
+var NVMe_PCIe = 0
+var Placa_mae = 0
+var Processador = 0
+var Fonte = 0
+var Gabinete = 0
+var Placa_de_video = 0
 	#Memórias RAM
 var RAM_2 = 0
 var RAM_4 = 0

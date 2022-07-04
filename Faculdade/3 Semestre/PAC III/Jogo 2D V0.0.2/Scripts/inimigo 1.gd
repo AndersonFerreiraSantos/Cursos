@@ -23,8 +23,8 @@ func _physics_process(delta: float) -> void:
 	_set_animation()
 
 
-func _on_anim_animation_finished(anim):
-	if  anim == "idle":
+func _on_anim_animation_finished(anim_name):
+	if  anim_name == "idle":
 		$texture.flip_h != $texture.flip_h
 		$ray_wall.scale.x *= -1
 		move_direction *= -1
@@ -33,7 +33,6 @@ func _on_anim_animation_finished(anim):
 
 func _set_animation():
 	var anim = "run"
-	
 	if $ray_wall.is_colliding():
 		anim = "idle"
 	elif velocity.x != 0:
@@ -46,7 +45,7 @@ func _set_animation():
 	if $anim.assigned_animation != anim:
 		$anim.play(anim)
 func _on_hitbox_body_entered(body):
-	print("colidiuuuuu")
+	#print("colidiuuuuu")
 	hitted = true
 	life -= 1
 	body.velocity.y -= 450

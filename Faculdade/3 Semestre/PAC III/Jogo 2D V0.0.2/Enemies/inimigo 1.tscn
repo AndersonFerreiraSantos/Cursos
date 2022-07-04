@@ -218,7 +218,7 @@ anims/run = SubResource( 4 )
 
 [node name="texture" type="Sprite" parent="."]
 position = Vector2( 5, -23 )
-texture = ExtResource( 6 )
+texture = ExtResource( 1 )
 
 [node name="ray_wall" type="RayCast2D" parent="."]
 enabled = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=128 format=2]
+[gd_scene load_steps=127 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/background/Editado/1.png" type="Texture" id=3]
@@ -25,7 +25,6 @@
 [ext_resource path="res://Assets/background/M1/Elevador.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Assets/background/M2/M2_V1.png" type="Texture" id=25]
 [ext_resource path="res://Assets/Menu/HUD.tscn" type="PackedScene" id=26]
-[ext_resource path="res://Enemies/inimigo 1.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Assets/background/M2/Elevador_1_M2_Baixo.png" type="Texture" id=28]
 [ext_resource path="res://Assets/background/M2/Grade_Elevador_01_M2.png" type="Texture" id=29]
 [ext_resource path="res://Scenes/Blocos.tscn" type="PackedScene" id=30]
@@ -69,7 +68,6 @@
 [ext_resource path="res://Audio/Alavanca.ogg" type="AudioStream" id=73]
 [ext_resource path="res://Levels/Alavanca_De_Parede_P3.gd" type="Script" id=74]
 [ext_resource path="res://Assets/background/M2/Computador.png" type="Texture" id=75]
-[ext_resource path="res://Enemies/inimigo 2.tscn" type="PackedScene" id=76]
 
 [sub_resource type="RectangleShape2D" id=130]
 extents = Vector2( 35.5, 206.531 )
@@ -417,8 +415,11 @@ extents = Vector2( 273.75, 4.25 )
 [sub_resource type="RectangleShape2D" id=81]
 extents = Vector2( 273.5, 4.25 )
 
-[sub_resource type="RectangleShape2D" id=87]
-extents = Vector2( 1610.75, 20.5 )
+[sub_resource type="RectangleShape2D" id=142]
+extents = Vector2( 1611.25, 20.5 )
+
+[sub_resource type="RectangleShape2D" id=143]
+extents = Vector2( 900.688, 20.5 )
 
 [sub_resource type="RectangleShape2D" id=113]
 extents = Vector2( 3.375, 56.5 )
@@ -626,11 +627,10 @@ func _set_animation():
 #		$anim.play(anim)
 "
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=145]
 extents = Vector2( 74, 17 )
 
-[sub_resource type="Animation" id=2]
-resource_name = "Fechando"
+[sub_resource type="Animation" id=146]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -669,8 +669,7 @@ tracks/2/keys = {
 "values": [ 3 ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "Idle"
+[sub_resource type="Animation" id=147]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -709,7 +708,7 @@ tracks/2/keys = {
 "values": [ 2 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=148]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -724,8 +723,7 @@ tracks/0/keys = {
 "values": [ 1 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "abrindo"
+[sub_resource type="Animation" id=149]
 length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:texture")
@@ -854,7 +852,7 @@ extents = Vector2( 611.375, 13.8125 )
 position = Vector2( 1, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 4654, 1285 )
+position = Vector2( 4271, 1267 )
 collision_mask = 8782
 
 [node name="Mensagens" type="Node2D" parent="."]
@@ -1351,8 +1349,12 @@ position = Vector2( 2258, -3441 )
 shape = SubResource( 81 )
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
-position = Vector2( 3388.75, -2117 )
-shape = SubResource( 87 )
+position = Vector2( 3388.25, -2117 )
+shape = SubResource( 142 )
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
+position = Vector2( 757.313, -2119 )
+shape = SubResource( 143 )
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
 position = Vector2( -2372.38, -3943.5 )
@@ -1401,19 +1403,6 @@ position = Vector2( 2488, -3659 )
 shape = SubResource( 84 )
 
 [node name="Inimigos" type="Node2D" parent="M2"]
-
-[node name="inimigo 3" parent="M2/Inimigos" instance=ExtResource( 76 )]
-position = Vector2( 5036, 1392 )
-z_index = 6
-collision_layer = 2
-collision_mask = 137
-
-[node name="inimigo 1" parent="M2/Inimigos" instance=ExtResource( 27 )]
-position = Vector2( 4909, 1329 )
-collision_mask = 137
-
-[node name="inimigo 2" parent="M2/Inimigos" instance=ExtResource( 76 )]
-position = Vector2( 4255, 1365 )
 
 [node name="skin" type="Node2D" parent="M2"]
 
@@ -1498,7 +1487,7 @@ position = Vector2( 6730, 1770 )
 position = Vector2( 6634, 1865 )
 
 [node name="Bloco - Imovel9" parent="M2/Foço" instance=ExtResource( 40 )]
-position = Vector2( 4616, 1422 )
+position = Vector2( 4261, 1420 )
 
 [node name="Bloco - Imovel11" parent="M2/Foço" instance=ExtResource( 40 )]
 position = Vector2( 4711, 1421 )
@@ -1541,7 +1530,7 @@ script = SubResource( 128 )
 [node name="Collision" type="CollisionShape2D" parent="M2/Suportes/Suporte3 - Local"]
 position = Vector2( 47, 103 )
 z_index = 1
-shape = SubResource( 1 )
+shape = SubResource( 145 )
 disabled = true
 
 [node name="Sprite" type="Sprite" parent="M2/Suportes/Suporte3 - Local"]
@@ -1552,10 +1541,10 @@ frame = 1
 
 [node name="anim" type="AnimationPlayer" parent="M2/Suportes/Suporte3 - Local"]
 autoplay = "Idle"
-anims/Fechando = SubResource( 2 )
-anims/Idle = SubResource( 6 )
-anims/RESET = SubResource( 3 )
-anims/abrindo = SubResource( 4 )
+anims/Fechando = SubResource( 146 )
+anims/Idle = SubResource( 147 )
+anims/RESET = SubResource( 148 )
+anims/abrindo = SubResource( 149 )
 
 [node name="Timer" type="Timer" parent="M2/Suportes/Suporte3 - Local"]
 wait_time = 1.5
