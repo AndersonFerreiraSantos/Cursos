@@ -16,6 +16,7 @@ func _physics_process(delta):
 	msg_8()
 	msg_9()
 	msg_10()
+	msg_11()
 #
 	
 	
@@ -76,6 +77,11 @@ func msg_10():
 		$msg_10.visible = true
 	elif Global.mensagem != 10:
 		$msg_10.visible = false
+func msg_11():
+	if Global.mensagem == 11:
+		$msg_11.visible = true
+	elif Global.mensagem != 11:
+		$msg_11.visible = false
 	
 #Opões -------------------------------------------------------------- 
 #Opões -------------------------------------------------------------- RJ45 - M1

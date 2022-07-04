@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=2]
+[gd_scene load_steps=145 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Enemies/Mushroom/Idle (32x32).png" type="Texture" id=2]
@@ -64,11 +64,17 @@
 [ext_resource path="res://Assets/background/Suporte/Suporte abrindo.png" type="Texture" id=62]
 [ext_resource path="res://Scenes/Suporte_eterno.tscn" type="PackedScene" id=63]
 [ext_resource path="res://Scenes/msgs.tscn" type="PackedScene" id=64]
-[ext_resource path="res://Levels/msg_4.gd" type="Script" id=65]
+[ext_resource path="res://Levels/msg_12.gd" type="Script" id=65]
 [ext_resource path="res://Levels/msg_3.gd" type="Script" id=66]
 [ext_resource path="res://Levels/msg_1.gd" type="Script" id=67]
 [ext_resource path="res://Assets/background/M2/Grade_elevador_M1.png" type="Texture" id=68]
 [ext_resource path="res://Assets/background/M2/Lampadas.png" type="Texture" id=69]
+[ext_resource path="res://Porta_P3.tscn" type="PackedScene" id=70]
+[ext_resource path="res://Assets/background/M1/Lavanca - Desativada.png" type="Texture" id=71]
+[ext_resource path="res://Assets/background/M1/Lavanca - Ativada.png" type="Texture" id=72]
+[ext_resource path="res://Audio/Alavanca.ogg" type="AudioStream" id=73]
+[ext_resource path="res://Levels/Alavanca_De_Parede_P3.gd" type="Script" id=74]
+[ext_resource path="res://Assets/background/M2/Computador.png" type="Texture" id=75]
 
 [sub_resource type="RectangleShape2D" id=130]
 extents = Vector2( 35.5, 206.531 )
@@ -88,8 +94,19 @@ extents = Vector2( 32, 31 )
 [sub_resource type="RectangleShape2D" id=133]
 extents = Vector2( 48.25, 41.125 )
 
+[sub_resource type="GDScript" id=139]
+script/source = "extends Area2D
+
+func _on_msg_4_body_entered(body):
+		Global.mensagem = 4
+		queue_free()
+"
+
 [sub_resource type="RectangleShape2D" id=134]
-extents = Vector2( 23.625, 105.75 )
+extents = Vector2( 24.1563, 105.75 )
+
+[sub_resource type="RectangleShape2D" id=140]
+extents = Vector2( 142.828, 76.375 )
 
 [sub_resource type="RectangleShape2D" id=111]
 extents = Vector2( 141.75, 58.75 )
@@ -1071,24 +1088,108 @@ tracks/2/keys = {
 "values": [ 2, 1, 0 ]
 }
 
+[sub_resource type="Animation" id=136]
+resource_name = "Ativada"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Lavanca-Desativada:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 72 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Lavanca-Desativada:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Lavanca-Desativada:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=137]
+resource_name = "Desativada"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Lavanca-Desativada:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 71 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Lavanca-Desativada:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Lavanca-Desativada:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=138]
+extents = Vector2( 23.5, 17 )
+
 [sub_resource type="RectangleShape2D" id=129]
 extents = Vector2( 611.375, 13.8125 )
 
 [node name="Main" type="Node2D"]
-position = Vector2( 0, -3 )
+position = Vector2( 1, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 3531, 176 )
+position = Vector2( 3531, 214 )
 collision_mask = 8782
 
 [node name="Mensagens" type="Node2D" parent="."]
+position = Vector2( 2, 0 )
 
 [node name="msg_1" type="Area2D" parent="Mensagens"]
 collision_layer = 0
 script = ExtResource( 67 )
 
 [node name="Collision" type="CollisionShape2D" parent="Mensagens/msg_1"]
-position = Vector2( 369, 366 )
+position = Vector2( 370, 366 )
 shape = SubResource( 130 )
 
 [node name="msg_2" type="Area2D" parent="Mensagens"]
@@ -1106,11 +1207,18 @@ position = Vector2( 1300, 532 )
 shape = SubResource( 133 )
 
 [node name="msg_4" type="Area2D" parent="Mensagens"]
-script = ExtResource( 65 )
+script = SubResource( 139 )
 
 [node name="Collision" type="CollisionShape2D" parent="Mensagens/msg_4"]
 position = Vector2( 2732, 422 )
 shape = SubResource( 134 )
+
+[node name="msg_12" type="Area2D" parent="Mensagens"]
+script = ExtResource( 65 )
+
+[node name="Collision" type="CollisionShape2D" parent="Mensagens/msg_12"]
+position = Vector2( 2460.17, 1392.38 )
+shape = SubResource( 140 )
 
 [node name="M1" type="Node2D" parent="."]
 script = ExtResource( 37 )
@@ -1170,7 +1278,7 @@ z_index = 10
 texture = ExtResource( 68 )
 
 [node name="Lampadas" type="Sprite" parent="M1/Noite"]
-position = Vector2( 5086, 944 )
+position = Vector2( 5087, 946 )
 texture = ExtResource( 69 )
 
 [node name="Trigger" parent="M1" instance=ExtResource( 13 )]
@@ -1193,7 +1301,7 @@ collision_layer = 0
 collision_mask = 8
 
 [node name="Baixo" type="CollisionShape2D" parent="M1/Elevador_1/Colisor de Baixo"]
-position = Vector2( 4, 1208 )
+position = Vector2( 4, 1206 )
 shape = SubResource( 112 )
 
 [node name="Elevador" parent="M1/Elevador_1" instance=ExtResource( 24 )]
@@ -1432,6 +1540,11 @@ position = Vector2( 1424, 203 )
 z_index = 6
 texture = ExtResource( 10 )
 
+[node name="Grama4" type="Sprite" parent="M1/Grama"]
+position = Vector2( 4453, 177 )
+z_index = 6
+texture = ExtResource( 10 )
+
 [node name="Collision" type="StaticBody2D" parent="M1"]
 position = Vector2( 0, 5 )
 z_index = 7
@@ -1511,6 +1624,11 @@ z_index = -2
 collision_layer = 8
 script = ExtResource( 15 )
 
+[node name="Porta_P3" parent="M1" instance=ExtResource( 70 )]
+position = Vector2( 3847, 746 )
+collision_layer = 8
+collision_mask = 136
+
 [node name="M2" type="Node2D" parent="."]
 
 [node name="Back" type="Sprite" parent="M2"]
@@ -1531,7 +1649,7 @@ collision_layer = 8
 collision_mask = 8
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="M2/Collision/Collisions/Sporte elevador"]
-position = Vector2( -783, -3809 )
+position = Vector2( -783, -3811 )
 shape = SubResource( 76 )
 
 [node name="Terreno" type="StaticBody2D" parent="M2/Collision/Collisions"]
@@ -1540,11 +1658,11 @@ collision_layer = 8
 collision_mask = 1034
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
-position = Vector2( -1682, -3883.5 )
+position = Vector2( -1682, -3885.5 )
 shape = SubResource( 77 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
-position = Vector2( 736.938, -3883.5 )
+position = Vector2( 736.938, -3885.5 )
 shape = SubResource( 79 )
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
@@ -1733,6 +1851,18 @@ position = Vector2( 6730, 1770 )
 [node name="Bloco - Imovel4" parent="M2/Foço" instance=ExtResource( 40 )]
 position = Vector2( 6634, 1865 )
 
+[node name="Bloco - Imovel9" parent="M2/Foço" instance=ExtResource( 40 )]
+position = Vector2( 4616, 1422 )
+
+[node name="Bloco - Imovel11" parent="M2/Foço" instance=ExtResource( 40 )]
+position = Vector2( 4711, 1421 )
+
+[node name="Bloco - Imovel10" parent="M2/Foço" instance=ExtResource( 40 )]
+position = Vector2( 5174, 1421 )
+
+[node name="Bloco - Imovel12" parent="M2/Foço" instance=ExtResource( 40 )]
+position = Vector2( 4007, 1421 )
+
 [node name="Bloco - Imovel5" parent="M2/Foço" instance=ExtResource( 40 )]
 position = Vector2( 6634, 1770 )
 
@@ -1743,8 +1873,8 @@ position = Vector2( 6730, 1676 )
 position = Vector2( 6730, 1581 )
 
 [node name="Cabos_eletricos" parent="M2/Foço" instance=ExtResource( 44 )]
-position = Vector2( 5859, 1449 )
-collision_mask = 0
+position = Vector2( 5734, 1445 )
+collision_layer = 1
 
 [node name="Portas M2" type="Node2D" parent="M2"]
 
@@ -1844,6 +1974,35 @@ position = Vector2( 6269, 2862 )
 [node name="Bloco - Imovel" parent="M2/Suportes" instance=ExtResource( 40 )]
 position = Vector2( 6712, 2399 )
 
+[node name="Area do computador" type="Node2D" parent="M2"]
+position = Vector2( 2523, 1338 )
+
+[node name="Alavanca_De_Parede" type="Area2D" parent="M2/Area do computador"]
+position = Vector2( -474, 24 )
+script = ExtResource( 74 )
+
+[node name="Lavanca-Desativada" type="Sprite" parent="M2/Area do computador/Alavanca_De_Parede"]
+position = Vector2( -21, 5 )
+texture = ExtResource( 72 )
+flip_h = true
+
+[node name="anim" type="AnimationPlayer" parent="M2/Area do computador/Alavanca_De_Parede"]
+autoplay = "Desativada"
+anims/Ativada = SubResource( 136 )
+anims/Desativada = SubResource( 137 )
+
+[node name="Collision" type="CollisionShape2D" parent="M2/Area do computador/Alavanca_De_Parede"]
+position = Vector2( -11.5, -1 )
+shape = SubResource( 138 )
+
+[node name="som" type="AudioStreamPlayer" parent="M2/Area do computador/Alavanca_De_Parede"]
+stream = ExtResource( 73 )
+pitch_scale = 0.25
+
+[node name="Computador" type="Sprite" parent="M2/Area do computador"]
+position = Vector2( -63, 60 )
+texture = ExtResource( 75 )
+
 [node name="Geral" type="Node2D" parent="."]
 position = Vector2( 5796, 1381 )
 
@@ -1870,6 +2029,7 @@ shape = SubResource( 129 )
 [connection signal="body_entered" from="Mensagens/msg_2" to="Mensagens/msg_2" method="_on_msg_2_body_entered"]
 [connection signal="body_entered" from="Mensagens/msg_3" to="Mensagens/msg_3" method="_on_msg_3_body_entered"]
 [connection signal="body_entered" from="Mensagens/msg_4" to="Mensagens/msg_4" method="_on_msg_4_body_entered"]
+[connection signal="body_entered" from="Mensagens/msg_12" to="Mensagens/msg_12" method="_on_msg_4_body_entered"]
 [connection signal="PlayerEntered" from="M1/Trigger" to="Player" method="_on_Trigger_PlayerEntered"]
 [connection signal="PlayerEntered" from="M1/Trigger" to="M1/HomeDoor" method="_on_Trigger_PlayerEntered"]
 [connection signal="body_entered" from="M1/Elevador_1/Colisor de Cima" to="M1/Elevador_1/Elevador" method="_on_Colisor_de_Cima_body_entered"]
@@ -1891,6 +2051,8 @@ shape = SubResource( 129 )
 [connection signal="timeout" from="M2/Suportes/Suporte3 - Local/Timer" to="M2/Suportes/Suporte3 - Local" method="_on_Timer_timeout"]
 [connection signal="body_entered" from="M2/Suportes/Agua eletrificada" to="Player" method="_on_Agua_eletrificada_body_entered"]
 [connection signal="body_exited" from="M2/Suportes/Agua eletrificada" to="Player" method="_on_Agua_eletrificada_body_exited"]
+[connection signal="body_entered" from="M2/Area do computador/Alavanca_De_Parede" to="M2/Area do computador/Alavanca_De_Parede" method="_on_Alavanca_De_Parede_body_entered"]
+[connection signal="body_exited" from="M2/Area do computador/Alavanca_De_Parede" to="M2/Area do computador/Alavanca_De_Parede" method="_on_Alavanca_De_Parede_body_exited"]
 
 [editable path="M2/Inimigos/inimigo 1"]
 [editable path="M2/Inimigos/inimigo 2"]

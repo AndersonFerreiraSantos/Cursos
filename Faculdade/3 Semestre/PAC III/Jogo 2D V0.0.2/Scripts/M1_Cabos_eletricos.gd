@@ -9,5 +9,3 @@ func _on_Timer_timeout():
 	else:
 		$Collision.disabled = true
 		tempo = 1
-	#print(tempo)
-

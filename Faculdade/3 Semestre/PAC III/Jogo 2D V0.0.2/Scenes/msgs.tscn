@@ -390,6 +390,7 @@ margin_bottom = 241.0
 texture_normal = ExtResource( 6 )
 
 [node name="msg_10" type="Label" parent="Holder"]
+visible = false
 margin_left = 469.0
 margin_top = 159.0
 margin_right = 1025.0
@@ -412,6 +413,16 @@ align = 1
 position = Vector2( 277, 106 )
 scale = Vector2( 0.635, 0.635 )
 texture = ExtResource( 11 )
+
+[node name="msg_11" type="Label" parent="Holder"]
+margin_left = 469.0
+margin_top = 159.0
+margin_right = 1025.0
+margin_bottom = 240.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 7 )
+text = "Mandou bem, a porta gigante está abrindo, vamos tentar achar as peças e ligar esse computador. "
+align = 1
 
 [connection signal="pressed" from="Holder/msg_8/HBoxContainer/MarginContainer/Correto" to="Holder" method="_on_Correto_pressed"]
 [connection signal="pressed" from="Holder/msg_8/HBoxContainer/MarginContainer2/Errado - 1" to="Holder" method="_on_Errado__1_pressed"]

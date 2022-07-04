@@ -41,6 +41,7 @@ var no_elevador = 5
 
 var mensagem = 0
 
+var porta_3 = false
 #Missão
 var em_missao = false
 #RJ45
