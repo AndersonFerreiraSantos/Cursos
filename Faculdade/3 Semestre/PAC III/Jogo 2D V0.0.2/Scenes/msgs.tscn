@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://Scripts/mensagens.gd" type="Script" id=1]
 [ext_resource path="res://Assets/background/M2/Skins/senhor.png" type="Texture" id=2]
@@ -39,6 +39,12 @@ font_data = ExtResource( 3 )
 [sub_resource type="DynamicFont" id=8]
 font_data = ExtResource( 3 )
 
+[sub_resource type="DynamicFont" id=10]
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=11]
+font_data = ExtResource( 3 )
+
 [node name="msg" type="CanvasLayer"]
 
 [node name="Holder" type="Control" parent="."]
@@ -47,7 +53,6 @@ margin_bottom = 40.0
 script = ExtResource( 1 )
 
 [node name="personagem" type="TextureRect" parent="Holder"]
-visible = false
 margin_left = 156.0
 margin_top = -96.0
 margin_right = 720.0
@@ -109,7 +114,7 @@ margin_right = 1020.0
 margin_bottom = 240.0
 custom_fonts/font = SubResource( 3 )
 text = "Algumas caixas parecem leves, pressione \"W\" para tentar joga-las e \"Q\" para arrasta-las,
- acredio que existem diversos tipos de caixas, vamos tetar e ver o que cada uma delas faz."
+ acredio que existem diversos tipos de caixas, vamos testar e ver o que cada uma delas faz."
 align = 1
 
 [node name="msg_4" type="Label" parent="Holder"]
@@ -415,13 +420,32 @@ scale = Vector2( 0.635, 0.635 )
 texture = ExtResource( 11 )
 
 [node name="msg_11" type="Label" parent="Holder"]
+visible = false
 margin_left = 469.0
 margin_top = 159.0
 margin_right = 1025.0
 margin_bottom = 240.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
-custom_fonts/font = SubResource( 7 )
-text = "Mandou bem, a porta gigante está abrindo, vamos tentar achar as peças e ligar esse computador. "
+custom_fonts/font = SubResource( 10 )
+text = "Mandou bem, a porta gigante está abrindo, vamos tentar achar as peças."
+align = 1
+
+[node name="msg_12" type="Label" parent="Holder"]
+margin_left = 523.0
+margin_top = 99.0
+margin_right = 1208.0
+margin_bottom = 180.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 11 )
+align = 1
+
+[node name="Label" type="Label" parent="Holder/msg_12"]
+margin_right = 685.0
+margin_bottom = 81.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 11 )
+text = "hummmm, parece o painel principal da base. Vamos procurar as peças que compõem esse computador e liga-lo
+para descobrir como destruir o local."
 align = 1
 
 [connection signal="pressed" from="Holder/msg_8/HBoxContainer/MarginContainer/Correto" to="Holder" method="_on_Correto_pressed"]

@@ -109,7 +109,7 @@ extents = Vector2( 24.1563, 105.75 )
 extents = Vector2( 142.828, 76.375 )
 
 [sub_resource type="RectangleShape2D" id=111]
-extents = Vector2( 141.75, 58.75 )
+extents = Vector2( 14.375, 21.6875 )
 
 [sub_resource type="RectangleShape2D" id=112]
 extents = Vector2( 63.5, 31 )
@@ -1169,7 +1169,7 @@ tracks/2/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=138]
-extents = Vector2( 23.5, 17 )
+extents = Vector2( 23.5, 25.5 )
 
 [sub_resource type="RectangleShape2D" id=129]
 extents = Vector2( 611.375, 13.8125 )
@@ -1178,7 +1178,7 @@ extents = Vector2( 611.375, 13.8125 )
 position = Vector2( 1, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 3531, 214 )
+position = Vector2( 2840, 412 )
 collision_mask = 8782
 
 [node name="Mensagens" type="Node2D" parent="."]
@@ -1273,7 +1273,7 @@ texture = ExtResource( 42 )
 position = Vector2( 2619, 84 )
 
 [node name="Sprite" type="Sprite" parent="M1/Noite"]
-position = Vector2( 3528, 773 )
+position = Vector2( 3532, 777 )
 z_index = 10
 texture = ExtResource( 68 )
 
@@ -1292,7 +1292,8 @@ collision_layer = 0
 collision_mask = 8
 
 [node name="Cima" type="CollisionShape2D" parent="M1/Elevador_1/Colisor de Cima"]
-position = Vector2( 5, -34 )
+position = Vector2( 233, -43 )
+z_index = 9
 shape = SubResource( 111 )
 
 [node name="Colisor de Baixo" type="Area2D" parent="M1/Elevador_1"]
@@ -1978,11 +1979,11 @@ position = Vector2( 6712, 2399 )
 position = Vector2( 2523, 1338 )
 
 [node name="Alavanca_De_Parede" type="Area2D" parent="M2/Area do computador"]
-position = Vector2( -474, 24 )
+position = Vector2( -492, -20 )
 script = ExtResource( 74 )
 
 [node name="Lavanca-Desativada" type="Sprite" parent="M2/Area do computador/Alavanca_De_Parede"]
-position = Vector2( -21, 5 )
+position = Vector2( -3, 17 )
 texture = ExtResource( 72 )
 flip_h = true
 
@@ -1992,7 +1993,7 @@ anims/Ativada = SubResource( 136 )
 anims/Desativada = SubResource( 137 )
 
 [node name="Collision" type="CollisionShape2D" parent="M2/Area do computador/Alavanca_De_Parede"]
-position = Vector2( -11.5, -1 )
+position = Vector2( 8, 13 )
 shape = SubResource( 138 )
 
 [node name="som" type="AudioStreamPlayer" parent="M2/Area do computador/Alavanca_De_Parede"]

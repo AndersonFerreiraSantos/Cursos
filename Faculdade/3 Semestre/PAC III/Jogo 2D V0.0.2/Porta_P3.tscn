@@ -8,7 +8,7 @@ extents = Vector2( 35.5, 240 )
 
 [sub_resource type="Animation" id=2]
 resource_name = "Aberta"
-length = 12.0
+length = 48.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Collision:position")
 tracks/0/interp = 1
@@ -16,7 +16,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 12 ),
+"times": PoolRealArray( 0, 48 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 481 ), Vector2( 0, 0 ) ]
@@ -28,7 +28,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 12 ),
+"times": PoolRealArray( 0, 48 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 482 ), Vector2( 0, 0 ) ]
@@ -48,7 +48,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "Fechada"
-length = 12.0
+length = 24.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Collision:position")
 tracks/0/interp = 1
@@ -56,7 +56,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 12 ),
+"times": PoolRealArray( 0, 24.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 481 ) ]
@@ -68,7 +68,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 12 ),
+"times": PoolRealArray( 0, 24.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 0, 482 ) ]
