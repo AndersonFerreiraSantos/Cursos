@@ -1,29 +1,41 @@
 extends Node
 
+#Inimigos
+var inimigo_1 = false
+var inimigo_2 = false
+var inimigo_3 = false
+var inimigo_4 = false
+var inimigo_5 = false
+var inimigo_6 = false
+var inimigo_7 = false
+var inimigo_8 = false
+var inimigo_9 = false
+
+var posicao_camera = 4
 #itens 
-var Cafe = 1 
-var Crimpador = 1
-var Cabo_de_Rede = 1
-var Patch_cord = 1
-var notebook = 1
-var RJ45_Macho = 1 #Se for pego abrira a porta_1
+var Cafe = 0 
+var Crimpador = 0
+var Cabo_de_Rede = 0
+var Patch_cord = 0
+var notebook = 0
+var RJ45_Macho = 0 #Se for pego abrira a porta_1
 
 #Peças
-var HD = 1
-var SSD = 1
-var NVMe_PCIe = 1
-var Placa_mae = 1
-var Processador = 1
-var Fonte = 1
-var Gabinete = 1
-var Placa_de_video = 1
+var HD = 0
+var SSD = 0
+var NVMe_PCIe = 0
+var Placa_mae = 0
+var Processador = 0
+var Fonte = 0
+var Gabinete = 0
+var Placa_de_video = 0
 
 
 	#Memórias RAM
-var RAM_2 = 1
-var RAM_4 = 1
-var RAM_8 = 1
-var RAM_16 = 1
+var RAM_2 = 0
+var RAM_4 = 0
+var RAM_8 = 0
+var RAM_16 = 0
 
 #Energia
 	#Blocos Ativos
@@ -57,11 +69,29 @@ var missao_1 = 0
 #Armadilhas____________________
 var no_cabo_eletrico = false
 func _process(delta: float) -> void:
-	print("RJ:",RJ45_Macho)
-	print("Cabo:",Cabo_de_Rede)
 	pass
 
 	#____________M1____________
 
 	
 	#____________M2____________
+func _ing_1():
+	if inimigo_1 == true:
+		RAM_2 += 1
+		inimigo_1 = false
+func _ing_2():
+	if inimigo_2 == true:
+		RAM_4 += 1
+		inimigo_2 = false
+func _ing_3():
+	if inimigo_3 == true:
+		HD += 1
+		inimigo_3 = false
+func _ing_4():
+	if inimigo_4 == true:
+		Processador += 1
+		inimigo_4 = false
+func _ing_5():
+	if inimigo_5 == true:
+		Fonte += 1
+		inimigo_5 = false

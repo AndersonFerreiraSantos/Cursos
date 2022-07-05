@@ -18,6 +18,7 @@ func _Alavanca():
 		
 		yield(get_tree().create_timer(0.3), "timeout")
 		$som.play()
+		Global.posicao_camera = 2
 		Porta = true
 		Global.porta_3 = true
 		Global.mensagem = 11

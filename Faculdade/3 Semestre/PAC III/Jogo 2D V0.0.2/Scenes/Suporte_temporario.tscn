@@ -242,6 +242,6 @@ anims/RESET = SubResource( 3 )
 anims/abrindo = SubResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 6.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

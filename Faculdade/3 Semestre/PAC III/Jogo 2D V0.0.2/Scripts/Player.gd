@@ -1,11 +1,12 @@
 extends KinematicBody2D
-var life = 5
+var life = 8
 var hurted = false
 var knockback_dir = 1
 var knockback_int = 3700
 
-#Posição da camera padrão = 0
-var posicao_camera = 9
+#0 é a posição de teste
+#Inicia no 1
+var posicao_camera = 0
 
 
 var UP = Vector2.UP
@@ -305,13 +306,30 @@ func _on_Alavanca_body_entered(body):
 	
 func posicao_camera():
 	if posicao_camera == 0:
+		$Camera.limit_right = 3300000
+		$Camera.limit_bottom = 5850000
+	if posicao_camera == 1:
 		$Camera.limit_right = 3300
 		$Camera.limit_bottom = 585
 		$Camera.limit_left = -10
-	if Global.Crimpador == 1:
-		posicao_camera = 1
-		$Camera.limit_right = 3300000
-		$Camera.limit_bottom = 5850000
+	if Global.Patch_cord == 1:
+		$Camera.limit_right = 3870
+		$Camera.limit_bottom = 1600
+		$Camera.limit_left = -10
+	if Global.posicao_camera == 2:
+		$Camera.limit_right = 9296
+		$Camera.limit_bottom = 1500
+		$Camera.limit_left = -10
+	if Global.posicao_camera == 3:
+		$Camera.limit_right = 9296
+		$Camera.limit_bottom = 1950
+		$Camera.limit_left = -10
+	if Global.posicao_camera == 4:
+		$Camera.limit_right = 9296
+		$Camera.limit_bottom = 3600
+		$Camera.limit_left = -10
+	
+	
 		#-------------------------------------------------------------
 func morte():
 	if life < 1:
@@ -322,12 +340,12 @@ func  life():
 	Global.life_player = life
 	
 func _on_Cabos_eletricos_body_entered(body):
-		em_choque = true
+
 		life -= 1
 		morte()
 		
 func _on_Cabos_eletricos_body_exited(body):
-	em_choque = false
+	pass
 
 
 func _on_Agua_eletrificada_body_entered(body):
@@ -335,8 +353,11 @@ func _on_Agua_eletrificada_body_entered(body):
 		life -= 1
 		morte()
 
-
 func _on_Agua_eletrificada_body_exited(body):
 	em_choque = false
 
+func _on_Camera_body_entered(body):
+	Global.posicao_camera = 3
 
+func _on_Camera1_body_entered(body):
+	Global.posicao_camera = 4

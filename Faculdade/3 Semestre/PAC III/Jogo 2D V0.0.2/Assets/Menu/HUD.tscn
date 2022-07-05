@@ -74,6 +74,7 @@ alignment = 1
 script = ExtResource( 13 )
 
 [node name="RJ45_Macho" type="TextureButton" parent="Inventario/Itens - linha 1"]
+visible = false
 margin_left = 40.0
 margin_right = 140.0
 margin_bottom = 113.0
@@ -91,8 +92,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="RAM_2" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 144.0
-margin_right = 244.0
+visible = false
+margin_left = 92.0
+margin_right = 192.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 9 )
 
@@ -108,8 +110,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="RAM_4" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 248.0
-margin_right = 348.0
+visible = false
+margin_left = 144.0
+margin_right = 244.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 14 )
 
@@ -125,8 +128,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="RAM_8" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 352.0
-margin_right = 452.0
+visible = false
+margin_left = 196.0
+margin_right = 296.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 15 )
 
@@ -142,8 +146,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="RAM_16" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 456.0
-margin_right = 556.0
+visible = false
+margin_left = 248.0
+margin_right = 348.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 16 )
 
@@ -159,8 +164,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="Processador" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 560.0
-margin_right = 660.0
+visible = false
+margin_left = 300.0
+margin_right = 400.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 21 )
 
@@ -176,8 +182,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="HD" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 664.0
-margin_right = 764.0
+visible = false
+margin_left = 352.0
+margin_right = 452.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 17 )
 
@@ -193,8 +200,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="Patch_cord" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 768.0
-margin_right = 868.0
+visible = false
+margin_left = 404.0
+margin_right = 504.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 10 )
 
@@ -210,8 +218,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="Placa_mae" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 872.0
-margin_right = 972.0
+visible = false
+margin_left = 456.0
+margin_right = 556.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 18 )
 
@@ -227,8 +236,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="Fonte" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 976.0
-margin_right = 1076.0
+visible = false
+margin_left = 508.0
+margin_right = 608.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 19 )
 
@@ -244,8 +254,9 @@ text = "0
 max_lines_visible = 0
 
 [node name="Gabinete" type="TextureButton" parent="Inventario/Itens - linha 1"]
-margin_left = 1080.0
-margin_right = 1180.0
+visible = false
+margin_left = 560.0
+margin_right = 660.0
 margin_bottom = 113.0
 texture_normal = ExtResource( 20 )
 
