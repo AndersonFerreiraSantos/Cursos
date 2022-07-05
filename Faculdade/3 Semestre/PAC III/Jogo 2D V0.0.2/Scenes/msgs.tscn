@@ -70,6 +70,7 @@ Tec. Senior"
 align = 1
 
 [node name="msg_1" type="Label" parent="Mensagens"]
+visible = false
 modulate = Color( 1, 0, 0, 1 )
 margin_left = 466.0
 margin_top = 158.0

@@ -340,7 +340,6 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="RAM_2" type="Label" parent="Drop"]
-visible = false
 margin_left = 523.0
 margin_top = 99.0
 margin_right = 1208.0

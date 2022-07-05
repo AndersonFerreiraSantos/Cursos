@@ -1,7 +1,7 @@
-[gd_scene load_steps=128 format=2]
+[gd_scene load_steps=156 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemies/inimigo 2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Anton-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Assets/background/Editado/1.png" type="Texture" id=3]
 [ext_resource path="res://Assets/background/Editado/3.png" type="Texture" id=4]
 [ext_resource path="res://Assets/background/Editado/2.png" type="Texture" id=5]
@@ -26,10 +26,13 @@
 [ext_resource path="res://Assets/background/M1/Elevador.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Assets/background/M2/M2_V1.png" type="Texture" id=25]
 [ext_resource path="res://Assets/Menu/HUD.tscn" type="PackedScene" id=26]
+[ext_resource path="res://Enemies/2/hit - 2.png" type="Texture" id=27]
 [ext_resource path="res://Assets/background/M2/Elevador_1_M2_Baixo.png" type="Texture" id=28]
 [ext_resource path="res://Assets/background/M2/Grade_Elevador_01_M2.png" type="Texture" id=29]
 [ext_resource path="res://Scenes/Blocos.tscn" type="PackedScene" id=30]
 [ext_resource path="res://Scenes/Trapolim.tscn" type="PackedScene" id=31]
+[ext_resource path="res://Enemies/2/derrotado - 2.png" type="Texture" id=32]
+[ext_resource path="res://Enemies/2/run - 2.png" type="Texture" id=33]
 [ext_resource path="res://Scripts/Blocos/Bloco - Energia - Cabo.tscn" type="PackedScene" id=34]
 [ext_resource path="res://Scripts/Blocos/Bloco - Energia - Massivo .tscn" type="PackedScene" id=35]
 [ext_resource path="res://Assets/background/M2/M2_V2.png" type="Texture" id=36]
@@ -430,6 +433,849 @@ extents = Vector2( 4, 105.75 )
 
 [sub_resource type="RectangleShape2D" id=84]
 extents = Vector2( 25.875, 221 )
+
+[sub_resource type="GDScript" id=150]
+script/source = "extends KinematicBody2D
+
+export var speed = 64
+export var life = 2
+export var drop = \"RAM_2\"
+
+
+var velocity = Vector2.ZERO
+var move_direction = -1
+var gravity = 1200
+var hitted = false
+var morto = false
+var entrou = false
+
+
+func _ready():
+	$Drop/RAM_2.visible = false
+
+func _physics_process(delta: float) -> void:
+	if entrou == true and morto == true and Input.is_action_pressed(\"agarrar\"):
+		$Drop/RAM_2.visible = true
+		$Morte/Collision.disabled = true
+		$coleta.play()
+		yield(get_tree().create_timer(0.3), \"timeout\")
+		$coleta.play()
+		yield(get_tree().create_timer(0.3), \"timeout\")
+		$coleta.play()
+		if drop == \"RAM_2\":
+			#$Drop/RAM_2.Label.text = \"CAssssaaaa\"
+			Global.RAM_2 += 1
+			#print(\"Pegou memória RAM 2\")
+			#var text_drop = String(\"Testeeee\")
+			#$Drop/RAM_2/Label.text = text_drop
+			#yield(get_tree().create_timer(1), \"timeout\")
+			$Drop/RAM_2/anim.play(\"Drop\")
+			yield(get_tree().create_timer(5), \"timeout\")
+			queue_free()
+		elif drop == \"RAM_4\":
+			$Drop/RAM_2/Label.text =\"CAssssaaaa\"
+			Global.RAM_4 += 1
+			#print(\"Pegou memória RAM 4\")
+			#var text_drop = String(\"Testeeee\")
+			#$Drop/RAM_2/Label.text = text_drop
+#			$Drop/RAM_2/Label.text = \"+ 4GB RAM\"
+			#yield(get_tree().create_timer(1), \"timeout\")
+			$Drop/RAM_2/anim.play(\"Drop\")
+			yield(get_tree().create_timer(5), \"timeout\")
+			queue_free()
+		elif drop == \"RAM_8\":
+			Global.RAM_8 += 1
+			print(\"Pegou memória RAM 8\")
+			$Drop/RAM_2/Label.text = \"+ 8GB RAM\"
+			$Drop/RAM_2/anim.play(\"Drop\")
+			yield(get_tree().create_timer(5), \"timeout\")
+			queue_free()
+		elif drop == \"HD\":
+			Global.HD += 1
+			print(\"Pegou HD\")
+			$Drop/RAM_2/Label.text = \"+ 1X HD\"
+		elif drop == \"SSD\":
+			Global.SSD += 1
+			print(\"Pegou SSD\")
+		elif drop == \"NVMe_PCIe\":
+			Global.NVMe_PCIe += 1
+			print(\"Pegou NVMe_PCIe\")
+		elif drop == \"Placa_mae\":
+			Global.Placa_mae += 1
+			print(\"Pegou Placa_mae\")
+		elif drop == \"Processador\":
+			Global.Processador += 1
+			print(\"Pegou Processador\")
+		elif drop == \"Fonte\":
+			Global.Fonte += 1
+			print(\"Pegou Fonte\")
+		elif drop == \"Gabinete\":
+			Global.Gabinete += 1
+			print(\"Pegou Gabinete\")
+		elif drop == \"Placa_de_video\":
+			Global.Placa_de_video += 1
+			print(\"Pegou Placa_de_video\")
+	velocity.x = speed * move_direction
+	velocity = move_and_slide(velocity)
+	velocity.y += gravity * delta
+	
+	if move_direction == 1:
+		$texture.flip_h = true
+	else:
+		$texture.flip_h = false
+	
+	velocity = move_and_slide(velocity)
+	_set_animation()
+
+func parar():
+	 move_direction = -1
+	 gravity = 0
+	 speed = 0
+	
+func _on_anim_animation_finished(anim_name):
+	if  anim_name == \"idle\":
+		#print(\"Entrouuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu\")
+		$texture.flip_h != $texture.flip_h
+		$ray_wall.scale.x *= -1
+		move_direction *= -1
+		$anim.play(\"run\") 
+		
+func _set_animation():
+	var anim = \"run\"
+	if $ray_wall.is_colliding():
+		anim = \"idle\"
+	elif velocity.x != 0:
+		anim = \"run\"
+	if hitted == true:
+		anim = \"hit\"
+	if life < 1:
+		anim = \"Derrotado\"
+		
+	if $anim.assigned_animation != anim:
+		$anim.play(anim)
+		
+func _on_hitbox_body_entered(body):
+	hitted = true
+	life -= 1
+	body.velocity.y -= 450
+	yield(get_tree().create_timer(0.4), \"timeout\")
+	hitted = false
+	if life < 1:
+		parar()
+		$CollisionShape2D.disabled = true	
+		$hitbox/Collision.disabled = true
+		morto = true
+		gravity = 0
+		
+		#queue_free()
+		#yield(get_tree().create_timer(6), \"timeout\")
+	
+func _on_Morte_body_entered(body):
+	entrou = true
+func _on_Morte_body_exited(body):
+	entrou = false
+"
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 31.5, 31 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Derrotado"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 32 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "fall"
+
+[sub_resource type="Animation" id=5]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 27 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 33 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "item"
+
+[sub_resource type="Animation" id=8]
+resource_name = "run"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 33 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 31.5, 0.5625 )
+
+[sub_resource type="DynamicFont" id=10]
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=11]
+resource_name = "Drop"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "+ 2GB RAM" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -877, -136 ), Vector2( -877, -436 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 295.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -76.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Label:margin_right")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 978.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Label:margin_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 5.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Label:rect_position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 300, 0 ) ]
+}
+
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 43.5, 35.5 )
+
+[sub_resource type="GDScript" id=151]
+script/source = "extends KinematicBody2D
+
+export var speed = 64
+export var life = 2
+export var drop = \"RAM_4\"
+
+
+var velocity = Vector2.ZERO
+var move_direction = -1
+var gravity = 1200
+var hitted = false
+var morto = false
+var entrou = false
+
+
+func _ready():
+	$Drop/RAM_2.visible = false
+
+func _physics_process(delta: float) -> void:
+	if entrou == true and morto == true and Input.is_action_pressed(\"agarrar\"):
+		$Drop/RAM_2.visible = true
+		$Morte/Collision.disabled = true
+		$coleta.play()
+		yield(get_tree().create_timer(0.3), \"timeout\")
+		$coleta.play()
+		yield(get_tree().create_timer(0.3), \"timeout\")
+		$coleta.play()
+		if drop == \"RAM_2\":
+			#$Drop/RAM_2.Label.text = \"CAssssaaaa\"
+			Global.RAM_2 += 1
+			#print(\"Pegou memória RAM 2\")
+			#var text_drop = String(\"Testeeee\")
+			#$Drop/RAM_2/Label.text = text_drop
+			#yield(get_tree().create_timer(1), \"timeout\")
+			$Drop/RAM_2/anim.play(\"Drop\")
+			yield(get_tree().create_timer(5), \"timeout\")
+			queue_free()
+		elif drop == \"RAM_4\":
+			$Drop/RAM_2/Label.text =\"CAssssaaaa\"
+			Global.RAM_4 += 1
+			#print(\"Pegou memória RAM 4\")
+			#var text_drop = String(\"Testeeee\")
+			#$Drop/RAM_2/Label.text = text_drop
+#			$Drop/RAM_2/Label.text = \"+ 4GB RAM\"
+			#yield(get_tree().create_timer(1), \"timeout\")
+			$Drop/RAM_2/anim.play(\"Drop\")
+			yield(get_tree().create_timer(5), \"timeout\")
+			queue_free()
+		elif drop == \"RAM_8\":
+			Global.RAM_8 += 1
+			print(\"Pegou memória RAM 8\")
+			$Drop/RAM_2/Label.text = \"+ 8GB RAM\"
+			$Drop/RAM_2/anim.play(\"Drop\")
+			yield(get_tree().create_timer(5), \"timeout\")
+			queue_free()
+		elif drop == \"HD\":
+			Global.HD += 1
+			print(\"Pegou HD\")
+			$Drop/RAM_2/Label.text = \"+ 1X HD\"
+		elif drop == \"SSD\":
+			Global.SSD += 1
+			print(\"Pegou SSD\")
+		elif drop == \"NVMe_PCIe\":
+			Global.NVMe_PCIe += 1
+			print(\"Pegou NVMe_PCIe\")
+		elif drop == \"Placa_mae\":
+			Global.Placa_mae += 1
+			print(\"Pegou Placa_mae\")
+		elif drop == \"Processador\":
+			Global.Processador += 1
+			print(\"Pegou Processador\")
+		elif drop == \"Fonte\":
+			Global.Fonte += 1
+			print(\"Pegou Fonte\")
+		elif drop == \"Gabinete\":
+			Global.Gabinete += 1
+			print(\"Pegou Gabinete\")
+		elif drop == \"Placa_de_video\":
+			Global.Placa_de_video += 1
+			print(\"Pegou Placa_de_video\")
+	velocity.x = speed * move_direction
+	velocity = move_and_slide(velocity)
+	velocity.y += gravity * delta
+	
+	if move_direction == 1:
+		$texture.flip_h = true
+	else:
+		$texture.flip_h = false
+	
+	velocity = move_and_slide(velocity)
+	_set_animation()
+
+func parar():
+	 move_direction = -1
+	 gravity = 0
+	 speed = 0
+	
+func _on_anim_animation_finished(anim_name):
+	if  anim_name == \"idle\":
+		#print(\"Entrouuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu\")
+		$texture.flip_h != $texture.flip_h
+		$ray_wall.scale.x *= -1
+		move_direction *= -1
+		$anim.play(\"run\") 
+		
+func _set_animation():
+	var anim = \"run\"
+	if $ray_wall.is_colliding():
+		anim = \"idle\"
+	elif velocity.x != 0:
+		anim = \"run\"
+	if hitted == true:
+		anim = \"hit\"
+	if life < 1:
+		anim = \"Derrotado\"
+		
+	if $anim.assigned_animation != anim:
+		$anim.play(anim)
+		
+func _on_hitbox_body_entered(body):
+	hitted = true
+	life -= 1
+	body.velocity.y -= 450
+	yield(get_tree().create_timer(0.4), \"timeout\")
+	hitted = false
+	if life < 1:
+		parar()
+		$CollisionShape2D.disabled = true	
+		$hitbox/Collision.disabled = true
+		morto = true
+		gravity = 0
+		
+		#queue_free()
+		#yield(get_tree().create_timer(6), \"timeout\")
+	
+func _on_Morte_body_entered(body):
+	entrou = true
+func _on_Morte_body_exited(body):
+	entrou = false
+"
+
+[sub_resource type="Animation" id=152]
+resource_name = "Derrotado"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 32 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=153]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1 ]
+}
+
+[sub_resource type="Animation" id=154]
+resource_name = "fall"
+
+[sub_resource type="Animation" id=155]
+resource_name = "hit"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 27 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 3 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2 ]
+}
+
+[sub_resource type="Animation" id=156]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 33 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ]
+}
+
+[sub_resource type="Animation" id=157]
+resource_name = "item"
+
+[sub_resource type="Animation" id=158]
+resource_name = "run"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.4 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 33 ) ]
+}
+
+[sub_resource type="DynamicFont" id=159]
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=160]
+resource_name = "Drop"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -877, -136 ), Vector2( -877, -436 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "+ 4GB RAM" ]
+}
+
+[sub_resource type="Animation" id=161]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:margin_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 295.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -76.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Label:margin_right")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 978.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Label:margin_bottom")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 5.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Label:rect_position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 300, 0 ) ]
+}
 
 [sub_resource type="GDScript" id=121]
 script/source = "extends KinematicBody2D
@@ -853,7 +1699,7 @@ extents = Vector2( 611.375, 13.8125 )
 position = Vector2( 1, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 3090, 417 )
+position = Vector2( 4569, 1286 )
 collision_mask = 8782
 
 [node name="Mensagens" type="Node2D" parent="."]
@@ -1406,11 +2252,167 @@ shape = SubResource( 84 )
 [node name="Inimigos" type="Node2D" parent="M2"]
 position = Vector2( 4427, 1298 )
 
-[node name="inimigo 1 - 2GB RAM" parent="M2/Inimigos" instance=ExtResource( 2 )]
-position = Vector2( 22, 82 )
+[node name="inimigo 1 - RAM 2GB" type="KinematicBody2D" parent="M2/Inimigos"]
+position = Vector2( 4, 0 )
+z_index = 5
+collision_layer = 2
+collision_mask = 137
+script = SubResource( 150 )
 
-[node name="inimigo 1 - 2GB RAM2" parent="M2/Inimigos" instance=ExtResource( 2 )]
-position = Vector2( 22, 82 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="M2/Inimigos/inimigo 1 - RAM 2GB"]
+position = Vector2( -4.5, 29 )
+shape = SubResource( 1 )
+
+[node name="ray_wall2" type="RayCast2D" parent="M2/Inimigos/inimigo 1 - RAM 2GB"]
+enabled = true
+cast_to = Vector2( -70, 0 )
+collision_mask = 129
+
+[node name="anim" type="AnimationPlayer" parent="M2/Inimigos/inimigo 1 - RAM 2GB"]
+autoplay = "run"
+anims/Derrotado = SubResource( 2 )
+anims/RESET = SubResource( 3 )
+anims/fall = SubResource( 4 )
+anims/hit = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/item = SubResource( 7 )
+anims/run = SubResource( 8 )
+
+[node name="texture" type="Sprite" parent="M2/Inimigos/inimigo 1 - RAM 2GB"]
+texture = ExtResource( 32 )
+
+[node name="ray_wall" type="RayCast2D" parent="M2/Inimigos/inimigo 1 - RAM 2GB"]
+position = Vector2( 8, 31 )
+enabled = true
+cast_to = Vector2( -50, 0 )
+collision_mask = 129
+
+[node name="hitbox" type="Area2D" parent="M2/Inimigos/inimigo 1 - RAM 2GB"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( -4, -7 )
+collision_layer = 64
+
+[node name="Collision" type="CollisionShape2D" parent="M2/Inimigos/inimigo 1 - RAM 2GB/hitbox"]
+position = Vector2( -0.5, 5 )
+shape = SubResource( 9 )
+
+[node name="Drop" type="Control" parent="M2/Inimigos/inimigo 1 - RAM 2GB"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="RAM_2" type="Label" parent="M2/Inimigos/inimigo 1 - RAM 2GB/Drop"]
+margin_left = 523.0
+margin_top = 99.0
+margin_right = 1208.0
+margin_bottom = 180.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 10 )
+align = 1
+
+[node name="Label" type="Label" parent="M2/Inimigos/inimigo 1 - RAM 2GB/Drop/RAM_2"]
+margin_left = 300.0
+margin_right = 983.0
+margin_bottom = 81.0
+custom_colors/font_color = Color( 0.054902, 0, 1, 1 )
+custom_fonts/font = SubResource( 10 )
+text = "+ 2GB RAM"
+align = 1
+
+[node name="anim" type="AnimationPlayer" parent="M2/Inimigos/inimigo 1 - RAM 2GB/Drop/RAM_2"]
+anims/Drop = SubResource( 11 )
+anims/RESET = SubResource( 12 )
+
+[node name="Morte" type="Area2D" parent="M2/Inimigos/inimigo 1 - RAM 2GB"]
+collision_layer = 0
+
+[node name="Collision" type="CollisionShape2D" parent="M2/Inimigos/inimigo 1 - RAM 2GB/Morte"]
+position = Vector2( -4.5, 25.5 )
+shape = SubResource( 13 )
+
+[node name="coleta" type="AudioStreamPlayer" parent="M2/Inimigos/inimigo 1 - RAM 2GB"]
+stream = ExtResource( 73 )
+pitch_scale = 3.15
+
+[node name="inimigo 2 - RAM 4GB" type="KinematicBody2D" parent="M2/Inimigos"]
+position = Vector2( 582, 24 )
+z_index = 5
+collision_layer = 2
+collision_mask = 137
+script = SubResource( 151 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="M2/Inimigos/inimigo 2 - RAM 4GB"]
+position = Vector2( -4.5, 29 )
+shape = SubResource( 1 )
+
+[node name="ray_wall2" type="RayCast2D" parent="M2/Inimigos/inimigo 2 - RAM 4GB"]
+enabled = true
+cast_to = Vector2( -70, 0 )
+collision_mask = 129
+
+[node name="anim" type="AnimationPlayer" parent="M2/Inimigos/inimigo 2 - RAM 4GB"]
+autoplay = "run"
+anims/Derrotado = SubResource( 152 )
+anims/RESET = SubResource( 153 )
+anims/fall = SubResource( 154 )
+anims/hit = SubResource( 155 )
+anims/idle = SubResource( 156 )
+anims/item = SubResource( 157 )
+anims/run = SubResource( 158 )
+
+[node name="texture" type="Sprite" parent="M2/Inimigos/inimigo 2 - RAM 4GB"]
+texture = ExtResource( 32 )
+
+[node name="ray_wall" type="RayCast2D" parent="M2/Inimigos/inimigo 2 - RAM 4GB"]
+position = Vector2( 8, 31 )
+enabled = true
+cast_to = Vector2( -50, 0 )
+collision_mask = 129
+
+[node name="hitbox" type="Area2D" parent="M2/Inimigos/inimigo 2 - RAM 4GB"]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( -4, -7 )
+collision_layer = 64
+
+[node name="Collision" type="CollisionShape2D" parent="M2/Inimigos/inimigo 2 - RAM 4GB/hitbox"]
+position = Vector2( -0.5, 5 )
+shape = SubResource( 9 )
+
+[node name="Drop" type="Control" parent="M2/Inimigos/inimigo 2 - RAM 4GB"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="RAM_2" type="Label" parent="M2/Inimigos/inimigo 2 - RAM 4GB/Drop"]
+margin_left = 523.0
+margin_top = 99.0
+margin_right = 1208.0
+margin_bottom = 180.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 10 )
+align = 1
+
+[node name="Label" type="Label" parent="M2/Inimigos/inimigo 2 - RAM 4GB/Drop/RAM_2"]
+margin_left = 300.0
+margin_right = 983.0
+margin_bottom = 81.0
+custom_colors/font_color = Color( 0.054902, 0, 1, 1 )
+custom_fonts/font = SubResource( 159 )
+text = "+ 4GB RAM"
+align = 1
+
+[node name="anim" type="AnimationPlayer" parent="M2/Inimigos/inimigo 2 - RAM 4GB/Drop/RAM_2"]
+anims/Drop = SubResource( 160 )
+anims/RESET = SubResource( 161 )
+
+[node name="Morte" type="Area2D" parent="M2/Inimigos/inimigo 2 - RAM 4GB"]
+collision_layer = 0
+
+[node name="Collision" type="CollisionShape2D" parent="M2/Inimigos/inimigo 2 - RAM 4GB/Morte"]
+position = Vector2( -4.5, 25.5 )
+shape = SubResource( 13 )
+
+[node name="coleta" type="AudioStreamPlayer" parent="M2/Inimigos/inimigo 2 - RAM 4GB"]
+stream = ExtResource( 73 )
+pitch_scale = 3.15
 
 [node name="skin" type="Node2D" parent="M2"]
 
@@ -1695,6 +2697,18 @@ shape = SubResource( 129 )
 [connection signal="PlayerEntered" from="M1/Itens/RJ45" to="Player" method="_on_RJ45_PlayerEntered"]
 [connection signal="PlayerEntered" from="M1/Itens/crimpador" to="Player" method="_on_crimpador2_PlayerEntered"]
 [connection signal="PlayerEntered" from="M1/Itens/cabo_de_rede" to="Player" method="_on_cabo_de_rede_PlayerEntered"]
+[connection signal="animation_finished" from="M2/Inimigos/inimigo 1 - RAM 2GB/anim" to="M2/Inimigos/inimigo 1 - RAM 2GB" method="_on_anim_animation_finished"]
+[connection signal="body_entered" from="M2/Inimigos/inimigo 1 - RAM 2GB/hitbox" to="M2/Inimigos/inimigo 1 - RAM 2GB" method="_on_hitbox_body_entered"]
+[connection signal="animation_finished" from="M2/Inimigos/inimigo 1 - RAM 2GB/Drop/RAM_2/anim" to="M2/Inimigos/inimigo 1 - RAM 2GB" method="_on_anim_animation_finished"]
+[connection signal="animation_started" from="M2/Inimigos/inimigo 1 - RAM 2GB/Drop/RAM_2/anim" to="M2/Inimigos/inimigo 1 - RAM 2GB" method="_on_anim_animation_started"]
+[connection signal="body_entered" from="M2/Inimigos/inimigo 1 - RAM 2GB/Morte" to="M2/Inimigos/inimigo 1 - RAM 2GB" method="_on_Morte_body_entered"]
+[connection signal="body_exited" from="M2/Inimigos/inimigo 1 - RAM 2GB/Morte" to="M2/Inimigos/inimigo 1 - RAM 2GB" method="_on_Morte_body_exited"]
+[connection signal="animation_finished" from="M2/Inimigos/inimigo 2 - RAM 4GB/anim" to="M2/Inimigos/inimigo 2 - RAM 4GB" method="_on_anim_animation_finished"]
+[connection signal="body_entered" from="M2/Inimigos/inimigo 2 - RAM 4GB/hitbox" to="M2/Inimigos/inimigo 2 - RAM 4GB" method="_on_hitbox_body_entered"]
+[connection signal="animation_finished" from="M2/Inimigos/inimigo 2 - RAM 4GB/Drop/RAM_2/anim" to="M2/Inimigos/inimigo 2 - RAM 4GB" method="_on_anim_animation_finished"]
+[connection signal="animation_started" from="M2/Inimigos/inimigo 2 - RAM 4GB/Drop/RAM_2/anim" to="M2/Inimigos/inimigo 2 - RAM 4GB" method="_on_anim_animation_started"]
+[connection signal="body_entered" from="M2/Inimigos/inimigo 2 - RAM 4GB/Morte" to="M2/Inimigos/inimigo 2 - RAM 4GB" method="_on_Morte_body_entered"]
+[connection signal="body_exited" from="M2/Inimigos/inimigo 2 - RAM 4GB/Morte" to="M2/Inimigos/inimigo 2 - RAM 4GB" method="_on_Morte_body_exited"]
 [connection signal="body_entered" from="M2/Foço/Cabos_eletricos" to="Player" method="_on_Cabos_eletricos_body_entered"]
 [connection signal="body_exited" from="M2/Foço/Cabos_eletricos" to="Player" method="_on_Cabos_eletricos_body_exited"]
 [connection signal="timeout" from="M2/Suportes/Suporte3 - Local/Timer" to="M2/Suportes/Suporte3 - Local" method="_on_Timer_timeout"]

@@ -9,7 +9,7 @@ func _ready():
 	$Descricoes.visible = false
 	$background.visible = false
 	
-	#Itens
+	#Itens ---- linha 1
 	$"Itens - linha 1/RJ45_Macho".visible  = false
 	$"Itens - linha 1/Patch_cord".visible = false
 	$"Itens - linha 1/RAM_2".visible = false
@@ -22,6 +22,9 @@ func _ready():
 	$"Itens - linha 1/Placa_mae".visible = false
 	$"Itens - linha 1/Fonte".visible = false
 	$"Itens - linha 1/Gabinete".visible = false
+	
+	#Itens ----- linha 2
+	$"Itens - linha 2/Cabo_de_rede".visible = false
 	
 func _physics_process(delta):
 	
@@ -63,6 +66,7 @@ func _on_TextureButton_pressed():
 	$"Descricoes/Placa_mae".visible = false
 	$"Descricoes/Fonte".visible = false
 	$"Descricoes/Gabinete".visible = false
+	$"Descricoes/Cabo_de_rede".visible = false
 
 #func _on_TextureButton_pressed():
 #	$Descricoes.visible = false
@@ -135,8 +139,7 @@ func _on_Fonte_pressed():
 func _on_Gabinete_pressed():
 	$Descricoes.visible = true
 	$"Descricoes/Gabinete".visible = true
-	
-
-
-
-
+#------------------------------------------------------------------------------Fileira 2
+func _on_Cabo_de_rede_pressed():
+	$Descricoes.visible = true
+	$"Descricoes/Cabo_de_rede".visible = true

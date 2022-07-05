@@ -2,7 +2,9 @@ extends KinematicBody2D
 
 export var speed = 64
 export var life = 2
-export var drop = "RAM_2"
+export var drop = "RAM_4"
+
+
 var velocity = Vector2.ZERO
 var move_direction = -1
 var gravity = 1200
@@ -11,7 +13,8 @@ var morto = false
 var entrou = false
 
 
-
+func _ready():
+	$Drop/RAM_2.visible = false
 
 func _physics_process(delta: float) -> void:
 	if entrou == true and morto == true and Input.is_action_pressed("agarrar"):
@@ -23,19 +26,33 @@ func _physics_process(delta: float) -> void:
 		yield(get_tree().create_timer(0.3), "timeout")
 		$coleta.play()
 		if drop == "RAM_2":
+			#$Drop/RAM_2.Label.text = "CAssssaaaa"
 			Global.RAM_2 += 1
-			print("Pegou memória RAM 2")
-			$Drop/RAM_2/Label.text = "+ 2GB RAM"
+			#print("Pegou memória RAM 2")
+			#var text_drop = String("Testeeee")
+			#$Drop/RAM_2/Label.text = text_drop
+			#yield(get_tree().create_timer(1), "timeout")
 			$Drop/RAM_2/anim.play("Drop")
+			yield(get_tree().create_timer(5), "timeout")
 			queue_free()
 		elif drop == "RAM_4":
+			$Drop/RAM_2/Label.text ="CAssssaaaa"
 			Global.RAM_4 += 1
-			print("Pegou memória RAM 4")
-			$Drop/RAM_2/Label.text = "+ 4GB RAM"
+			#print("Pegou memória RAM 4")
+			#var text_drop = String("Testeeee")
+			#$Drop/RAM_2/Label.text = text_drop
+#			$Drop/RAM_2/Label.text = "+ 4GB RAM"
+			#yield(get_tree().create_timer(1), "timeout")
+			$Drop/RAM_2/anim.play("Drop")
+			yield(get_tree().create_timer(5), "timeout")
+			queue_free()
 		elif drop == "RAM_8":
 			Global.RAM_8 += 1
 			print("Pegou memória RAM 8")
 			$Drop/RAM_2/Label.text = "+ 8GB RAM"
+			$Drop/RAM_2/anim.play("Drop")
+			yield(get_tree().create_timer(5), "timeout")
+			queue_free()
 		elif drop == "HD":
 			Global.HD += 1
 			print("Pegou HD")
@@ -79,10 +96,6 @@ func parar():
 	 speed = 0
 	
 func _on_anim_animation_finished(anim_name):
-	if  life < 1:
-		yield(get_tree().create_timer(5), "timeout")
-		$Drop/RAM_2/Label.visible = false
-		#queue_free()
 	if  anim_name == "idle":
 		#print("Entrouuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu")
 		$texture.flip_h != $texture.flip_h
@@ -90,8 +103,6 @@ func _on_anim_animation_finished(anim_name):
 		move_direction *= -1
 		$anim.play("run") 
 		
-		
-
 func _set_animation():
 	var anim = "run"
 	if $ray_wall.is_colliding():

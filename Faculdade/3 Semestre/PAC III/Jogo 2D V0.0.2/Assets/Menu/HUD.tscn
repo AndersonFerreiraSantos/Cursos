@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Assets/Items/Cafe/Cafe_icon.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/score.gd" type="Script" id=2]
@@ -21,6 +21,8 @@
 [ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Fonte.png" type="Texture" id=19]
 [ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Gainete.png" type="Texture" id=20]
 [ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Processador.png" type="Texture" id=21]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Cabo de rede.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Menu/Itens - linha 2.gd" type="Script" id=23]
 
 [sub_resource type="StreamTexture" id=5]
 load_path = "res://.import/RJ - 45 - F.png-aeb27d2a5eb1f043ddb2a5dd13fc1f1c.stex"
@@ -266,6 +268,25 @@ margin_top = 258.0
 margin_right = -15.0
 margin_bottom = -300.0
 alignment = 1
+script = ExtResource( 23 )
+
+[node name="Cabo_de_rede" type="TextureButton" parent="Inventario/Itens - linha 2"]
+visible = false
+margin_left = 560.0
+margin_right = 660.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 22 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 2/Cabo_de_rede"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
 
 [node name="Itens - linha 3" type="HBoxContainer" parent="Inventario"]
 anchor_right = 1.0
@@ -310,10 +331,10 @@ autowrap = true
 
 [node name="Peca" type="Label" parent="Inventario/Descricoes/RJ45_Macho/Label"]
 modulate = Color( 0, 0.0156863, 1, 1 )
-margin_left = -174.0
-margin_top = -58.0
-margin_right = 857.0
-margin_bottom = 14.0
+margin_left = -36.0
+margin_top = -65.0
+margin_right = 995.0
+margin_bottom = 7.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 6 )
 text = "RJ45 - Macho/Fêmea"
@@ -1083,6 +1104,83 @@ text = "Com um patch panel você consegue saber onde tá conectado cada cabo e a
 align = 1
 autowrap = true
 
+[node name="Cabo_de_rede" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/Cabo_de_rede"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/Cabo_de_rede/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Cabo de rede"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/Cabo_de_rede/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/Cabo_de_rede/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/Cabo_de_rede/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/Cabo_de_rede/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Porquê usar patch cord?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/Cabo_de_rede/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
 [node name="Cafe" type="Control" parent="."]
 margin_left = -4.0
 margin_top = 2.0
@@ -1151,6 +1249,7 @@ Setas = Andar
 [connection signal="pressed" from="Inventario/Itens - linha 1/Placa_mae" to="Inventario" method="_on_Plca_mae_pressed"]
 [connection signal="pressed" from="Inventario/Itens - linha 1/Fonte" to="Inventario" method="_on_Fonte_pressed"]
 [connection signal="pressed" from="Inventario/Itens - linha 1/Gabinete" to="Inventario" method="_on_Gabinete_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 2/Cabo_de_rede" to="Inventario" method="_on_Cabo_de_rede_pressed"]
 [connection signal="pressed" from="Inventario/Descricoes/RJ45_Macho/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
 [connection signal="pressed" from="Inventario/Descricoes/RAM/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
 [connection signal="pressed" from="Inventario/Descricoes/Processador/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
@@ -1161,3 +1260,4 @@ Setas = Andar
 [connection signal="pressed" from="Inventario/Descricoes/SSD/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
 [connection signal="pressed" from="Inventario/Descricoes/NVMe_PCIe/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
 [connection signal="pressed" from="Inventario/Descricoes/Patch_cord/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/Cabo_de_rede/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]

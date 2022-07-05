@@ -93,7 +93,7 @@ func _physics_process(delta: float) -> void:
 #--------------------------------------------------------------------------------------------------------
 	#Missão 1 - Finalizar
 		#Fazer patch_cord
-	patch_cord()
+#	patch_cord()
 #--------------------------------------------------------------------------------------------------------
 	_porta_1()
 
@@ -220,14 +220,14 @@ func _set_animation():
 #func _on_Trigger_PlayerEntered() -> void:
 #	$Camera.current = false
 
-func patch_cord():
-	if Global.Crimpador == 1 && Global.RJ45_Macho == 2 && Global.Cabo_de_Rede == 1:
-		Global.Patch_cord = 1
-		Global.RJ45_Macho -= 2
-		Global.Cabo_de_Rede -= 1
-		
-		print("Parabéns, você fez um patch cord. +", Global.Patch_cord," patch cord")
-		print("Crimpador:", Global.Crimpador, ", RJ45 macho:", Global.RJ45_Macho,", Cabo de Rede:", Global.Cabo_de_Rede)
+#func patch_cord():
+#	if Global.Crimpador == 1 && Global.RJ45_Macho == 2 && Global.Cabo_de_Rede == 1:
+#		Global.Patch_cord = 1
+#		Global.RJ45_Macho -= 2
+#		Global.Cabo_de_Rede -= 1
+#
+#		print("Parabéns, você fez um patch cord. +", Global.Patch_cord," patch cord")
+#		print("Crimpador:", Global.Crimpador, ", RJ45 macho:", Global.RJ45_Macho,", Cabo de Rede:", Global.Cabo_de_Rede)
 #Funções para abrir portas-----------------------------------------------------------------PORTAS
 
 func _porta_1():
@@ -236,7 +236,7 @@ func _porta_1():
 		
 func _porta_2():
 	if Global.missao_1 == 1:
-		Global.porta_2 = "aberta"		
+		Global.porta_2 = "aberta"
 
 func _on_cabo_de_rede_PlayerEntered():
 	missao_1_itens += 1

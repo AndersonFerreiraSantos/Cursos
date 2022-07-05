@@ -30,12 +30,10 @@ var RAM_16 = 1
 		#Bloco Ativo M2
 var bloco_ativo_1 = false
 
-
-
 #Computador
 
-
 var Elevador = 1
+
 var Elevador_2 = 1
 
 var life_player = 5
@@ -59,6 +57,8 @@ var missao_1 = 0
 #Armadilhas____________________
 var no_cabo_eletrico = false
 func _process(delta: float) -> void:
+	print("RJ:",RJ45_Macho)
+	print("Cabo:",Cabo_de_Rede)
 	pass
 
 	#____________M1____________

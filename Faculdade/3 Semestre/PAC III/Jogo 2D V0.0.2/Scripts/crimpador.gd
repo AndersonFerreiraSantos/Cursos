@@ -12,5 +12,4 @@ func _physics_process(delta: float) -> void:
 			Global.em_missao = true
 			Global.mensagem = 8
 			Global.Crimpador += 1
-			print("crimpador: ", Global.Crimpador)
 			queue_free()

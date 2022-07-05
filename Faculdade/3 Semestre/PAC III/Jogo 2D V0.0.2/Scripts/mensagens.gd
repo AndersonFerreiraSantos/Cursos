@@ -19,10 +19,6 @@ func _physics_process(delta):
 	msg_11()
 	msg_12()
 #
-	
-	
-	
-	
 func msg_1():
 	if Global.mensagem == 1:
 		$msg_1.visible = true

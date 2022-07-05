@@ -79,4 +79,4 @@ func _physics_process(delta):
 	else:
 		$Gabinete.visible = false
 		
-
+#----------------------------------------------------------------------Fila 2
