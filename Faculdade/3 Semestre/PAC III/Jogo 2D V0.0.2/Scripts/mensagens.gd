@@ -101,3 +101,5 @@ func _on_Errado__1_pressed():
 func _on_Errado__2_pressed():
 	Global.missao_1 = 3
 	Global.mensagem = 9
+
+

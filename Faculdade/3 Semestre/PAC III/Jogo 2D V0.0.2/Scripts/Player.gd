@@ -7,6 +7,7 @@ var knockback_int = 3700
 #Posição da camera padrão = 0
 var posicao_camera = 9
 
+
 var UP = Vector2.UP
 #Gravidade do player:
 var velocity = Vector2.ZERO
@@ -218,13 +219,14 @@ func _set_animation():
 #camera parar de seguir jogardor CASA-----------------------
 #func _on_Trigger_PlayerEntered() -> void:
 #	$Camera.current = false
+
 func patch_cord():
 	if Global.Crimpador == 1 && Global.RJ45_Macho == 2 && Global.Cabo_de_Rede == 1:
-		Global.Patch_Cord = 1
+		Global.Patch_cord = 1
 		Global.RJ45_Macho -= 2
 		Global.Cabo_de_Rede -= 1
 		
-		print("Parabéns, você fez um patch cord. +", Global.Patch_Cord," patch cord")
+		print("Parabéns, você fez um patch cord. +", Global.Patch_cord," patch cord")
 		print("Crimpador:", Global.Crimpador, ", RJ45 macho:", Global.RJ45_Macho,", Cabo de Rede:", Global.Cabo_de_Rede)
 #Funções para abrir portas-----------------------------------------------------------------PORTAS
 

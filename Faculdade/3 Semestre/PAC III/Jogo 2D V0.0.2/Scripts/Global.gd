@@ -1,26 +1,29 @@
 extends Node
 
 #itens 
-var Cafe = 0 
-var Crimpador = 0
-var Cabo_de_Rede = 0
-var Patch_Cord = 0
-var notebook = 0
-var RJ45_Macho = 0 #Se for pego abrira a porta_1
+var Cafe = 1 
+var Crimpador = 1
+var Cabo_de_Rede = 1
+var Patch_cord = 1
+var notebook = 1
+var RJ45_Macho = 1 #Se for pego abrira a porta_1
 
 #Peças
-var HD = 0
-var SSD = 0
-var NVMe_PCIe = 0
-var Placa_mae = 0
-var Processador = 0
-var Fonte = 0
-var Gabinete = 0
-var Placa_de_video = 0
+var HD = 1
+var SSD = 1
+var NVMe_PCIe = 1
+var Placa_mae = 1
+var Processador = 1
+var Fonte = 1
+var Gabinete = 1
+var Placa_de_video = 1
+
+
 	#Memórias RAM
-var RAM_2 = 0
-var RAM_4 = 0
-var RAM_8 = 0
+var RAM_2 = 1
+var RAM_4 = 1
+var RAM_8 = 1
+var RAM_16 = 1
 
 #Energia
 	#Blocos Ativos

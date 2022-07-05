@@ -1,22 +1,1095 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Assets/Items/Cafe/Cafe_icon.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/score.gd" type="Script" id=2]
 [ext_resource path="res://Macondo-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Assets/Menu/heart.png" type="Texture" id=4]
 [ext_resource path="res://Scripts/life2.gd" type="Script" id=5]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/bolsa.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Menu/Inventario.gd" type="Script" id=7]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/fundo.png" type="Texture" id=8]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/RAM 2GB.png" type="Texture" id=9]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/patch cord.png" type="Texture" id=10]
+[ext_resource path="res://Anton-Regular.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/sombra.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Menu/Itens - linha 1.gd" type="Script" id=13]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/RAM 4GB.png" type="Texture" id=14]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/RAM 8GB.png" type="Texture" id=15]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/RAM 16GB.png" type="Texture" id=16]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/HD.png" type="Texture" id=17]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Placa mae.png" type="Texture" id=18]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Fonte.png" type="Texture" id=19]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Gainete.png" type="Texture" id=20]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Processador.png" type="Texture" id=21]
+
+[sub_resource type="StreamTexture" id=5]
+load_path = "res://.import/RJ - 45 - F.png-aeb27d2a5eb1f043ddb2a5dd13fc1f1c.stex"
 
 [sub_resource type="DynamicFont" id=1]
 size = 45
 font_data = ExtResource( 3 )
 
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 47
+font_data = ExtResource( 11 )
+
+[sub_resource type="StreamTexture" id=4]
+load_path = "res://.import/fechar.png-2a2f57e8d5209031c1ac4d9448ee5282.stex"
+
 [node name="HUD" type="CanvasLayer"]
 
-[node name="Holder" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Inventario" type="Control" parent="."]
+margin_left = 17.0
+margin_top = 10.0
+margin_right = 1270.0
+margin_bottom = 681.0
+script = ExtResource( 7 )
 
-[node name="icon" type="TextureRect" parent="Holder"]
+[node name="Correto" type="TextureButton" parent="Inventario"]
+visible = false
+margin_left = 1156.0
+margin_top = 6.0
+margin_right = 1256.0
+margin_bottom = 247.0
+texture_normal = ExtResource( 6 )
+
+[node name="background" type="Sprite" parent="Inventario"]
+position = Vector2( 623, 336 )
+z_index = -1
+texture = ExtResource( 8 )
+
+[node name="Itens - linha 1" type="HBoxContainer" parent="Inventario"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 106.0
+margin_right = -17.0
+margin_bottom = -452.0
+alignment = 1
+script = ExtResource( 13 )
+
+[node name="RJ45_Macho" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 40.0
+margin_right = 140.0
+margin_bottom = 113.0
+texture_normal = SubResource( 5 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/RJ45_Macho"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="RAM_2" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 144.0
+margin_right = 244.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 9 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/RAM_2"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="RAM_4" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 248.0
+margin_right = 348.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 14 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/RAM_4"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="RAM_8" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 352.0
+margin_right = 452.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 15 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/RAM_8"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="RAM_16" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 456.0
+margin_right = 556.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 16 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/RAM_16"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="Processador" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 560.0
+margin_right = 660.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 21 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/Processador"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="HD" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 664.0
+margin_right = 764.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 17 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/HD"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="Patch_cord" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 768.0
+margin_right = 868.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 10 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/Patch_cord"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="Placa_mae" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 872.0
+margin_right = 972.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 18 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/Placa_mae"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="Fonte" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 976.0
+margin_right = 1076.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 19 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/Fonte"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="Gabinete" type="TextureButton" parent="Inventario/Itens - linha 1"]
+margin_left = 1080.0
+margin_right = 1180.0
+margin_bottom = 113.0
+texture_normal = ExtResource( 20 )
+
+[node name="Quantidade" type="Label" parent="Inventario/Itens - linha 1/Gabinete"]
+modulate = Color( 0.0313726, 1, 0, 1 )
+margin_left = 31.0
+margin_top = 97.0
+margin_right = 87.0
+margin_bottom = 208.0
+custom_fonts/font = SubResource( 1 )
+text = "0
+"
+max_lines_visible = 0
+
+[node name="Itens - linha 2" type="HBoxContainer" parent="Inventario"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 17.0
+margin_top = 258.0
+margin_right = -15.0
+margin_bottom = -300.0
+alignment = 1
+
+[node name="Itens - linha 3" type="HBoxContainer" parent="Inventario"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 418.0
+margin_right = -16.0
+margin_bottom = -140.0
+alignment = 1
+
+[node name="Itens - linha 4" type="HBoxContainer" parent="Inventario"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 15.0
+margin_top = 542.0
+margin_right = -17.0
+margin_bottom = -16.0
+alignment = 1
+
+[node name="Descricoes" type="Control" parent="Inventario"]
+margin_left = 2415.0
+margin_top = 278.0
+margin_right = 2415.0
+margin_bottom = 391.0
+rect_pivot_offset = Vector2( -1783, 59 )
+
+[node name="RJ45_Macho" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/RJ45_Macho"]
+margin_left = -468.0
+margin_top = -270.0
+margin_right = 563.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/RJ45_Macho/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -174.0
+margin_top = -58.0
+margin_right = 857.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "RJ45 - Macho/Fêmea"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/RJ45_Macho/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/RJ45_Macho/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -50.0
+margin_top = 178.0
+margin_right = 981.0
+margin_bottom = 205.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Porque se chama RJ45? "
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/RJ45_Macho/Label"]
+margin_left = -42.0
+margin_top = 209.0
+margin_right = 989.0
+margin_bottom = 290.0
+custom_fonts/font = SubResource( 2 )
+text = "Quando as pessoas olhavam o conector do telefone na parede já associavam o nome RJ45, quando passaram a ver conectores parecidos para os computadores passaram a chamá-los também de RJ45. Daí, esse conector ser chamado popularmente de RJ45 e associado diretamente ao cabeamento de computadores."
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/RJ45_Macho/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -58.0
+margin_top = 56.0
+margin_right = 973.0
+margin_bottom = 83.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/RJ45_Macho/Label"]
+margin_left = -50.0
+margin_top = 87.0
+margin_right = 981.0
+margin_bottom = 168.0
+custom_fonts/font = SubResource( 2 )
+text = "O cabo Ethernet, ou cabo RJ-45, como também é conhecido, é um cabo de rede utilizado para fazer a conexão por meio de fios. Ele pode ser utilizado em diferentes locais, como residências e estabelecimentos comerciais, por exemplo."
+align = 1
+autowrap = true
+
+[node name="RAM" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/RAM"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/RAM/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Memória RAM"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/RAM/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/RAM/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/RAM/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+text = "A memória RAM (Random Access Memory - Memória de Acesso Aleatório) é um hardware de armazenamento randômico e volátil de memória. Isto significa que esta peça armazena dados de programas em execução enquanto o computador está ligado."
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/RAM/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Como a memória RAM é usada?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/RAM/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+text = "Seu computador usa RAM para carregar dados, porque é muito mais rápido do que executar os mesmos dados diretamente de um disco rígido. Pense na RAM como uma mesa de escritório. Uma mesa é usada para acesso rápido à documentos importantes, ferramentas de escrita e outros itens de que você precisa no momento."
+align = 1
+autowrap = true
+
+[node name="Processador" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/Processador"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/Processador/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Processador"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/Processador/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/Processador/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/Processador/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+text = "O processador é a unidade central de processamento de um computador (CPU), que funciona como o cérebro do computador, pois interage e faz as conexões necessárias entre todos os programas instalados."
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/Processador/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Quais foram os primeiros processadores?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/Processador/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+text = "Em Novembro de 1971, uma companhia chamada Intel, publicou a introdução para o mundo do primeiro processador do mundo, o Intel 4004 (Patente Americana #3,821,715), inventado pelos engenheiros da Intel e Ted Hof. O chip Intel 4004 tinha tudo que um computador precisava para pensar em um pequeno chip."
+align = 1
+autowrap = true
+
+[node name="Fonte" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/Fonte"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/Fonte/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Fonte"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/Fonte/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/Fonte/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/Fonte/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+text = "A fonte de energia do computador ou, em inglês, PSU (Power Supply Unit — Unidade de Alimentação de Energia), é responsável por converter a voltagem da energia elétrica, que chega pelas tomadas, em voltagens menores, capazes de ser suportadas pelos"
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/Fonte/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é uma fonte modular?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/Fonte/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+text = "Uma fonte semi ou full-modular é uma fonte que permite um melhor gerenciamento dos cabos dentro do gabinete, visto permitem que sejam acoplados a fonte apenas os cabos que precisamos utilizar."
+align = 1
+autowrap = true
+
+[node name="Gabinete" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/Gabinete"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/Gabinete/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Gabinete"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/Gabinete/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/Gabinete/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/Gabinete/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+text = "A função do Gabinete é proteger os componentes de sujeira e umidade, e também evitar superaquecimento dos componentes. Dentro de um gabinete, existem vários componentes que fazem com que o computador funcione."
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/Gabinete/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Qual o tipo de gabinete?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/Gabinete/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+text = "Existem três tamanhos principais de gabinete: torre completa, torre intermediária e mini-ITX. Os gabinetes de torre completa e torre intermediária são compatíveis com as placas mães ATX padrão – de longe o tamanho mais comum das placas mãe por aí. Ambos também podem caber em placas mães micro-ATX menores."
+align = 1
+autowrap = true
+
+[node name="Placa_mae" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/Placa_mae"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/Placa_mae/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Placa mãe"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/Placa_mae/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/Placa_mae/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/Placa_mae/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+text = "Ela é o sistema que une todos os componentes de um computador, permitindo que eles funcionem de forma organizada. Sua peça dispõe de todos os caminhos e redes que permitem a troca de informação entre todas as outras: processadores, memórias, sistemas de armazenamento, placa de rede e tudo o mais."
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/Placa_mae/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Como funciona?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/Placa_mae/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+text = "A placa-mãe fica encaixada diretamente com o cabo da fonte que transporta a energia elétrica necessária pra ela funcionar. E ela sozinha consegue alimentar o processador, as memórias e a grande maioria dos dispositivos encaixados nos slots."
+align = 1
+autowrap = true
+
+[node name="HD" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/HD"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/HD/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "HD"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/HD/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/HD/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/HD/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+text = "O HD ou Disco Rígido serve para armazenar arquivos, programas, jogos e todo tipo de conteúdo que se deseja manter no computador. O sistema é, na verdade, mais um tipo de memória que existe dentro de um PC"
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/HD/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Como funciona?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/HD/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+text = "O disco rígido, popularmente conhecido como HD (Hard Disk), é um dispositivo que é usado em computadores capaz de armazenar dados. No HD é armazenado qualquer tipo de informação, podendo ser um simples arquivo de uso pessoal, como também informações usadas pelo sistema operacional."
+align = 1
+autowrap = true
+
+[node name="SSD" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/SSD"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/SSD/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "SSD"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/SSD/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/SSD/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/SSD/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+text = "Essa unidade é um tipo de armazenamento mais rápido e silencioso que o antigo HDD (Unidade de Disco Rígido, em português) convencionais de computadores e notebooks. O componente é essencial e garante mais velocidade em todas as tarefas, desde ligar o sistema até carregar programas e jogos."
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/SSD/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Que tipo de memória é um SSD"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/SSD/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+text = "SSD ou Solid State Drive é um tipo de memória não volátil utilizada na indústria da tecnologia, principalmente em computadores, considerada a evolução dos hard disks. Esses semicondutores possuem controladores e memórias flash NAND, que utilizam corrente elétrica para o armazenamento de dados."
+align = 1
+autowrap = true
+
+[node name="NVMe_PCIe" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/NVMe_PCIe"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/NVMe_PCIe/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "NVMe PCIe "
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/NVMe_PCIe/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/NVMe_PCIe/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/NVMe_PCIe/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+text = "O que é SSD com PCIe?
+Os SSDs do tipo PCIe também são conhecidos no mercado como modelos SATA III. Eles são capazes de atingir velocidades altíssimas de até 6 GB/s. Essa velocidade significa que aplicações tradicionais de desktop, como jogos, podem ser iniciadas em cerca de 5 segundos."
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/NVMe_PCIe/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Qual a diferença entre SSD SATA e PCIe?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/NVMe_PCIe/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+text = "Assuntos abordados: SATA e PCIe, que a primeira vista são dois tipos de entradas em uma placa-mãe, e teremos foco no seu uso por HDs e SSDs, onde a PCIe tem maior passagem de dados, e a SATA tem um número maior de entradas."
+align = 1
+autowrap = true
+
+[node name="Patch_cord" type="Sprite" parent="Inventario/Descricoes"]
+visible = false
+position = Vector2( -1783, 79 )
+z_index = 1
+texture = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="Inventario/Descricoes/Patch_cord"]
+margin_left = -466.0
+margin_top = -270.0
+margin_right = 565.0
+margin_bottom = -81.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+autowrap = true
+
+[node name="Peca" type="Label" parent="Inventario/Descricoes/Patch_cord/Label"]
+modulate = Color( 0, 0.0156863, 1, 1 )
+margin_left = -73.0
+margin_top = -51.0
+margin_right = 958.0
+margin_bottom = 21.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 6 )
+text = "Patch cord"
+align = 1
+autowrap = true
+
+[node name="TextureButton" type="TextureButton" parent="Inventario/Descricoes/Patch_cord/Label"]
+margin_left = 879.0
+margin_top = -78.0
+margin_right = 986.0
+margin_bottom = 29.0
+texture_normal = SubResource( 4 )
+
+[node name="Pergunta 1" type="Label" parent="Inventario/Descricoes/Patch_cord/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -54.0
+margin_top = 35.0
+margin_right = 977.0
+margin_bottom = 62.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "O que é?"
+align = 1
+autowrap = true
+
+[node name="Resposta 1" type="Label" parent="Inventario/Descricoes/Patch_cord/Label"]
+margin_left = -46.0
+margin_top = 66.0
+margin_right = 985.0
+margin_bottom = 147.0
+custom_fonts/font = SubResource( 2 )
+text = "O Patch Panel ajuda você a evitar de queimar portas do switch, já que você não precisará mais ficar ligando e desligando os cabos do Switch, tudo você fará no Patch Panel. Patch Cord: Cabo de rede do PC para o Switch. Patch Cable: Cabo para ligar equipamentos iguais (HUB – HUB, por exemplo)."
+align = 1
+autowrap = true
+
+[node name="Pergunta 2" type="Label" parent="Inventario/Descricoes/Patch_cord/Label"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = -48.0
+margin_top = 158.0
+margin_right = 983.0
+margin_bottom = 185.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Porquê usar patch cord?"
+align = 1
+autowrap = true
+
+[node name="Resposta 2" type="Label" parent="Inventario/Descricoes/Patch_cord/Label"]
+margin_left = -40.0
+margin_top = 189.0
+margin_right = 991.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 2 )
+text = "Com um patch panel você consegue saber onde tá conectado cada cabo e assim os fios não ficam espalhados por aí e nem precisam ficar escondidos atrás de paredes ou móveis. Ou seja, além de deixar o ambiente bem mais organizado, fica mais fácil trocar algum cabo que tá com defeito ou na hora de conectar um novo."
+align = 1
+autowrap = true
+
+[node name="Cafe" type="Control" parent="."]
+margin_left = -4.0
+margin_top = 2.0
+margin_right = 36.0
+margin_bottom = 42.0
+
+[node name="icon" type="TextureRect" parent="Cafe"]
 margin_left = 33.0
 margin_top = 14.0
 margin_right = 92.0
@@ -24,7 +1097,7 @@ margin_bottom = 75.0
 texture = ExtResource( 1 )
 expand = true
 
-[node name="score" type="Label" parent="Holder"]
+[node name="score" type="Label" parent="Cafe"]
 margin_left = 96.0
 margin_top = 24.0
 margin_right = 195.0
@@ -34,14 +1107,14 @@ text = "00"
 max_lines_visible = 0
 script = ExtResource( 2 )
 
-[node name="Holder2" type="Control" parent="."]
+[node name="Vida" type="Control" parent="."]
 margin_left = 176.0
 margin_top = 30.0
 margin_right = 524.0
 margin_bottom = 70.0
 script = ExtResource( 5 )
 
-[node name="life" type="TextureRect" parent="Holder2"]
+[node name="life" type="TextureRect" parent="Vida"]
 margin_left = 3.0
 margin_top = 4.0
 margin_right = 34.0
@@ -50,17 +1123,41 @@ texture = ExtResource( 4 )
 expand = true
 stretch_mode = 2
 
-[node name="Control" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="Comandos" type="Control" parent="."]
+margin_left = 34.0
+margin_top = 605.0
+margin_right = 74.0
+margin_bottom = 645.0
 
-[node name="Controles" type="Label" parent="Control"]
-margin_left = 8.0
-margin_top = 623.0
-margin_right = 471.0
-margin_bottom = 705.0
+[node name="Controles" type="Label" parent="Comandos"]
+margin_left = 5.0
+margin_top = -18.0
+margin_right = 468.0
+margin_bottom = 64.0
 text = "Q = Empurrar/utilizar
 W = Jogar
 Espaço = Pular
 Setas = Andar
 "
+
+[connection signal="pressed" from="Inventario/Itens - linha 1/RJ45_Macho" to="Inventario" method="_on_RJ45_Macho_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/RAM_2" to="Inventario" method="_on_RAM_2_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/RAM_4" to="Inventario" method="_on_RAM_4_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/RAM_8" to="Inventario" method="_on_RAM_8_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/RAM_16" to="Inventario" method="_on_RAM_16_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/Processador" to="Inventario" method="_on_Processador_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/HD" to="Inventario" method="_on_HD_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/Patch_cord" to="Inventario" method="_on_Patch_cord_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/Placa_mae" to="Inventario" method="_on_Plca_mae_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/Fonte" to="Inventario" method="_on_Fonte_pressed"]
+[connection signal="pressed" from="Inventario/Itens - linha 1/Gabinete" to="Inventario" method="_on_Gabinete_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/RJ45_Macho/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/RAM/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/Processador/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/Fonte/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/Gabinete/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/Placa_mae/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/HD/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/SSD/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/NVMe_PCIe/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="Inventario/Descricoes/Patch_cord/Label/TextureButton" to="Inventario" method="_on_TextureButton_pressed"]

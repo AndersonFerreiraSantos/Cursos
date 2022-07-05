@@ -15,6 +15,7 @@ func _on_Alavanca_De_Parede_body_exited(body):
 func _Alavanca():
 	var anim = "Ativado"
 	if status == true and Porta == false and Input.is_action_pressed("agarrar"):
+		
 		yield(get_tree().create_timer(0.3), "timeout")
 		$som.play()
 		Porta = true

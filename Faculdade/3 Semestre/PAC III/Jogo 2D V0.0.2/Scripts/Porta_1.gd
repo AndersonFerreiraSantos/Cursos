@@ -1,5 +1,5 @@
 extends KinematicBody2D
-var teste = Global.Patch_Cord
+var teste = Global.Patch_cord
 
 func _physics_process(delta: float) -> void:
 	teste()
