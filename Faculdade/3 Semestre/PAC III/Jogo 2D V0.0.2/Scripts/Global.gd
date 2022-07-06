@@ -11,7 +11,7 @@ var inimigo_7 = false
 var inimigo_8 = false
 var inimigo_9 = false
 
-var posicao_camera = 4
+var posicao_camera = 10
 #itens 
 var Cafe = 0 
 var Crimpador = 0

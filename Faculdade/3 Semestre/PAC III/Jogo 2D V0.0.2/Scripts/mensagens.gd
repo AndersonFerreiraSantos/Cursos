@@ -18,6 +18,9 @@ func _physics_process(delta):
 	msg_10()
 	msg_11()
 	msg_12()
+	msg_15()
+	msg_20()
+	msg_21()
 #
 func msg_1():
 	if Global.mensagem == 1:
@@ -84,7 +87,22 @@ func msg_12():
 		$msg_12.visible = true
 	elif Global.mensagem != 12:
 		$msg_12.visible = false
+func msg_15():
+	if Global.mensagem == 15:
+		$msg_15.visible = true
+	elif Global.mensagem != 15:
+		$msg_15.visible = false
 
+func msg_20():
+	if Global.mensagem == 20:
+		$msg_20.visible = true
+	elif Global.mensagem != 20:
+		$msg_20.visible = false
+func msg_21():
+	if Global.mensagem == 21:
+		$msg_21.visible = true
+	elif Global.mensagem != 21:
+		$msg_21.visible = false
 #Opões -------------------------------------------------------------- 
 #Opões -------------------------------------------------------------- RJ45 - M1
 func _on_Correto_pressed():
@@ -99,3 +117,7 @@ func _on_Errado__2_pressed():
 	Global.mensagem = 9
 
 
+
+
+func _on_Button_pressed():
+	Global.mensagem = 21

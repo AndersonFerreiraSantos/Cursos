@@ -1,4 +1,4 @@
-[gd_scene load_steps=200 format=2]
+[gd_scene load_steps=234 format=2]
 
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Anton-Regular.ttf" type="DynamicFontData" id=2]
@@ -22,7 +22,6 @@
 [ext_resource path="res://Scenes/Iluinação_M1.tscn" type="PackedScene" id=20]
 [ext_resource path="res://Porta.tscn" type="PackedScene" id=21]
 [ext_resource path="res://Assets/Items/Cafe/Cafe.tscn" type="PackedScene" id=22]
-[ext_resource path="res://Assets/Items/Cafe/Cafe_Expresso.tscn" type="PackedScene" id=23]
 [ext_resource path="res://Assets/background/M1/Elevador.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Assets/background/M2/M2_V1.png" type="Texture" id=25]
 [ext_resource path="res://Assets/Menu/HUD.tscn" type="PackedScene" id=26]
@@ -80,6 +79,14 @@
 [ext_resource path="res://Assets/background/M2/Esgoto.png" type="Texture" id=78]
 [ext_resource path="res://Assets/background/M2/Cabos eletricos.png" type="Texture" id=79]
 [ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Gainete.png" type="Texture" id=80]
+[ext_resource path="res://Prefabs/FallingPlatform.tscn" type="PackedScene" id=81]
+[ext_resource path="res://Levels/Area2D.gd" type="Script" id=82]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Placa mae.png" type="Texture" id=83]
+[ext_resource path="res://Assets/Traps/Falling Platforms/Off.png" type="Texture" id=84]
+[ext_resource path="res://Assets/Traps/Falling Platforms/On (32x10).png" type="Texture" id=85]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/Fonte.png" type="Texture" id=86]
+[ext_resource path="res://Assets/background/M2/Skins/bolsa/Itens/RAM 16GB.png" type="Texture" id=87]
+[ext_resource path="res://Levels/Computador.gd" type="Script" id=88]
 
 [sub_resource type="RectangleShape2D" id=130]
 extents = Vector2( 35.5, 206.531 )
@@ -311,6 +318,189 @@ tracks/0/keys = {
 "values": [ ExtResource( 59 ) ]
 }
 
+[sub_resource type="GDScript" id=219]
+script/source = "extends KinematicBody2D
+#Unicoooo
+
+export var speed = 500
+var velocity = Vector2.ZERO
+var move_direction_cima = 1
+var move_direction_baixo = -1
+
+func _ready():
+	move_direction_cima = 1
+func _physics_process(delta: float) -> void:
+
+	_anim()
+	if Global.Elevador_2 == 0:
+		velocity.y = speed * move_direction_cima
+		velocity = move_and_slide(velocity)
+		
+		
+	elif Global.Elevador_2 == 1:
+#		Global.gravidade_player = 0
+		velocity.y = speed * move_direction_baixo
+		velocity = move_and_slide(velocity)
+		
+
+
+func _on_Alavanca_body_exited(body):
+	print('Saiu')
+	Global.Elevador_2 = 0
+	
+	
+func _anim():
+	var anim = \"Cima\"
+	if Global.Elevador_2 == 1:
+		anim = \"Cima\"
+	if Global.Elevador_2 == 0:
+		anim = \"Baixo\"
+	if $anim.assigned_animation != anim:
+		$anim.play(anim)
+
+#onready var Elevador = $Elevador
+#onready var Tween = $Tween
+#var teste = Global.Elevador
+#export var speed = 1.0
+#export var horizontal = false
+#export var distance = 400
+#var follow = Vector2.ZERO
+#const WAIT_DURATION = 0
+#
+#func _ready():
+#	_start_tween(teste)
+#
+#func _start_tween(teste):
+#	if (Global.Elevador == 1):
+#
+#		var move_direction = Vector2.DOWN * distance
+#		var duration = move_direction.length() / float(speed * 10)
+##		Tween.interpolate_property(
+##			self, \"follow\", move_direction, duration, 
+##			Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, WAIT_DURATION
+##			)
+#		Tween.interpolate_property(
+#			self, \"follow\", move_direction, Vector2.DOWN * distance, duration, 
+#			Tween.TRANS_LINEAR
+#			)
+#		Tween.start()
+#func _physics_process(delta: float) -> void:
+#	Elevador.position = Elevador.position.linear_interpolate(follow, 0.05)
+
+
+func _on_Colisor_de_Cima_body_entered(body):
+	Global.no_elevador = 4
+	yield(get_tree().create_timer(0.3), \"timeout\")
+	Global.no_elevador = 3
+
+	
+
+func _on_Colisor_de_Baixo_body_entered(body):
+	Global.no_elevador = 3
+
+	
+
+
+
+func _on_Ambiente_som_stop():
+	$Ambiente/elevador.stop()
+"
+
+[sub_resource type="Animation" id=220]
+resource_name = "Baixo"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 28 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=221]
+resource_name = "Cima"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 60 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=222]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 59 ) ]
+}
+
 [sub_resource type="Shader" id=53]
 code = "shader_type canvas_item;
 
@@ -392,6 +582,64 @@ func _physics_process(delta: float) -> void:
 [sub_resource type="RectangleShape2D" id=198]
 extents = Vector2( 32, 32 )
 
+[sub_resource type="GDScript" id=218]
+script/source = "extends Area2D
+
+signal PlayerEntered
+
+#aaaaaaaaaaaaaaaaaa
+#aaaaaaaaaaaaaaaaaa
+func _physics_process(delta: float) -> void:
+	var bodies = get_overlapping_bodies()
+	
+	for body in bodies:
+		if body.name == \"Player\":
+			Global.Fonte += 1
+			print(\"cabo de rede: \", Global.Fonte)
+			queue_free()
+"
+
+[sub_resource type="RectangleShape2D" id=200]
+extents = Vector2( 48.5, 33.5 )
+
+[sub_resource type="GDScript" id=223]
+script/source = "extends Area2D
+
+signal PlayerEntered
+
+#aaaaaaaaaaaaaaaaaa
+#aaaaaaaaaaaaaaaaaa
+func _physics_process(delta: float) -> void:
+	var bodies = get_overlapping_bodies()
+	
+	for body in bodies:
+		if body.name == \"Player\":
+			Global.RAM_16 += 1
+			print(\"cabo de rede: \", Global.RAM_16)
+			queue_free()
+"
+
+[sub_resource type="RectangleShape2D" id=224]
+extents = Vector2( 48.5, 33.5 )
+
+[sub_resource type="GDScript" id=199]
+script/source = "extends Area2D
+
+signal PlayerEntered
+
+#aaaaaaaaaaaaaaaaaa
+#aaaaaaaaaaaaaaaaaa
+func _physics_process(delta: float) -> void:
+	var bodies = get_overlapping_bodies()
+	
+	for body in bodies:
+		if body.name == \"Player\":
+			Global.mensagem = 15
+			Global.Placa_mae += 1
+			print(\"cabo de rede: \", Global.Placa_mae)
+			queue_free()
+"
+
 [sub_resource type="SegmentShape2D" id=62]
 a = Vector2( 3303, 303 )
 b = Vector2( 1863, 303 )
@@ -453,16 +701,16 @@ extents = Vector2( 273.5, 4.25 )
 extents = Vector2( 1611.25, 20.5 )
 
 [sub_resource type="RectangleShape2D" id=143]
-extents = Vector2( 900.688, 20.5 )
-
-[sub_resource type="RectangleShape2D" id=113]
-extents = Vector2( 3.375, 56.5 )
+extents = Vector2( 2864.5, 32.25 )
 
 [sub_resource type="RectangleShape2D" id=162]
 extents = Vector2( 74.5, 665.5 )
 
 [sub_resource type="RectangleShape2D" id=163]
-extents = Vector2( 74.5, 665.5 )
+extents = Vector2( 74.5, 1203.25 )
+
+[sub_resource type="RectangleShape2D" id=225]
+extents = Vector2( 71.75, 81.25 )
 
 [sub_resource type="RectangleShape2D" id=78]
 extents = Vector2( 4, 105.75 )
@@ -1320,7 +1568,7 @@ tracks/4/keys = {
 script/source = "extends KinematicBody2D
 
 export var speed = 500
-export var life = 7
+export var life = 2
 export var drop = \"HD\"
 
 
@@ -2685,6 +2933,9 @@ tracks/2/keys = {
 [sub_resource type="RectangleShape2D" id=138]
 extents = Vector2( 23.5, 25.5 )
 
+[sub_resource type="RectangleShape2D" id=226]
+extents = Vector2( 138.5, 74 )
+
 [sub_resource type="RectangleShape2D" id=186]
 extents = Vector2( 16.25, 165.75 )
 
@@ -2694,11 +2945,696 @@ extents = Vector2( 174.813, 19.875 )
 [sub_resource type="RectangleShape2D" id=190]
 extents = Vector2( 261, 108 )
 
+[sub_resource type="GDScript" id=201]
+script/source = "extends KinematicBody2D
+
+onready var anim = $anim
+onready var timer = $timer
+
+onready var reset_position = global_position
+
+var velocity = Vector2.ZERO
+var gravity = 720
+var is_triggered = false
+export var reset_timer = 3.0
+
+func _ready():
+	set_physics_process(false)
+
+func _physics_process(delta: float) -> void:
+	velocity.y += gravity * delta
+	position += velocity * delta
+	
+func collide_with(_collision: KinematicCollision2D, _collider: KinematicBody2D):
+	if !is_triggered:
+		is_triggered = true
+		yield(get_tree().create_timer(1), \"timeout\")
+		anim.play(\"shake\")
+		velocity = Vector2.ZERO
+
+func _on_anim_animation_finished(_anim_name: String) -> void:
+	set_physics_process(true)
+	timer.start(reset_timer)
+
+func _on_timer_timeout() -> void:
+	set_physics_process(false)
+	yield(get_tree(), \"physics_frame\")
+	var temp = collision_layer
+	collision_layer = 0
+	global_position = reset_position
+	yield(get_tree(), \"physics_frame\")
+	collision_layer = temp
+	is_triggered = false
+	
+	
+	
+	
+"
+
+[sub_resource type="RectangleShape2D" id=202]
+extents = Vector2( 100, 15 )
+
+[sub_resource type="Animation" id=203]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 84 ) ]
+}
+
+[sub_resource type="Animation" id=204]
+resource_name = "off"
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 84 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("texture:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -10, 0 ) ]
+}
+
+[sub_resource type="Animation" id=205]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 85 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -10, 25 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+
+[sub_resource type="Animation" id=206]
+resource_name = "shake"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 84 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("texture:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, 0 ), Vector2( 0, 0 ), Vector2( 10, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="GDScript" id=207]
+script/source = "extends KinematicBody2D
+
+onready var anim = $anim
+onready var timer = $timer
+
+onready var reset_position = global_position
+
+var velocity = Vector2.ZERO
+var gravity = 720
+var is_triggered = false
+export var reset_timer = 3.0
+
+func _ready():
+	set_physics_process(false)
+
+func _physics_process(delta: float) -> void:
+	velocity.y += gravity * delta
+	position += velocity * delta
+	
+func collide_with(_collision: KinematicCollision2D, _collider: KinematicBody2D):
+	if !is_triggered:
+		is_triggered = true
+		yield(get_tree().create_timer(0.5), \"timeout\")
+		anim.play(\"shake\")
+		velocity = Vector2.ZERO
+
+func _on_anim_animation_finished(_anim_name: String) -> void:
+	set_physics_process(true)
+	timer.start(reset_timer)
+
+func _on_timer_timeout() -> void:
+	set_physics_process(false)
+	yield(get_tree(), \"physics_frame\")
+	var temp = collision_layer
+	collision_layer = 0
+	global_position = reset_position
+	yield(get_tree(), \"physics_frame\")
+	collision_layer = temp
+	is_triggered = false
+	
+	
+	
+	
+"
+
+[sub_resource type="RectangleShape2D" id=208]
+extents = Vector2( 100, 15 )
+
+[sub_resource type="Animation" id=209]
+resource_name = "off"
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 84 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("texture:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -10, 0 ) ]
+}
+
+[sub_resource type="Animation" id=210]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 85 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -10, 25 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+
+[sub_resource type="Animation" id=211]
+resource_name = "shake"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 84 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("texture:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, 0 ), Vector2( 0, 0 ), Vector2( 10, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=212]
+resource_name = "off"
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 84 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("texture:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -10, 0 ) ]
+}
+
+[sub_resource type="Animation" id=213]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 85 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -10, 25 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+
+[sub_resource type="Animation" id=214]
+resource_name = "shake"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 84 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("texture:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, 0 ), Vector2( 0, 0 ), Vector2( 10, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=215]
+resource_name = "off"
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 84 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("texture:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -10, 0 ) ]
+}
+
+[sub_resource type="Animation" id=216]
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 85 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -10, 25 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:hframes")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 4 ]
+}
+
+[sub_resource type="Animation" id=217]
+resource_name = "shake"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("texture:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 84 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("texture:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 1 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("texture:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("texture:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, 0 ), Vector2( 0, 0 ), Vector2( 10, 0 ), Vector2( 0, 0 ) ]
+}
+
 [node name="Main" type="Node2D"]
 position = Vector2( 1, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 246, 327 )
+position = Vector2( 247, 335 )
 collision_mask = 8782
 
 [node name="Mensagens" type="Node2D" parent="."]
@@ -2867,7 +3803,7 @@ shape = SubResource( 112 )
 position = Vector2( 3420, 1924 )
 z_index = 4
 collision_layer = 8
-collision_mask = 8
+collision_mask = 1032
 collision/safe_margin = 0.001
 script = SubResource( 126 )
 
@@ -2895,6 +3831,63 @@ collision_layer = 0
 script = ExtResource( 58 )
 
 [node name="Collision" type="CollisionShape2D" parent="M1/Elevador_2/Elevador/Ambiente"]
+position = Vector2( -3, 9 )
+z_index = 10
+shape = SubResource( 109 )
+
+[node name="Elevador_3" type="Node2D" parent="M1"]
+position = Vector2( -1618, -556 )
+
+[node name="Colisor de Cima" type="Area2D" parent="M1/Elevador_3"]
+position = Vector2( 3531, 328 )
+collision_layer = 0
+collision_mask = 8
+
+[node name="Cima" type="CollisionShape2D" parent="M1/Elevador_3/Colisor de Cima"]
+position = Vector2( -107, 1439 )
+shape = SubResource( 141 )
+
+[node name="Colisor de Baixo" type="Area2D" parent="M1/Elevador_3"]
+position = Vector2( 3528, 347 )
+collision_layer = 0
+collision_mask = 8
+
+[node name="Baixo" type="CollisionShape2D" parent="M1/Elevador_3/Colisor de Baixo"]
+position = Vector2( -116, 3451 )
+shape = SubResource( 112 )
+
+[node name="Elevador" type="KinematicBody2D" parent="M1/Elevador_3"]
+position = Vector2( 3420, 1924 )
+z_index = 4
+collision_layer = 8
+collision_mask = 1032
+collision/safe_margin = 0.001
+script = SubResource( 219 )
+
+[node name="Sprite" type="Sprite" parent="M1/Elevador_3/Elevador"]
+texture = ExtResource( 59 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="M1/Elevador_3/Elevador"]
+position = Vector2( -2, 118.25 )
+z_index = 1
+shape = SubResource( 127 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="M1/Elevador_3/Elevador"]
+position = Vector2( -2, -118 )
+z_index = 1
+shape = SubResource( 127 )
+
+[node name="anim" type="AnimationPlayer" parent="M1/Elevador_3/Elevador"]
+autoplay = "Baixo"
+anims/Baixo = SubResource( 220 )
+anims/Cima = SubResource( 221 )
+anims/RESET = SubResource( 222 )
+
+[node name="Ambiente" type="Area2D" parent="M1/Elevador_3/Elevador"]
+collision_layer = 0
+script = ExtResource( 58 )
+
+[node name="Collision" type="CollisionShape2D" parent="M1/Elevador_3/Elevador/Ambiente"]
 position = Vector2( -3, 9 )
 z_index = 10
 shape = SubResource( 109 )
@@ -3020,19 +4013,55 @@ shape = SubResource( 198 )
 position = Vector2( 3, -8 )
 texture = ExtResource( 80 )
 
+[node name="Fonte" type="Area2D" parent="M1/Itens"]
+position = Vector2( 7595, 2682 )
+script = SubResource( 218 )
+
+[node name="Collision" type="CollisionShape2D" parent="M1/Itens/Fonte"]
+position = Vector2( 8.5, -18.5 )
+shape = SubResource( 200 )
+
+[node name="Sprite" type="Sprite" parent="M1/Itens/Fonte"]
+position = Vector2( 9, -16 )
+texture = ExtResource( 86 )
+
+[node name="RAM_16" type="Area2D" parent="M1/Itens"]
+position = Vector2( 9117, 1871 )
+script = SubResource( 223 )
+
+[node name="Collision" type="CollisionShape2D" parent="M1/Itens/RAM_16"]
+position = Vector2( 8.5, -18.5 )
+shape = SubResource( 224 )
+
+[node name="Sprite" type="Sprite" parent="M1/Itens/RAM_16"]
+position = Vector2( 9, -16 )
+texture = ExtResource( 87 )
+
+[node name="RAM_17" type="Area2D" parent="M1/Itens"]
+position = Vector2( 4632, 3164 )
+script = SubResource( 223 )
+
+[node name="Collision" type="CollisionShape2D" parent="M1/Itens/RAM_17"]
+position = Vector2( 8.5, -18.5 )
+shape = SubResource( 224 )
+
+[node name="Sprite" type="Sprite" parent="M1/Itens/RAM_17"]
+position = Vector2( 9, -16 )
+texture = ExtResource( 87 )
+
+[node name="Placa_mae" type="Area2D" parent="M1/Itens"]
+position = Vector2( 4074, 2407 )
+script = SubResource( 199 )
+
+[node name="Collision" type="CollisionShape2D" parent="M1/Itens/Placa_mae"]
+position = Vector2( 8.5, -18.5 )
+shape = SubResource( 200 )
+
+[node name="Sprite" type="Sprite" parent="M1/Itens/Placa_mae"]
+position = Vector2( 9, -16 )
+texture = ExtResource( 83 )
+
 [node name="Cafe" type="Node2D" parent="M1/Itens"]
-
-[node name="Cafe_expresso" parent="M1/Itens/Cafe" instance=ExtResource( 23 )]
-position = Vector2( 1130, 473 )
-Cafe = 3
-
-[node name="Cafe_expresso2" parent="M1/Itens/Cafe" instance=ExtResource( 23 )]
-position = Vector2( 1190, 474 )
-Cafe = 3
-
-[node name="Cafe_expresso3" parent="M1/Itens/Cafe" instance=ExtResource( 23 )]
-position = Vector2( 1255, 471 )
-Cafe = 3
 
 [node name="Cafe" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
 position = Vector2( 413, 492 )
@@ -3041,19 +4070,256 @@ position = Vector2( 413, 492 )
 position = Vector2( 491, 496 )
 
 [node name="Cafe3" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
-position = Vector2( 606, 471 )
+position = Vector2( 569, 496 )
 
 [node name="Cafe4" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
-position = Vector2( 684, 460 )
+position = Vector2( 651, 491 )
 
 [node name="Cafe5" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
-position = Vector2( 823, 424 )
+position = Vector2( 739, 489 )
 
 [node name="Cafe6" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
 position = Vector2( 939, 416 )
 
 [node name="Cafe7" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
 position = Vector2( 1023, 404 )
+
+[node name="Cafe8" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1814, 227 )
+
+[node name="Cafe9" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1816, 257 )
+
+[node name="Cafe10" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1815, 290 )
+
+[node name="Cafe11" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2018, 243 )
+
+[node name="Cafe12" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2129, 241 )
+
+[node name="Cafe13" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2260, 244 )
+
+[node name="Cafe14" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 979, 376 )
+
+[node name="Cafe15" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1132, 402 )
+
+[node name="Cafe16" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1260, 403 )
+
+[node name="Cafe17" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1904, 480 )
+
+[node name="Cafe18" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1837, 492 )
+
+[node name="Cafe19" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1754, 520 )
+
+[node name="Cafe20" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1994, 474 )
+
+[node name="Cafe21" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2088, 470 )
+
+[node name="Cafe22" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2517, 463 )
+
+[node name="Cafe23" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2575, 464 )
+
+[node name="Cafe24" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2667, 464 )
+
+[node name="Cafe25" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2727, 460 )
+
+[node name="Cafe26" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2781, 461 )
+
+[node name="Cafe27" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 3207, 1420 )
+
+[node name="Cafe28" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 3126, 1422 )
+
+[node name="Cafe29" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 3278, 1417 )
+
+[node name="Cafe30" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7920, 2801 )
+
+[node name="Cafe31" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7952, 2760 )
+
+[node name="Cafe32" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 8008, 2730 )
+
+[node name="Cafe33" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 8062, 2746 )
+
+[node name="Cafe34" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 8110, 2782 )
+
+[node name="Cafe35" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 8139, 2822 )
+
+[node name="Cafe36" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 8964, 2797 )
+
+[node name="Cafe37" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 8930, 2780 )
+
+[node name="Cafe38" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 8880, 2778 )
+
+[node name="Cafe39" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 8814, 2786 )
+
+[node name="Cafe40" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7603, 3132 )
+
+[node name="Cafe41" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7664, 3133 )
+
+[node name="Cafe42" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7744, 3126 )
+
+[node name="Cafe43" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7797, 3130 )
+
+[node name="Cafe44" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7853, 3130 )
+
+[node name="Cafe45" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7115, 2967 )
+
+[node name="Cafe46" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7075, 2968 )
+
+[node name="Cafe47" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6704, 2968 )
+
+[node name="Cafe48" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6672, 2971 )
+
+[node name="Cafe49" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6514, 2887 )
+
+[node name="Cafe50" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6477, 2880 )
+
+[node name="Cafe51" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6295, 2816 )
+
+[node name="Cafe52" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6254, 2816 )
+
+[node name="Cafe53" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5608, 2772 )
+
+[node name="Cafe54" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5605, 2703 )
+
+[node name="Cafe55" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5604, 2619 )
+
+[node name="Cafe56" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5564, 2546 )
+
+[node name="Cafe57" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5545, 2476 )
+
+[node name="Cafe58" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5496, 2436 )
+
+[node name="Cafe59" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5441, 2396 )
+
+[node name="Cafe60" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5387, 2371 )
+
+[node name="Cafe61" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5314, 2383 )
+
+[node name="Cafe62" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5196, 2410 )
+
+[node name="Cafe63" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 5031, 2400 )
+
+[node name="Cafe64" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6297, 2695 )
+
+[node name="Cafe65" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6330, 2637 )
+
+[node name="Cafe66" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6357, 2583 )
+
+[node name="Cafe67" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6390, 2513 )
+
+[node name="Cafe68" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6420, 2456 )
+
+[node name="Cafe69" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6475, 2401 )
+
+[node name="Cafe70" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6539, 2397 )
+
+[node name="Cafe71" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6804, 2286 )
+
+[node name="Cafe72" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 6858, 2238 )
+
+[node name="Cafe73" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7337, 2205 )
+
+[node name="Cafe74" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7360, 2257 )
+
+[node name="Cafe75" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7357, 2332 )
+
+[node name="Cafe76" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7356, 2393 )
+
+[node name="Cafe77" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 7360, 2448 )
+
+[node name="Cafe78" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 3943, 2429 )
+
+[node name="Cafe79" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 3882, 2482 )
+
+[node name="Cafe80" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 3570, 2553 )
+
+[node name="Cafe81" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 3295, 2670 )
+
+[node name="Cafe82" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 3041, 2774 )
+
+[node name="Cafe83" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2766, 2851 )
+
+[node name="Cafe84" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2499, 2955 )
+
+[node name="Cafe85" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 2168, 3024 )
+
+[node name="Cafe86" parent="M1/Itens/Cafe" instance=ExtResource( 22 )]
+position = Vector2( 1989, 3088 )
 
 [node name="Grama" type="Node2D" parent="M1"]
 
@@ -3210,20 +4476,20 @@ position = Vector2( 3388.25, -2117 )
 shape = SubResource( 142 )
 
 [node name="CollisionShape2D8" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
-position = Vector2( 757.313, -2119 )
+position = Vector2( -1206.5, -2107.25 )
 shape = SubResource( 143 )
-
-[node name="CollisionShape2D7" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
-position = Vector2( -2372.38, -3943.5 )
-shape = SubResource( 113 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
 position = Vector2( 5074, -2786.5 )
 shape = SubResource( 162 )
 
 [node name="CollisionShape2D9" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
-position = Vector2( -388, -2591 )
+position = Vector2( -3064, -3329 )
 shape = SubResource( 163 )
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="M2/Collision/Collisions/Terreno"]
+position = Vector2( -2493, -4207 )
+shape = SubResource( 225 )
 
 [node name="barreria_robo" type="StaticBody2D" parent="M2/Collision/Collisions"]
 collision_layer = 128
@@ -3616,12 +4882,20 @@ pitch_scale = 3.15
 [node name="skin" type="Node2D" parent="M2"]
 
 [node name="Grade_Elevador_01_M2" type="Sprite" parent="M2/skin"]
-position = Vector2( 7442, 1959 )
+position = Vector2( 7443, 2213 )
 z_index = 4
 texture = ExtResource( 29 )
+offset = Vector2( -1, -254 )
+
+[node name="Grade_Elevador_01_M3" type="Sprite" parent="M2/skin"]
+position = Vector2( 1802, 2282 )
+z_index = 4
+texture = ExtResource( 29 )
+offset = Vector2( -1, -254 )
 
 [node name="Trapolim" parent="M2/skin" instance=ExtResource( 31 )]
-position = Vector2( 5629, 3050 )
+position = Vector2( 5865, 2722 )
+z_index = 4
 
 [node name="Blocos" type="Node2D" parent="M2"]
 
@@ -3666,6 +4940,7 @@ position = Vector2( -1, 0 )
 position = Vector2( 6152, 3152 )
 
 [node name="bloco" type="KinematicBody2D" parent="M2/Blocos/Blocos moveis/Bloco_1"]
+position = Vector2( 326, -16 )
 z_index = 2
 collision_layer = 1024
 collision_mask = 1032
@@ -3704,7 +4979,7 @@ cast_to = Vector2( 0, 10 )
 collision_mask = 264
 
 [node name="bloco4" type="KinematicBody2D" parent="M2/Blocos/Blocos moveis/Bloco_1"]
-position = Vector2( -662, -51 )
+position = Vector2( -701, -75 )
 z_index = 2
 collision_layer = 1024
 collision_mask = 1032
@@ -4019,6 +5294,7 @@ z_index = 8
 [node name="Plataforma3" parent="M2/Suportes" instance=ExtResource( 52 )]
 position = Vector2( 5758, 2862 )
 z_index = 8
+collision_mask = 1034
 
 [node name="Plataforma4" parent="M2/Suportes" instance=ExtResource( 52 )]
 position = Vector2( 6709, 2473 )
@@ -4063,10 +5339,34 @@ texture = ExtResource( 61 )
 position = Vector2( 6269, 2862 )
 
 [node name="Suporte_eterno2" parent="M2/Suportes" instance=ExtResource( 63 )]
-position = Vector2( 4955, 2760 )
+position = Vector2( 3857, 2566 )
+
+[node name="Suporte_eterno4" parent="M2/Suportes" instance=ExtResource( 63 )]
+position = Vector2( 3575, 2666 )
+
+[node name="Suporte_eterno5" parent="M2/Suportes" instance=ExtResource( 63 )]
+position = Vector2( 3289, 2763 )
+
+[node name="Suporte_eterno6" parent="M2/Suportes" instance=ExtResource( 63 )]
+position = Vector2( 3024, 2852 )
+
+[node name="Suporte_eterno7" parent="M2/Suportes" instance=ExtResource( 63 )]
+position = Vector2( 2774, 2960 )
+
+[node name="Suporte_eterno8" parent="M2/Suportes" instance=ExtResource( 63 )]
+position = Vector2( 2475, 3057 )
+
+[node name="Suporte_eterno9" parent="M2/Suportes" instance=ExtResource( 63 )]
+position = Vector2( 2166, 3110 )
+
+[node name="Suporte_eterno3" parent="M2/Suportes" instance=ExtResource( 63 )]
+position = Vector2( 4094, 2470 )
 
 [node name="Bloco - Imovel" parent="M2/Suportes" instance=ExtResource( 40 )]
 position = Vector2( 6712, 2399 )
+
+[node name="Bloco - Imovel2" parent="M2/Suportes" instance=ExtResource( 40 )]
+position = Vector2( 6944, 2217 )
 
 [node name="Area do computador" type="Node2D" parent="M2"]
 position = Vector2( 2523, 1338 )
@@ -4170,6 +5470,14 @@ position = Vector2( 3742, -142 )
 [node name="Computador" type="Sprite" parent="M2/Area do computador"]
 position = Vector2( -63, 60 )
 texture = ExtResource( 75 )
+script = ExtResource( 88 )
+
+[node name="Area2D" type="Area2D" parent="M2/Area do computador/Computador"]
+script = ExtResource( 82 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="M2/Area do computador/Computador/Area2D"]
+position = Vector2( 1.5, -6 )
+shape = SubResource( 226 )
 
 [node name="Cafe" parent="M2/Area do computador" instance=ExtResource( 22 )]
 position = Vector2( 111, 96 )
@@ -4203,6 +5511,135 @@ z_index = 6
 texture = ExtResource( 78 )
 
 [node name="M3" type="Node2D" parent="."]
+position = Vector2( 5093, 3145 )
+
+[node name="FallingPlatform" parent="M3" instance=ExtResource( 81 )]
+position = Vector2( 159, -709 )
+z_index = 5
+collision_layer = 8
+collision_mask = 8
+
+[node name="FallingPlatform6" type="KinematicBody2D" parent="M3"]
+position = Vector2( 3989, -1266 )
+z_index = 5
+collision_layer = 8
+collision_mask = 8
+script = SubResource( 201 )
+
+[node name="texture" type="Sprite" parent="M3/FallingPlatform6"]
+position = Vector2( -10, 0 )
+texture = ExtResource( 84 )
+
+[node name="collision" type="CollisionShape2D" parent="M3/FallingPlatform6"]
+position = Vector2( -10, 35 )
+shape = SubResource( 202 )
+one_way_collision = true
+
+[node name="anim" type="AnimationPlayer" parent="M3/FallingPlatform6"]
+autoplay = "on"
+anims/RESET = SubResource( 203 )
+anims/off = SubResource( 204 )
+anims/on = SubResource( 205 )
+anims/shake = SubResource( 206 )
+
+[node name="timer" type="Timer" parent="M3/FallingPlatform6"]
+wait_time = 6.0
+
+[node name="FallingPlatform7" type="KinematicBody2D" parent="M3"]
+position = Vector2( 3598, -1266 )
+z_index = 5
+collision_layer = 8
+collision_mask = 8
+script = SubResource( 207 )
+
+[node name="texture" type="Sprite" parent="M3/FallingPlatform7"]
+position = Vector2( -10, 0 )
+texture = ExtResource( 84 )
+
+[node name="collision" type="CollisionShape2D" parent="M3/FallingPlatform7"]
+position = Vector2( -10, 35 )
+shape = SubResource( 208 )
+one_way_collision = true
+
+[node name="anim" type="AnimationPlayer" parent="M3/FallingPlatform7"]
+autoplay = "on"
+anims/off = SubResource( 209 )
+anims/on = SubResource( 210 )
+anims/shake = SubResource( 211 )
+
+[node name="timer" type="Timer" parent="M3/FallingPlatform7"]
+
+[node name="FallingPlatform8" type="KinematicBody2D" parent="M3"]
+position = Vector2( 3314, -1199 )
+z_index = 5
+collision_layer = 8
+collision_mask = 8
+script = SubResource( 207 )
+
+[node name="texture" type="Sprite" parent="M3/FallingPlatform8"]
+position = Vector2( -10, 0 )
+texture = ExtResource( 84 )
+
+[node name="collision" type="CollisionShape2D" parent="M3/FallingPlatform8"]
+position = Vector2( -10, 35 )
+shape = SubResource( 208 )
+one_way_collision = true
+
+[node name="anim" type="AnimationPlayer" parent="M3/FallingPlatform8"]
+autoplay = "on"
+anims/off = SubResource( 212 )
+anims/on = SubResource( 213 )
+anims/shake = SubResource( 214 )
+
+[node name="timer" type="Timer" parent="M3/FallingPlatform8"]
+
+[node name="FallingPlatform9" type="KinematicBody2D" parent="M3"]
+position = Vector2( 3021, -1126 )
+z_index = 5
+collision_layer = 8
+collision_mask = 8
+script = SubResource( 207 )
+
+[node name="texture" type="Sprite" parent="M3/FallingPlatform9"]
+position = Vector2( -10, 0 )
+texture = ExtResource( 84 )
+
+[node name="collision" type="CollisionShape2D" parent="M3/FallingPlatform9"]
+position = Vector2( -10, 35 )
+shape = SubResource( 208 )
+one_way_collision = true
+
+[node name="anim" type="AnimationPlayer" parent="M3/FallingPlatform9"]
+autoplay = "on"
+anims/off = SubResource( 215 )
+anims/on = SubResource( 216 )
+anims/shake = SubResource( 217 )
+
+[node name="timer" type="Timer" parent="M3/FallingPlatform9"]
+
+[node name="FallingPlatform2" parent="M3" instance=ExtResource( 81 )]
+position = Vector2( -41, -709 )
+z_index = 5
+collision_layer = 8
+collision_mask = 8
+
+[node name="FallingPlatform3" parent="M3" instance=ExtResource( 81 )]
+position = Vector2( -241, -709 )
+z_index = 5
+collision_layer = 8
+collision_mask = 8
+
+[node name="FallingPlatform4" parent="M3" instance=ExtResource( 81 )]
+position = Vector2( -441, -709 )
+z_index = 5
+collision_layer = 8
+collision_mask = 8
+
+[node name="FallingPlatform5" parent="M3" instance=ExtResource( 81 )]
+position = Vector2( -641, -709 )
+z_index = 5
+collision_layer = 8
+collision_mask = 8
 
 [node name="Geral" type="Node2D" parent="."]
 position = Vector2( 5796, 1381 )
@@ -4242,6 +5679,13 @@ B = Inventário
 [connection signal="som_elevador" from="M1/Elevador_2/Elevador/Ambiente" to="M1/Elevador_2/Elevador/Ambiente" method="_on_Ambiente_som_elevador"]
 [connection signal="som_stop" from="M1/Elevador_2/Elevador/Ambiente" to="M1/Elevador_2/Elevador" method="_on_Ambiente_som_stop"]
 [connection signal="som_stop" from="M1/Elevador_2/Elevador/Ambiente" to="M1/Elevador_2/Elevador/Ambiente" method="_on_Ambiente_som_stop"]
+[connection signal="body_entered" from="M1/Elevador_3/Colisor de Cima" to="M1/Elevador_3/Elevador" method="_on_Colisor_de_Cima_body_entered"]
+[connection signal="body_entered" from="M1/Elevador_3/Colisor de Baixo" to="M1/Elevador_3/Elevador" method="_on_Colisor_de_Baixo_body_entered"]
+[connection signal="body_entered" from="M1/Elevador_3/Elevador/Ambiente" to="M1/Elevador_3/Elevador/Ambiente" method="_on_Ambiente_body_entered"]
+[connection signal="body_exited" from="M1/Elevador_3/Elevador/Ambiente" to="M1/Elevador_3/Elevador/Ambiente" method="_on_Ambiente_body_exited"]
+[connection signal="som_elevador" from="M1/Elevador_3/Elevador/Ambiente" to="M1/Elevador_3/Elevador/Ambiente" method="_on_Ambiente_som_elevador"]
+[connection signal="som_stop" from="M1/Elevador_3/Elevador/Ambiente" to="M1/Elevador_3/Elevador" method="_on_Ambiente_som_stop"]
+[connection signal="som_stop" from="M1/Elevador_3/Elevador/Ambiente" to="M1/Elevador_3/Elevador/Ambiente" method="_on_Ambiente_som_stop"]
 [connection signal="PlayerEntered" from="M1/Itens/RJ45" to="Player" method="_on_RJ45_PlayerEntered"]
 [connection signal="PlayerEntered" from="M1/Itens/crimpador" to="Player" method="_on_crimpador2_PlayerEntered"]
 [connection signal="PlayerEntered" from="M1/Itens/cabo_de_rede" to="Player" method="_on_cabo_de_rede_PlayerEntered"]
@@ -4290,7 +5734,17 @@ B = Inventário
 [connection signal="body_exited" from="M2/Suportes/Agua eletrificada" to="Player" method="_on_Agua_eletrificada_body_exited"]
 [connection signal="body_entered" from="M2/Area do computador/Alavanca_De_Parede" to="M2/Area do computador/Alavanca_De_Parede" method="_on_Alavanca_De_Parede_body_entered"]
 [connection signal="body_exited" from="M2/Area do computador/Alavanca_De_Parede" to="M2/Area do computador/Alavanca_De_Parede" method="_on_Alavanca_De_Parede_body_exited"]
+[connection signal="body_entered" from="M2/Area do computador/Computador/Area2D" to="M2/Area do computador/Computador/Area2D" method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="M2/Area do computador/Computador/Area2D" to="M2/Area do computador/Computador/Area2D" method="_on_Area2D_body_exited"]
 [connection signal="body_entered" from="M2/Area do computador/Camera" to="Player" method="_on_Camera_body_entered"]
 [connection signal="body_entered" from="M2/Area do computador/Camera1" to="Player" method="_on_Camera1_body_entered"]
+[connection signal="animation_finished" from="M3/FallingPlatform6/anim" to="M3/FallingPlatform6" method="_on_anim_animation_finished"]
+[connection signal="timeout" from="M3/FallingPlatform6/timer" to="M3/FallingPlatform6" method="_on_timer_timeout"]
+[connection signal="animation_finished" from="M3/FallingPlatform7/anim" to="M3/FallingPlatform7" method="_on_anim_animation_finished"]
+[connection signal="timeout" from="M3/FallingPlatform7/timer" to="M3/FallingPlatform7" method="_on_timer_timeout"]
+[connection signal="animation_finished" from="M3/FallingPlatform8/anim" to="M3/FallingPlatform8" method="_on_anim_animation_finished"]
+[connection signal="timeout" from="M3/FallingPlatform8/timer" to="M3/FallingPlatform8" method="_on_timer_timeout"]
+[connection signal="animation_finished" from="M3/FallingPlatform9/anim" to="M3/FallingPlatform9" method="_on_anim_animation_finished"]
+[connection signal="timeout" from="M3/FallingPlatform9/timer" to="M3/FallingPlatform9" method="_on_timer_timeout"]
 
 [editable path="Geral/HUD"]

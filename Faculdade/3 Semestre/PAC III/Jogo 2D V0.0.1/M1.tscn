@@ -79,7 +79,7 @@ drag_margin_v_enabled = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2( 778, 257 )
 frames = SubResource( 10 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Passagem mapa1" parent="." instance=ExtResource( 4 )]

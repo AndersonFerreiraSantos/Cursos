@@ -1,12 +1,12 @@
 extends KinematicBody2D
-var life = 8
+var life = 33
 var hurted = false
 var knockback_dir = 1
 var knockback_int = 3700
 
 #0 é a posição de teste
 #Inicia no 1
-var posicao_camera = 0
+var posicao_camera = 1
 
 
 var UP = Vector2.UP
@@ -37,6 +37,7 @@ onready var iswall := $wallDetector as RayCast2D
 onready var EmpurraD := $EmpurraD as RayCast2D
 
 signal mudar_life(player_life)
+
 func _ready() -> void:
 	connect("mudar_life", get_parent().get_node("HUD/HBoxContainer/Holder2"), "on_change_life")
 	emit_signal("change_life", max_life)
@@ -63,6 +64,12 @@ onready var raycasts = $raycasts
 func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("msg"):
 		Global.mensagem = 0
+		
+	for platforms in get_slide_count():
+		var collision = get_slide_collision(platforms)
+		if collision.collider.has_method("collide_with"):
+			collision.collider.collide_with(collision, self)
+			
 
 	#Danos_______________
 	#Player_________________
@@ -305,9 +312,9 @@ func _on_Alavanca_body_entered(body):
 	#print("Entrou no elevador 01")
 	
 func posicao_camera():
-	if posicao_camera == 0:
-		$Camera.limit_right = 3300000
-		$Camera.limit_bottom = 5850000
+#	if posicao_camera == 0:
+#		$Camera.limit_right = 3300000
+#		$Camera.limit_bottom = 5850000
 	if posicao_camera == 1:
 		$Camera.limit_right = 3300
 		$Camera.limit_bottom = 585
@@ -315,11 +322,11 @@ func posicao_camera():
 	if Global.Patch_cord == 1:
 		$Camera.limit_right = 3870
 		$Camera.limit_bottom = 1600
-		$Camera.limit_left = -10
+		$Camera.limit_left = 1922
 	if Global.posicao_camera == 2:
 		$Camera.limit_right = 9296
 		$Camera.limit_bottom = 1500
-		$Camera.limit_left = -10
+		$Camera.limit_left = 1922
 	if Global.posicao_camera == 3:
 		$Camera.limit_right = 9296
 		$Camera.limit_bottom = 1950
@@ -334,7 +341,8 @@ func posicao_camera():
 func morte():
 	if life < 1:
 		queue_free()
-		get_tree().reload_current_scene()
+		Global.posicao_camera = 10
+		get_tree().change_scene("res://Levels/Level_01.tscn")
 
 func  life():
 	Global.life_player = life

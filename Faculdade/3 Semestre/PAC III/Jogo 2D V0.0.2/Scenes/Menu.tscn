@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/background/Editado/1.png" type="Texture" id=1]
+[ext_resource path="res://Assets/background/Editado/3.png" type="Texture" id=2]
+[ext_resource path="res://Assets/background/Editado/5.png" type="Texture" id=3]
+[ext_resource path="res://Assets/background/Editado/2.png" type="Texture" id=4]
+[ext_resource path="res://Assets/background/Editado/4.png" type="Texture" id=5]
+[ext_resource path="res://Assets/background/Editado/6.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Menu/Buttons/Play.png" type="Texture" id=7]
+
+[node name="Start" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Sprite" type="Sprite" parent="."]
+z_index = 20
+
+[node name="4" type="Sprite" parent="Sprite"]
+position = Vector2( 641, 310 )
+scale = Vector2( 1.26074, 1.05208 )
+texture = ExtResource( 5 )
+
+[node name="6" type="Sprite" parent="Sprite/4"]
+position = Vector2( 107.08, -52.2772 )
+scale = Vector2( 0.793184, 0.950495 )
+texture = ExtResource( 3 )
+
+[node name="3" type="Sprite" parent="Sprite/4"]
+position = Vector2( -130.082, -30.4158 )
+scale = Vector2( 0.793184, 0.950495 )
+texture = ExtResource( 2 )
+
+[node name="2" type="Sprite" parent="Sprite/4"]
+position = Vector2( 38.0729, 26.6139 )
+scale = Vector2( 0.793184, 0.950495 )
+texture = ExtResource( 4 )
+
+[node name="5" type="Sprite" parent="Sprite/4"]
+position = Vector2( 1.58636, -1.901 )
+texture = ExtResource( 3 )
+
+[node name="6" type="Sprite" parent="Sprite/4/5"]
+position = Vector2( -20.6227, -376.396 )
+texture = ExtResource( 6 )
+
+[node name="1" type="Sprite" parent="Sprite/4/5"]
+position = Vector2( -1.58636, 276.594 )
+texture = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 604.0
+margin_top = 222.0
+margin_right = 637.0
+margin_bottom = 250.0
+icon = ExtResource( 7 )
