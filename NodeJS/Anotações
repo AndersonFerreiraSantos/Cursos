@@ -7,13 +7,23 @@ O que é NPM:
 Terminal CDMER é utilizado no windows para simular um terminal do linux, nem todos os comandos são executados corretamente no PowerShell    
 Módulos são scripts reaproveitáveis. inter "nós desenvolvemos, core modules" "módulos que vem com o Node.js", externos "módulos que instamos via NPM".
 
+O que é Express:
+    È uma framwok para Node.js, server para criar aplicações WEB, rotas, renderizar HTMl, conectar a banco de dado entre outras coisas.
+
 Síncrono e Assíncrono:
     Síncrono: O codigo ira executar sincronizado, ou seja, vai executar o proximo assim que terminar o que esta executando.
     Assíncrono: Ele não precisa terminar um para executar o proximo.
 
+Template Engine:
+    Uma forma de deixar o HTML dinâmico, inserindo variáveis do back-end no front-end, criando layouts que são reaproveitaveis
 
 CORE MODULES: Conhecimento sobre módulos do node, caso o objetivo seja verificar arquivos, sistema, configurar servidor é necessário verificar essa pasta.
 
+Core Modules fundamentais para crianção de software em node(não é necessário instalar):
+    http: módulo para criar servidores HTTP;
+    path: extrair informações de paths (caminhos) de arquivos;
+    fs: file system, leitura e escrita de arquivos;
+    url: módulo para trabalhar com URLs;
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Insalações:
@@ -21,7 +31,7 @@ Insalações:
     cmder: https://cmder.net/
     Pacotes: pesquisar pactes do Node https://www.npmjs.com/search?q=express
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Comandos:
     node -v: Verificar versão do NodeJS.
     npm -v: Verificar versão do NPM.
@@ -35,8 +45,10 @@ Comandos:
         npm link "pacote": Em alguns casos é necessário executar o npm link "pacote" pois alguns pacotes necessita dos arquivos localmente.
     npm uninstall "pacote": Para remover os pacotes, ele remove as dependencias dos arquivos json também.
     node: acessa o node via terminal.
+    nom install nodemon: Serve para atualizar auttomaticamente o servidor, lembrar de instalar em modo dev '--save-dev'
 
     npm init: inicializar o NPM no prjeto (permite instalar modulos externos).
+        OBS: Lembrar de inicializar o projeto com 'npm init' antes.
      Pacotes NPM:
         npm install minimist: minimist é um pacote que permite extrair argumentos do console.
         npm install chalk: chalk é um pacote para uma visualização do console mais agradável.
@@ -44,12 +56,15 @@ Comandos:
         npm install inquirer: Módulo para lidar melhor com input do usuário.
             Correção - Para funcionar corretamente: npm install inquirer@8.1.0
         npm install lodash: Verificar...(compara array)
-
-Core Modules fundamentais para crianção de software em node(não é necessário instalar):
-    http: módulo para criar servidores HTTP;
-    path: extrair informações de paths (caminhos) de arquivos;
-    fs: file system, leitura e escrita de arquivos;
-    url: módulo para trabalhar com URLs;
+        npm install express: responsavel po renderizar html, fazer conexão com banco entre outras coisas.
+        npm install express-handlebars:
 
 
-    
+
+
+    OBS: 
+        Para reparar basta trocar esta linha de código:
+        app.engine('handlebars', exphbs())
+
+        Por esta:
+        app.engine('handlebars', exphbs.engine())

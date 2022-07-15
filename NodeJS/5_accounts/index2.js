@@ -241,6 +241,13 @@ function removeAmount(accountName, amount) {
       console.log(err)
     },
   )
+  function withdraw() {
+    inquirer.prompt([
+      {
+        
+      }
+    ])
+  }
 
   console.log(
     chalk.green(`Foi realizado um saque de R$${amount} da sua conta!`),
