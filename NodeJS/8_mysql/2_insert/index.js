@@ -5,6 +5,14 @@ const mysql = require('mysql')
 //executar o express
 const app = express()
 
+//Pegaro body em json
+app.use(
+    express.urlencoded({
+        extend:true,
+    }),
+)
+app.use(express.json())
+
 app.engine('handlebars', exphbs.engine())
 
 app.set('view engine', 'handlebars')
@@ -16,8 +24,24 @@ app.get('/', (req, res) => {
     res.render('home')
 })
 
-//conexão SQL
+app.post('/books/insertbook', (req, res) => {
 
+    const title = req.body.title
+    const pagesqty = req.body.pagesqty
+
+    const sql = `INSERT INTO books (title, pagesqty) VALUES ('${title}', '${pagesqty}')`
+
+    conn.query(sql, function(err){
+        if(err) {
+            console.log(err)
+        }
+
+        res.redirect('/')
+    })
+
+})
+
+//conexão SQL
 const conn = mysql.createConnection({
     host:'localhost',
     user:'root',
